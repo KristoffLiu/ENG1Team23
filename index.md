@@ -1,4 +1,4 @@
-## Welcome to GitHub Pages
+## ENG1 Team 23 - Legs United
 
 You can use the [editor on GitHub](https://github.com/ScottMClark/ENG1Team23/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
@@ -23,8 +23,10 @@ Syntax highlighted code block
 
 **Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
 ```
+
+[Link](https://www.google.com)
+![Image](https://cerberus-laboratories.com/images/blog/random_numbers.jpg)
 
 For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
