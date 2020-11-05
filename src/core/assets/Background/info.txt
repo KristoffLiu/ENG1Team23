@@ -1,0 +1,2 @@
+4 columns
+64x64 = 1 frame
