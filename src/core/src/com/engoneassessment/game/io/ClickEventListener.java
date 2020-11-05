@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class ClickEventListener extends ClickListener {
     /**
-     * 对象（演员/舞台）被点击时调用
+     * used when actor/stage is clicked
      *
      * @param x
      * 		x coordination of click released, relative to the left-bottom of the clicked object.
@@ -18,6 +18,7 @@ public class ClickEventListener extends ClickListener {
         // get the clicked Actor
         //Actor actor = event.getListenerActor();
 
-        //Gdx.app.log(TAG, "被点击: " + x + ", " + y + "; Actor: " + actor.getClass().getSimpleName());
+
+        //Gdx.app.log(TAG, "isclicked: " + x + ", " + y + "; Actor: " + actor.getClass().getSimpleName());
     }
 }

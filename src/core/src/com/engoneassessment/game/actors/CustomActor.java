@@ -55,7 +55,9 @@ public class CustomActor extends Actor {
     @Override
     public void act(float delta) {
         super.act(delta);
+
         // 现在这里一般没有什么逻辑要处理
+        // Usually there's no more actions to deal with.
     }
 
     /**
@@ -66,6 +68,10 @@ public class CustomActor extends Actor {
      *
      * @param parentAlpha
      * 		父节点的透明度, 处理透明度和演员的颜色属性有关, 稍微复杂, 这里暂时先不处理
+     * 		The Sprite Batch, is used to render the texture of actor encapsulation.
+     *
+     * @param parentAlpha
+     * 		the transparent of parent
      */
     @Override
     public void draw(Batch batch, float parentAlpha) {
