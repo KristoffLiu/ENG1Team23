@@ -2,6 +2,8 @@
 
 Scott Clark | Jamie Roberts | Maciej Kaszynski | Kristoff Liu | Oliver Xie | Tammy Yeung
 
+![](./Jesus23.png)
+
 ### Documentation
 
 - [Requirements](https://docs.google.com/document/d/13156ywn519An_QWeEImV5j5__AVFFo-zgKqG7HZolH8/edit?usp=sharing)
