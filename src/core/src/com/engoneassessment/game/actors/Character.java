@@ -17,11 +17,9 @@ public class Character extends CustomActor {
     private Double health = 100.0;
     private String position; // variable type has to be changed to what we define later
 
-
     public Character(TextureRegion textureRegion) {
         super(textureRegion);
     }
-
 
     public String getPos() {
         return position;
@@ -67,4 +65,5 @@ public class Character extends CustomActor {
         //    //this.setTexture();
         //}
     }
+
 }

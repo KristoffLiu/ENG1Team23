@@ -14,6 +14,7 @@ import com.engoneassessment.game.screens.start.StartScreen;
  *
  * - Zhikang Liu 2020/11/01
  */
+
 public class GameEntry extends Game {
 
     public static final float VIEW_WIDTH = 1920;

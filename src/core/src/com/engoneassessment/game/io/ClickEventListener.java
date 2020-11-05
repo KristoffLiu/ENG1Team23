@@ -18,6 +18,7 @@ public class ClickEventListener extends ClickListener {
         // get the clicked Actor
         //Actor actor = event.getListenerActor();
 
+
         //Gdx.app.log(TAG, "isclicked: " + x + ", " + y + "; Actor: " + actor.getClass().getSimpleName());
     }
 }
