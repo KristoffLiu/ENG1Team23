@@ -13,6 +13,7 @@ public class Hostile extends Character{
     private Double health = 100.0;
     private String position; // variable type has to be changed to what we define later
      */
+    public int NumOfDestroy = 0; // record the number of systems the hostile destroy
 
     public Hostile(TextureRegion region) {
         super(region);
@@ -43,4 +44,9 @@ public class Hostile extends Character{
         speed = s;
     }
     */
+
+    public int getNumOfDestroy() {
+        return NumOfDestroy;
+    }
+
 }
