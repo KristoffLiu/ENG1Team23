@@ -1,6 +1,9 @@
 package com.engoneassessment.game;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.engoneassessment.game.actors.Player;
 import com.engoneassessment.game.screens.main.GameScreen;
 import com.engoneassessment.game.screens.setting.SettingScreen;
 import com.engoneassessment.game.screens.start.StartScreen;
@@ -25,6 +28,7 @@ public class GameEntry extends Game {
     private SettingScreen settingScreen;
     private GameScreen gameScreen;
 
+
     /**
      * Called when the game is first created.
      */
@@ -34,13 +38,17 @@ public class GameEntry extends Game {
         startScreen = new StartScreen(this);
 
         // Create MainGameScreen
-        gameScreen = new GameScreen();
+        gameScreen = new GameScreen(this);
 
         setScreen(startScreen);
     }
 
     public void switchScreen(){
+    }
 
+    //Starts the game by changing the game screen
+    public void startGame(){
+        setScreen(gameScreen);
     }
 
     @Override
