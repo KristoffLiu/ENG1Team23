@@ -1,2 +1,2 @@
 3 columns, 3 rows
-19x19 = 1 frame
+42x42 = 1 frame
