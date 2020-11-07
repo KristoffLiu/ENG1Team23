@@ -10,12 +10,12 @@ import com.badlogic.gdx.utils.Array;
 public class Character extends CustomActor {
     Array<Texture> actionTextures;
 
-    private int speed;
+    public int speed;
     // i set the speed as integer initially, because using double may be more complicated
     private String ability; // every hostile has a ability
     // abilities such as be invisible, speeding up...
     private Double health = 100.0;
-    private String position; // variable type has to be changed to what we define later
+    public String position; // variable type has to be changed to what we define later
 
     public Character(TextureRegion textureRegion) {
         super(textureRegion);
