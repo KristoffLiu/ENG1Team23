@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.CustomActor;
-import com.engoneassessment.game.actors.Player;
+import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.io.ClickEventListener;
 import com.engoneassessment.game.io.CustomInputProcessor;
 
@@ -124,6 +124,9 @@ public class GameScreen implements Screen {
                     player.MoveByAction();
                     Gdx.app.log("Tag", "right");
                     break;
+                }
+                case Input.Keys.W:{
+                    auber.moveBy(0,1200 * Gdx.graphics.getDeltaTime());
                 }
             }
             return false;
