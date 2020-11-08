@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Hostile extends Character{
 
+    private Character hostile;
+
     private boolean arrested = false; // hostile's initial status is not arrested
     /*
     private int speed;
@@ -17,36 +19,26 @@ public class Hostile extends Character{
 
     public Hostile(TextureRegion region) {
         super(region);
+        this.hostile = hostile;
     }
 
     public void getCaught() {
         arrested = true;
     }
 
-    /*
-    public String getPos() {
-        return position;
-    }
-
-    public void setPos(String pos) {
-        position = pos;
-    }
-
-    public void setHealth(Double hp) {
-        health = hp;
-    }
-
-    public Double getHealth() {
-        return health;
-    }
-
-    public void setSpeed(int s) {
-        speed = s;
-    }
-    */
-
     public int getNumOfDestroy() {
         return NumOfDestroy;
+    }
+
+    public void attackPlayer() {
+        if (hostile.getPos() == Player.getPos()) {
+            //then
+            //Player.setHealth()
+        }
+    }
+
+    public boolean checkPlayerRange() {
+        return true;
     }
 
 }
