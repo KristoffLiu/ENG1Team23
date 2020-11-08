@@ -21,25 +21,6 @@ public class Character extends CustomActor {
         super(textureRegion);
     }
 
-    public String getPos() {
-        return position;
-    }
-
-    public void setPos(String pos) {
-        position = pos;
-    }
-
-    public void setHealth(Double hp) {
-        health = hp;
-    }
-
-    public Double getHealth() {
-        return health;
-    }
-
-    public void setSpeed(int s) {
-        speed = s;
-    }
 
 
     /*
@@ -65,5 +46,26 @@ public class Character extends CustomActor {
         //    //this.setTexture();
         //}
     }
+
+    public String getPos() {
+        return position;
+    }
+
+    public void setPos(String pos) {
+        position = pos;
+    }
+
+    public void setHealth(Double hp) {
+        health = hp;
+    }
+
+    public Double getHealth() {
+        return health;
+    }
+
+    public void setSpeed(int s) {
+        speed = s;
+    }
+
 
 }
