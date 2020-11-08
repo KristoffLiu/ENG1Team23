@@ -3,11 +3,12 @@ package com.engoneassessment.game.actors;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-public class Character extends CustomActor {
+public class Character extends CustomActor{
     Array<Texture> actionTextures;
 
     public int speed;
@@ -21,6 +22,10 @@ public class Character extends CustomActor {
         super(textureRegion);
     }
 
+
+    public void changeX(int change){
+
+    }
 
 
     /*
@@ -66,6 +71,4 @@ public class Character extends CustomActor {
     public void setSpeed(int s) {
         speed = s;
     }
-
-
 }

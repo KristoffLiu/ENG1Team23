@@ -42,13 +42,17 @@ public class GameEntry extends Game {
 
 
         // Create MainGameScreen
-        gameScreen = new GameScreen();
+        gameScreen = new GameScreen(this);
 
         setScreen(gameScreen);
     }
 
     public void switchScreen(){
+    }
 
+    //Starts the game by changing the game screen
+    public void startGame(){
+        setScreen(gameScreen);
     }
 
     public void render(float delta) {
