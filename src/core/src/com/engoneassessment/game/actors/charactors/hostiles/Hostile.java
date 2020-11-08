@@ -18,7 +18,7 @@ public class Hostile extends NPC {
     }
 
     private Boolean checkIfPlayerInRange(){
-
+        return true;
     }
 
     public void getCaught() {

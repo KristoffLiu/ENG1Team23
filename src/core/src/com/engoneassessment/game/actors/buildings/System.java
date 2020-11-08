@@ -9,10 +9,10 @@ public class System extends Building {
     }
 
     public Boolean isDestroyed(){
-
+        return true;
     }
 
     public float timeTillDestroyed(){
-
+        return 0f;
     }
 }

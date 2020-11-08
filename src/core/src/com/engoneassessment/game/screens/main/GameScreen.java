@@ -81,24 +81,6 @@ public class GameScreen implements Screen {
         stage.addActor(customActor);
     }
 
-    public boolean isCollision(CustomActor customActor){
-        for(Actor actor : stage.getActors()){
-            if(((CustomActor)actor).getBounds().overlaps(customActor.getBounds())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isCollidedWithAnotherActor(CustomActor customActor){
-        for(Actor actor : stage.getActors()){
-            if(((CustomActor)actor).getBounds().overlaps(customActor.getBounds())){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void CollisionHandler(){
 
     }

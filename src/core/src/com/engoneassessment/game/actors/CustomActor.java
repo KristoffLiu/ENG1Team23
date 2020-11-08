@@ -52,7 +52,6 @@ public class CustomActor extends Actor {
 
     /**
      * logic handler of the actor
-     * we need handle the collision detection here.
      *
      * @param delta
      *		the change of time from the last rendered frame to the current rendering frame,
