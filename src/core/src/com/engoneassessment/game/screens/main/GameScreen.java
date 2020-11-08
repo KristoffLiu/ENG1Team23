@@ -1,9 +1,6 @@
 package com.engoneassessment.game.screens.main;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,23 +21,26 @@ public class GameScreen implements Screen {
     public static GameScreen currentWorld;
 
     Player player;
+    public Stage stage;
+    public Stage UIstage;
 
     public GameScreen(GameEntry gameEntry){
         currentWorld = this;
         this.gameEntry = gameEntry;
-
-        stage = new Stage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT));
+        // 设置 Log 输出级别
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
         Texture texture = new Texture(Gdx.files.internal("badlogic.jpg"));
         player = new Player(new TextureRegion(texture));
-        player.addListener(new PlayerInputListener());
 
-
+        stage = new Stage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT));
         stage.addActor(player);
+
+        Gdx.input.setInputProcessor(stage);
+        stage.addListener(new PlayerInputListener());
     }
 
-    public Stage stage;
-    public Stage UIstage;
+
 
     /**
      * Called when this screen becomes the current screen for a Game.
@@ -57,7 +57,10 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        Gdx.gl.glClearColor(0.39f, 0.58f, 0.92f, 1.0f);
 
+        stage.act();
+        stage.draw();
     }
 
     /**
@@ -110,28 +113,13 @@ public class GameScreen implements Screen {
 
     }
 
-    public class PlayerInputListener extends InputListener {
+    private class PlayerInputListener extends InputListener {
         @Override
         public boolean keyDown(InputEvent event, int keycode) {
             switch (keycode) {
-                case Input.Keys.UP: {
-
-                    break;
-                }
-                case Input.Keys.DOWN: {
-
-                    break;
-                }
-                case Input.Keys.A: {
-
-                    break;
-                }
-                case Input.Keys.ENTER: {
-
-                    break;
-                }
-                default: {
-
+                case Input.Keys.RIGHT: {
+                    player.MoveByAction();
+                    Gdx.app.log("Tag", "right");
                     break;
                 }
             }

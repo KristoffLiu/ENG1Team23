@@ -2,6 +2,8 @@ package com.engoneassessment.game.actors.charactors;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.utils.Array;
 import com.engoneassessment.game.actors.CustomActor;
 
@@ -73,4 +75,8 @@ public class Character extends CustomActor implements ICharacter {
         }
     }
 
+    public void MoveByAction(){
+        MoveByAction action = Actions.moveBy(100, 0, 2.0F);
+        this.addAction(action);
+    }
 }
