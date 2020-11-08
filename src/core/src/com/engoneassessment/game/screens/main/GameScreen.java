@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
     public GameScreen(GameEntry gameEntry){
         currentWorld = this;
         this.gameEntry = gameEntry;
-        // 设置 Log 输出级别
+
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
         Texture texture = new Texture(Gdx.files.internal("badlogic.jpg"));
