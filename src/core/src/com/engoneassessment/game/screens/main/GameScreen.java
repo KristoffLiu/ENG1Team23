@@ -1,6 +1,7 @@
 package com.engoneassessment.game.screens.main;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -17,17 +18,27 @@ import com.engoneassessment.game.io.CustomInputProcessor;
 
 public class GameScreen implements Screen {
 
-    public Stage stage;
-    public Player auber;
+    private GameEntry gameEntry;
+    public static GameScreen currentWorld;
 
+    Player player;
+    public Stage stage;
+
+    public Stage UIstage;
+    public Player auber;
+  
     public GameScreen(GameEntry gameEntry){
+        currentWorld = this;
+        this.gameEntry = gameEntry;
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+
         stage = new Stage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT));
         auber = new Player(new TextureRegion(new Texture("run.gif")));;
         stage.addActor(auber);
         Gdx.input.setInputProcessor(stage);
-
+        stage.addListener(new PlayerInputListener());
     }
-
+  
     /**
      * Called when this screen becomes the current screen for a Game.
      */
@@ -101,26 +112,22 @@ public class GameScreen implements Screen {
         stage.addActor(customActor);
     }
 
-    public boolean isCollision(CustomActor customActor){
-        for(Actor actor : stage.getActors()){
-            if(((CustomActor)actor).getBounds().overlaps(customActor.getBounds())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isCollidedWithAnotherActor(CustomActor customActor){
-        for(Actor actor : stage.getActors()){
-            if(((CustomActor)actor).getBounds().overlaps(customActor.getBounds())){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void CollisionHandler(){
 
+    }
+
+    private class PlayerInputListener extends InputListener {
+        @Override
+        public boolean keyDown(InputEvent event, int keycode) {
+            switch (keycode) {
+                case Input.Keys.RIGHT: {
+                    player.MoveByAction();
+                    Gdx.app.log("Tag", "right");
+                    break;
+                }
+            }
+            return false;
+        }
     }
 
     public void keysPressed(){

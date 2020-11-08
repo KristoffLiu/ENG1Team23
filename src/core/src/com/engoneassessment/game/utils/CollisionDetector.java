@@ -1,10 +1,11 @@
 package com.engoneassessment.game.utils;
 
-/**
- * WARNING !!!!!!!!!!!!!!!!!
- * So far this is not usable;
- */
+import com.badlogic.gdx.math.Rectangle;
+import com.engoneassessment.game.actors.Character;
 
-public class CollisionDetector {
-    public static boolean isCollision;
+public class CollisionDetector implements ICollisionDetector {
+    @Override
+    public boolean checkCollision(Rectangle bounds, Character.FacingDirection facingDirection) {
+        return false;
+    }
 }

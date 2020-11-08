@@ -9,4 +9,9 @@ public class Player extends Character{
     }
     // every time when Auber arrests a hostile,(which means Auber collides the hostile)
     // his health is reduced a little
+
+    public void ChangeDirection(){
+
+    }
+
 }
