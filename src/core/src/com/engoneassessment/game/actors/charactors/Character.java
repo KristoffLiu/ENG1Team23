@@ -1,13 +1,13 @@
-package com.engoneassessment.game.actors;
+package com.engoneassessment.game.actors.charactors;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.engoneassessment.game.actors.CustomActor;
+import com.engoneassessment.game.screens.main.GameScreen;
 
-public class Character extends CustomActor {
+public class Character extends CustomActor implements ICollisionDetector {
     Array<Texture> actionTextures;
 
     private int speed;
@@ -66,4 +66,16 @@ public class Character extends CustomActor {
         //}
     }
 
+
+    @Override
+    public boolean checkCollision() {
+        Array<Actor> actors = GameScreen.currentWorld.stage.getActors();
+        for(Actor actor : actors){
+            CustomActor customActor = (CustomActor) actor;
+            if(customActor.getBounds().overlaps(this.getBounds())){
+                //add Handler;
+            }
+        }
+        return false;
+    }
 }

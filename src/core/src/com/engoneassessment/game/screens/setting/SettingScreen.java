@@ -1,7 +1,6 @@
 package com.engoneassessment.game.screens.setting;
 
 import com.badlogic.gdx.Screen;
-import com.engoneassessment.game.actors.Hostile;
 
 public class SettingScreen implements Screen {
 

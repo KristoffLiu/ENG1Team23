@@ -1,5 +1,6 @@
 package com.engoneassessment.game.screens.main;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -7,6 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.engoneassessment.game.actors.CustomActor;
 
 public class GameScreen implements Screen {
+
+    public static GameScreen currentWorld;
+
+    public GameScreen(){
+        currentWorld = this;
+    }
 
     public Stage stage;
 
