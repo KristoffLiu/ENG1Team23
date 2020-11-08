@@ -1,5 +1,7 @@
 package com.engoneassessment.game.io;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -15,10 +17,8 @@ public class ClickEventListener extends ClickListener {
      */
     @Override
     public void clicked(InputEvent event, float x, float y) {
-        // get the clicked Actor
-        //Actor actor = event.getListenerActor();
-
-
-        //Gdx.app.log(TAG, "isclicked: " + x + ", " + y + "; Actor: " + actor.getClass().getSimpleName());
+        //get the clicked Actor
+        Actor actor = event.getListenerActor();
+        System.out.println(actor.getX());
     }
 }

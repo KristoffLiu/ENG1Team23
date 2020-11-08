@@ -5,12 +5,15 @@ import com.engoneassessment.game.actors.charactors.npcs.NPC;
 
 public class Hostile extends NPC {
 
+    private Character hostile;
+
     private boolean arrested = false; // hostile's initial status is not arrested
 
     public int NumOfDestroy = 0; // record the number of systems the hostile destroy
 
     public Hostile(TextureRegion region) {
         super(region);
+        this.hostile = hostile;
     }
 
     public void attackPlayer(){
@@ -58,9 +61,20 @@ public class Hostile extends NPC {
 
     public Double getHealth() {
         return health;
+        
     }
 
-    public void setSpeed(int s) {
-        speed = s;
+    public void attackPlayer() {
+        if (hostile.getPos() == Player.getPos()) {
+            //then
+            //Player.setHealth()
+        }
     }
     */
+
+
+    public boolean checkPlayerRange() {
+        return true;
+    }
+
+}

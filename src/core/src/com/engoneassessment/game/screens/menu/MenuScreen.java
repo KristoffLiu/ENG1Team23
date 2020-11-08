@@ -1,14 +1,22 @@
 package com.engoneassessment.game.screens.menu;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.engoneassessment.game.GameEntry;
 
 public class MenuScreen implements Screen {
+    private Stage stage;
+
+    public MenuScreen(GameEntry gameEntry) {
+        stage = new Stage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT));
+    }
+
     /**
      * Called when this screen becomes the current screen for a Game.
      */
     @Override
     public void show() {
-
     }
 
     /**

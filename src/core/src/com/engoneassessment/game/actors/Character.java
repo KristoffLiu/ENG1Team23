@@ -1,6 +1,8 @@
 package com.engoneassessment.game.actors;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
@@ -29,28 +31,14 @@ public class Character extends CustomActor implements ICharacter {
     private MovementState movementState = MovementState.IDLE;
     private CharacterCollisionDetector collisionDetector = new CharacterCollisionDetector();
 
+
     public Character(TextureRegion textureRegion) {
         super(textureRegion);
     }
 
-    public String getPos() {
-        return position;
-    }
 
-    public void setPos(String pos) {
-        position = pos;
-    }
+    public void changeX(int change){
 
-    public void setHealth(Double hp) {
-        health = hp;
-    }
-
-    public Double getHealth() {
-        return health;
-    }
-
-    public void setSpeed(int s) {
-        speed = s;
     }
 
 
@@ -80,5 +68,23 @@ public class Character extends CustomActor implements ICharacter {
     public void MoveByAction(){
         MoveByAction action = Actions.moveBy(100, 0, 2.0F);
         this.addAction(action);
+    public String getPos() {
+        return position;
+    }
+
+    public void setPos(String pos) {
+        position = pos;
+    }
+
+    public void setHealth(Double hp) {
+        health = hp;
+    }
+
+    public Double getHealth() {
+        return health;
+    }
+
+    public void setSpeed(int s) {
+        speed = s;
     }
 }

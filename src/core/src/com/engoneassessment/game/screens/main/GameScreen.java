@@ -1,15 +1,20 @@
 package com.engoneassessment.game.screens.main;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.actors.Player;
+import com.engoneassessment.game.io.ClickEventListener;
+import com.engoneassessment.game.io.CustomInputProcessor;
 
 public class GameScreen implements Screen {
 
@@ -18,32 +23,28 @@ public class GameScreen implements Screen {
 
     Player player;
     public Stage stage;
-    public Stage UIstage;
 
+    public Stage UIstage;
+    public Player auber;
+  
     public GameScreen(GameEntry gameEntry){
         currentWorld = this;
         this.gameEntry = gameEntry;
-
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
-        Texture texture = new Texture(Gdx.files.internal("badlogic.jpg"));
-        player = new Player(new TextureRegion(texture));
-
         stage = new Stage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT));
-        stage.addActor(player);
-
+        auber = new Player(new TextureRegion(new Texture("run.gif")));;
+        stage.addActor(auber);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new PlayerInputListener());
     }
-
-
-
+  
     /**
      * Called when this screen becomes the current screen for a Game.
      */
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     /**
@@ -53,8 +54,14 @@ public class GameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
+        //Checks for movement keys being held
+        keysPressed();
+        //Sets the camera position to the centre of the player
+        stage.getViewport().getCamera().position.set(auber.getX()+auber.getWidth()/2,auber.getY()+auber.getHeight()/2,0);
+        stage.getViewport().getCamera().update();
+        //Fills the screen
         Gdx.gl.glClearColor(0.39f, 0.58f, 0.92f, 1.0f);
-
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
     }
@@ -66,7 +73,7 @@ public class GameScreen implements Screen {
      */
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height, false);
     }
 
     /**
@@ -121,5 +128,23 @@ public class GameScreen implements Screen {
             }
             return false;
         }
+    }
+
+    public void keysPressed(){
+        //Moves the auber around
+        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+            auber.moveBy(0,1200 * Gdx.graphics.getDeltaTime());
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
+            auber.moveBy(- 1200 * Gdx.graphics.getDeltaTime(),0);
+
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.S)) {
+            auber.moveBy(0,- 1200 * Gdx.graphics.getDeltaTime());
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.D)) {
+            auber.moveBy(1200 * Gdx.graphics.getDeltaTime(),0);
+        }
+
     }
 }
