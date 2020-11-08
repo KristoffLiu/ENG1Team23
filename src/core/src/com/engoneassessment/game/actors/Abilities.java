@@ -1,6 +1,8 @@
 package com.engoneassessment.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.engoneassessment.game.actors.characters.npcs.Hostile;
+
 import java.util.Random;
 
 public class Abilities extends Hostile {

@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.engoneassessment.game.screens.main.GameScreen;
 import com.engoneassessment.game.screens.setting.SettingScreen;
 import com.engoneassessment.game.screens.start.StartScreen;
-import com.engoneassessment.game.actors.Player;
 
 /**
  * Since it may not only be a single screen/stage game,
@@ -28,6 +27,7 @@ public class GameEntry extends Game {
     private StartScreen startScreen;
     private SettingScreen settingScreen;
     private GameScreen gameScreen;
+    public Stage stage;
 
 
     /**
@@ -37,14 +37,11 @@ public class GameEntry extends Game {
     public void create() {
         // Create StartScreen
         startScreen = new StartScreen(this);
-        stage = new Stage(new StretchViewport(gapmeEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT));
-        player = Player(new TextureRegion(new Texture("badlogic.png")));
-
 
         // Create MainGameScreen
         gameScreen = new GameScreen(this);
 
-        setScreen(gameScreen);
+        setScreen(startScreen);
     }
 
     public void switchScreen(){
@@ -53,13 +50,6 @@ public class GameEntry extends Game {
     //Starts the game by changing the game screen
     public void startGame(){
         setScreen(gameScreen);
-    }
-
-    public void render(float delta) {
-        Gdx.gl.glClearColor(0.39f, 0.58f, 0.92f, 1.0f);
-
-        stage.act();
-        stage.draw();
     }
 
     @Override
