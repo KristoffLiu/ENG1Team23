@@ -34,9 +34,9 @@ public class GameEntry extends Game {
         startScreen = new StartScreen(this);
 
         // Create MainGameScreen
-        gameScreen = new GameScreen();
+        gameScreen = new GameScreen(this);
 
-        setScreen(startScreen);
+        setScreen(gameScreen);
     }
 
     public void switchScreen(){

@@ -1,4 +1,4 @@
-package com.engoneassessment.game.actors.charactors;
+package com.engoneassessment.game.actors.charactors.npcs;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;

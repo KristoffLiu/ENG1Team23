@@ -13,7 +13,6 @@ public class CharacterCollisionDetector extends CollisionDetector {
     private Rectangle overlappedBounds = new Rectangle();
     final float detectingScannerLength = 10.0f;
 
-
     private void generateCollisionDetectionBounds(Rectangle bounds, Character.FacingDirection facingDirection){
         CollisionDetectionBounds.set(bounds);
         switch (facingDirection){
