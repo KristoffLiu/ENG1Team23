@@ -1,9 +1,6 @@
 package com.engoneassessment.game.actors;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.engoneassessment.game.actors.charactors.Character;
 
 public class Player extends Character {
 

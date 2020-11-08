@@ -3,7 +3,7 @@ package com.engoneassessment.game.actors.charactors.npcs;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.engoneassessment.game.actors.buildings.Building;
-import com.engoneassessment.game.actors.charactors.Character;
+import com.engoneassessment.game.actors.Character;
 import com.engoneassessment.game.actors.rooms.Room;
 
 public class NPC extends Character {

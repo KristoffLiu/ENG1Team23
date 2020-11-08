@@ -3,6 +3,7 @@ package com.engoneassessment.game.actors.charactors;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.engoneassessment.game.actors.Character;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.screens.main.GameScreen;
 import com.engoneassessment.game.utils.CollisionDetector;
