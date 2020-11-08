@@ -11,15 +11,45 @@ import com.badlogic.gdx.utils.Array;
 public class Character extends CustomActor{
     Array<Texture> actionTextures;
 
-    private int speed;
+    public int speed;
     // i set the speed as integer initially, because using double may be more complicated
     private String ability; // every hostile has a ability
     // abilities such as be invisible, speeding up...
     private Double health = 100.0;
-    private String position; // variable type has to be changed to what we define later
+    public String position; // variable type has to be changed to what we define later
 
     public Character(TextureRegion textureRegion) {
         super(textureRegion);
+    }
+
+
+    public void changeX(int change){
+
+    }
+
+
+    /*
+    0:stand
+    1:stand_left
+     */
+
+    public void movement_keyboard_event(){
+        //if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+        //    this.changeX(- 1200 * Gdx.graphics.getDeltaTime());
+        //    //this.setTexture();
+        //}
+        //if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        //    this.changeX(1200 * Gdx.graphics.getDeltaTime());
+        //    //this.setTexture();
+        //}
+        //if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        //    this.changeY(1200 * Gdx.graphics.getDeltaTime());
+        //    //this.setTexture();
+        //}
+        //if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        //    this.changeY(-1200 * Gdx.graphics.getDeltaTime());
+        //    //this.setTexture();
+        //}
     }
 
     public String getPos() {
@@ -41,15 +71,4 @@ public class Character extends CustomActor{
     public void setSpeed(int s) {
         speed = s;
     }
-
-    public void changeX(int change){
-
-    }
-
-
-    /*
-    0:stand
-    1:stand_left
-     */
-
 }
