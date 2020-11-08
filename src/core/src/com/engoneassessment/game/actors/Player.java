@@ -1,4 +1,4 @@
-package com.engoneassessment.game.actors.charactors;
+package com.engoneassessment.game.actors;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

@@ -1,4 +1,4 @@
-package com.engoneassessment.game.actors.charactors.npcs.hostiles;
+package com.engoneassessment.game.actors;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.actors.charactors.npcs.NPC;
