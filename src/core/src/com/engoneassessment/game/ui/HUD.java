@@ -41,7 +41,7 @@ public class HUD extends Stage {
         buttonMapStyle.down = new TextureRegionDrawable(buttonMap_downTexture);
         buttonMap = new Button(buttonMapStyle);
         buttonMap.setX(this.getWidth() - buttonMap.getWidth() - 20);
-        buttonMap.setY(this.getHeight() - buttonMap.getHeight() - 20);
+        buttonMap.setY(20);
     }
 
 
@@ -53,9 +53,6 @@ public class HUD extends Stage {
 
         hitbar = new Image(new TextureRegion(cellRegions[6][0]));
         hitbar.setX(20);
-        hitbar.setY(this.getHeight() - 50);
+        hitbar.setY(20);
     }
-
-    //public Array<CustomActor>
-
 }
