@@ -15,6 +15,8 @@ import com.engoneassessment.game.screens.rooms.*;
 import com.engoneassessment.game.screens.setting.SettingScreen;
 import com.engoneassessment.game.screens.start.StartScreen;
 
+import java.util.Random;
+
 /**
  * Since it may not only be a single screen/stage game,
  * then we should extend the whole game based on Game class,
@@ -53,6 +55,8 @@ public class GameEntry extends Game {
 
     private Label.LabelStyle style;
 
+    private static Random random;
+
     BitmapFont font;
 
     /**
@@ -60,6 +64,8 @@ public class GameEntry extends Game {
      */
     @Override
     public void create() {
+        //Used for generating random numbers
+        random = new Random();
         //Creates the input handler for keyboard based events
         inputHandler = new InputListener(){
             @Override
@@ -126,34 +132,34 @@ public class GameEntry extends Game {
         gameScreen = new GameScreen(this);
 
         //Create Cargo Bay Screen
-        cargoScreen = new CargoScreen(this);
+        cargoScreen = new CargoScreen(this,"Cargo");
 
         //Create Command Screen
-        commandScreen = new CommandScreen(this);
+        commandScreen = new CommandScreen(this,"Command");
 
         //Create Electrical Screen
-        electricalScreen = new ElectricalScreen(this);
+        electricalScreen = new ElectricalScreen(this,"Electrical");
 
         //Create Engine Screen
-        engineScreen = new EngineScreen(this);
+        engineScreen = new EngineScreen(this,"Engine");
 
         //Create Hanger Screen
-        hangerScreen = new HangerScreen(this);
+        hangerScreen = new HangerScreen(this,"Hanger");
 
         //Create Infirmary Screen
-        infirmaryScreen = new InfirmaryScreen(this);
+        infirmaryScreen = new InfirmaryScreen(this,"Infirmary");
 
         //Create Oxygen Screen
-        oxygenScreen = new OxygenScreen(this);
+        oxygenScreen = new OxygenScreen(this,"Oxygen");
 
         //Create Quarters Screen
-        quartersScreen = new QuartersScreen(this);
+        quartersScreen = new QuartersScreen(this,"Brig");
 
         //Create Weapons Screen
-        weaponsScreen = new WeaponsScreen(this);
+        weaponsScreen = new WeaponsScreen(this,"Weapons");
 
         //Create Brig Screen
-        brigScreen = new BrigScreen(this);
+        brigScreen = new BrigScreen(this, "Brig");
 
         setScreen(startScreen);
     }
@@ -236,5 +242,9 @@ public class GameEntry extends Game {
 
     public void setAuber(Player auber) {
         this.auber = auber;
+    }
+
+    public static Random getRandom() {
+        return random;
     }
 }
