@@ -1,5 +1,4 @@
 package com.engoneassessment.game.screens.main;
-
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,8 +10,12 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.actors.characters.Player;
+import com.engoneassessment.game.io.ClickEventListener;
+import com.engoneassessment.game.io.CustomInputProcessor;
+import com.engoneassessment.game.ui.HUD;
 
 
+//This screeen is never shown in game.
 public class GameScreen implements Screen {
 
     private GameEntry gameEntry;
@@ -23,6 +26,7 @@ public class GameScreen implements Screen {
 
     public Stage UIstage;
     public Player auber;
+    public HUD hud;
   
     public GameScreen(GameEntry gameEntry){
         currentWorld = this;
@@ -34,6 +38,8 @@ public class GameScreen implements Screen {
         stage.addActor(auber);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new PlayerInputListener());
+
+        hud = new HUD(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT),auber);
     }
   
     /**
@@ -61,6 +67,8 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        hud.act();
+        hud.draw();
     }
 
     /**
