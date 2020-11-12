@@ -5,7 +5,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -28,28 +27,19 @@ public class StartScreen implements Screen {
     private MenuButton playButton;
 
     private Label labelGameTitle;
-    BitmapFont font;
-
 
     public StartScreen(final GameEntry gameEntry){
+
         this.gameEntry = gameEntry;
 
-        stage = new Stage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT));
+        stage = new Stage(new StretchViewport(GameEntry.VIEW_WIDTH, GameEntry.VIEW_HEIGHT));
 
-        font = new BitmapFont(Gdx.files.internal("font/ImpactFont.fnt"));
-        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear); //Make the font much clearer on the edge
-        font.getData().setScale(2.0f);
-        font.setColor(100,256,256,256);
-        Label.LabelStyle style = new Label.LabelStyle();
-        style.font = font;
-
-        labelGameTitle = new Label("Auber Game",style);
-        labelGameTitle.setPosition(0,0);
+        labelGameTitle = new Label("Auber Game",gameEntry.getStyle());
+        labelGameTitle.setPosition(stage.getWidth()/2-labelGameTitle.getWidth()/2,800);
 
         //Creates the menu button and move it to the correct place
         playButton = new MenuButton(new TextureRegion(new Texture("Menu/Buttons/playNormal.jpg")),new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")));
-        playButton.setX(stage.getWidth()/2-playButton.getWidth()/2);
-        playButton.setY(600);
+        playButton.setPosition(stage.getWidth()/2-playButton.getWidth()/2,400);
 
         //Detects any inputs related to the play button
         playButton.addListener(new ClickListener(){
@@ -66,7 +56,7 @@ public class StartScreen implements Screen {
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameEntry.startGame();
+                gameEntry.setScreen(gameEntry.getInfirmaryScreen());
                 super.clicked(event, x, y);
             }
         });

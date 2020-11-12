@@ -13,7 +13,8 @@ public class Room extends CustomActor {
     public Array<System> systemsInRoom;
     public Texture texture;
 
-    public Room(TextureRegion textureRegion) {
+    public Room(TextureRegion textureRegion, String name) {
         super(textureRegion);
+        this.name = name;
     }
 }

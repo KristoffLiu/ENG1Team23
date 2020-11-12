@@ -5,16 +5,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.actors.characters.Player;
-import com.engoneassessment.game.io.ClickEventListener;
-import com.engoneassessment.game.io.CustomInputProcessor;
+
 
 public class GameScreen implements Screen {
 
@@ -33,7 +30,7 @@ public class GameScreen implements Screen {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
         stage = new Stage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT));
-        auber = new Player(new TextureRegion(new Texture("run.gif")));;
+        auber = new Player(new TextureRegion(new Texture("Characters/Auber/idle/idle.gif")));
         stage.addActor(auber);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new PlayerInputListener());
@@ -125,9 +122,6 @@ public class GameScreen implements Screen {
                     Gdx.app.log("Tag", "right");
                     break;
                 }
-                case Input.Keys.W:{
-                    auber.moveBy(0,1200 * Gdx.graphics.getDeltaTime());
-                }
             }
             return false;
         }
@@ -136,17 +130,17 @@ public class GameScreen implements Screen {
     public void keysPressed(){
         //Moves the auber around
         if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-            auber.moveBy(0,1200 * Gdx.graphics.getDeltaTime());
+            auber.moveBy(0,auber.getSpeed() * Gdx.graphics.getDeltaTime());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-            auber.moveBy(- 1200 * Gdx.graphics.getDeltaTime(),0);
+            auber.moveBy(- auber.getSpeed() * Gdx.graphics.getDeltaTime(),0);
 
         }
         if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-            auber.moveBy(0,- 1200 * Gdx.graphics.getDeltaTime());
+            auber.moveBy(0,- auber.getSpeed() * Gdx.graphics.getDeltaTime());
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-            auber.moveBy(1200 * Gdx.graphics.getDeltaTime(),0);
+            auber.moveBy(auber.getSpeed() * Gdx.graphics.getDeltaTime(),0);
         }
 
     }
