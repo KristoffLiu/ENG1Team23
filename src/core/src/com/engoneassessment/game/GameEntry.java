@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.screens.main.GameScreen;
 import com.engoneassessment.game.screens.rooms.*;
 import com.engoneassessment.game.screens.setting.SettingScreen;
 import com.engoneassessment.game.screens.start.StartScreen;
+import com.engoneassessment.game.ui.HUD;
 
 /**
  * Since it may not only be a single screen/stage game,
@@ -31,6 +33,8 @@ public class GameEntry extends Game {
     public static final float VIEW_HEIGHT = 1080;
 
     private Player auber;
+    public HUD hud;
+
     private InputListener inputHandler;
 
     //Screens Objects
@@ -118,7 +122,7 @@ public class GameEntry extends Game {
 
         //Creates the initial auber
         auber = new Player(new TextureRegion(new Texture("Characters/auber/idle/idle.gif")));
-
+        hud = new HUD(new StretchViewport(this.VIEW_WIDTH, this.VIEW_HEIGHT),auber);
         // Create StartScreen
         startScreen = new StartScreen(this);
 

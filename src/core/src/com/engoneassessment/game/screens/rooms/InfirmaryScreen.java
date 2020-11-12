@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.actors.rooms.Room;
+import com.engoneassessment.game.ui.HUD;
 
 public class InfirmaryScreen implements Screen {
     private final GameEntry gameEntry;

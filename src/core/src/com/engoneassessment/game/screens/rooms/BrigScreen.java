@@ -42,7 +42,6 @@ public class BrigScreen implements Screen {
 
         stage.addListener(gameEntry.getKeyboardInputHandler());
         Gdx.input.setInputProcessor(stage);
-
     }
 
     @Override

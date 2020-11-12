@@ -9,6 +9,8 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
 		float scale = 0.6F;
+		config.title = "Auber Game - York CS ENG1 Assessment - Team 23";
+		config.
 		config.width = (int) (1920 * scale);
 		config.height = (int) (1080 * scale);
 
