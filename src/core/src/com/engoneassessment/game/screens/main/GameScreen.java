@@ -15,6 +15,7 @@ import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.io.ClickEventListener;
 import com.engoneassessment.game.io.CustomInputProcessor;
+import com.engoneassessment.game.ui.HUD;
 
 public class GameScreen implements Screen {
 
@@ -26,6 +27,7 @@ public class GameScreen implements Screen {
 
     public Stage UIstage;
     public Player auber;
+    public HUD hud;
   
     public GameScreen(GameEntry gameEntry){
         currentWorld = this;
@@ -37,6 +39,8 @@ public class GameScreen implements Screen {
         stage.addActor(auber);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new PlayerInputListener());
+
+        hud = new HUD(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT),auber);
     }
   
     /**
@@ -64,6 +68,8 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+        hud.act();
+        hud.draw();
     }
 
     /**
