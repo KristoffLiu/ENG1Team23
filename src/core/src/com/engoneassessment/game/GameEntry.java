@@ -47,6 +47,7 @@ public class GameEntry extends Game {
     private OxygenScreen oxygenScreen;
     private QuartersScreen quartersScreen;
     private WeaponsScreen weaponsScreen;
+    private BrigScreen brigScreen;
 
     public Stage stage;
 
@@ -99,6 +100,10 @@ public class GameEntry extends Game {
                     setScreen(weaponsScreen);
                 }
 
+                if(keycode == Input.Keys.NUM_0) {
+                    setScreen(brigScreen);
+                }
+
                 return super.keyDown(event, keycode);
             }
         };
@@ -146,6 +151,9 @@ public class GameEntry extends Game {
 
         //Create Weapons Screen
         weaponsScreen = new WeaponsScreen(this);
+
+        //Create Brig Screen
+        brigScreen = new BrigScreen(this);
 
         setScreen(startScreen);
     }
