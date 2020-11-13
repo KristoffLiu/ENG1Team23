@@ -28,6 +28,7 @@ public class HUD extends Stage {
 
         initButtonMap();
         initHitBar();
+        initButtonBeam();
 
         this.addActor(hitbar);
         this.addActor(buttonMap);
@@ -40,6 +41,8 @@ public class HUD extends Stage {
         buttonMapStyle.up = new TextureRegionDrawable(buttonMap_upTexture);
         buttonMapStyle.down = new TextureRegionDrawable(buttonMap_downTexture);
         buttonMap = new Button(buttonMapStyle);
+        buttonMap.setWidth(buttonMap.getWidth() * 1.5f);
+        buttonMap.setHeight(buttonMap.getHeight() * 1.5f);
         buttonMap.setX(this.getWidth() - buttonMap.getWidth() - 20);
         buttonMap.setY(20);
     }
@@ -52,7 +55,19 @@ public class HUD extends Stage {
         TextureRegion[][] cellRegions = TextureRegion.split(hitbarTexture, perCellWidth, perCellHeight);
 
         hitbar = new Image(new TextureRegion(cellRegions[6][0]));
+        hitbar.setWidth(hitbar.getWidth()*1.5f);
         hitbar.setX(20);
         hitbar.setY(20);
+    }
+
+    public void initButtonBeam(){
+//        hitbarTexture = new Texture(Gdx.files.internal("UI/Icons/Hitbar.png"));
+//        int perCellWidth = hitbarTexture.getWidth() / hitbar_frameCols;
+//        int perCellHeight = hitbarTexture.getHeight() / hitbar_frameRows;
+//        TextureRegion[][] cellRegions = TextureRegion.split(hitbarTexture, perCellWidth, perCellHeight);
+//
+//        hitbar = new Image(new TextureRegion(cellRegions[6][0]));
+//        hitbar.setX(20);
+//        hitbar.setY(20);
     }
 }

@@ -13,14 +13,17 @@ import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.actors.characters.npcs.NonHostile;
 import com.engoneassessment.game.actors.rooms.Room;
+import com.engoneassessment.game.ui.HUD;
 
 public class RoomScreen implements Screen {
     private final GameEntry gameEntry;
+    protected String name;
 
     final Room floor;
     final Room walls;
     public Stage stage;
     public Player auber;
+    public HUD hud;
     final int min_x;
     final int min_y;
     final int max_x;
@@ -59,8 +62,7 @@ public class RoomScreen implements Screen {
         stage.addListener(gameEntry.getKeyboardInputHandler());
         Gdx.input.setInputProcessor(stage);
 
-
-
+        hud = gameEntry.hud;
     }
 
     @Override
@@ -86,6 +88,8 @@ public class RoomScreen implements Screen {
         //Acts and draws the stage
         stage.act();
         stage.draw();
+        hud.act();
+        hud.draw();
     }
 
     @Override

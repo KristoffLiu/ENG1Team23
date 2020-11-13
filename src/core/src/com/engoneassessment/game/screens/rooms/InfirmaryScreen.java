@@ -9,7 +9,6 @@ import com.engoneassessment.game.ui.HUD;
 
 
 public class InfirmaryScreen extends RoomScreen {
-    String name;
 
     public InfirmaryScreen(GameEntry gameEntry, String name) {
         super(gameEntry);
