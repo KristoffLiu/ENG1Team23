@@ -40,6 +40,11 @@ public class NinePatchImage extends Image {
     }
 
     @Override
+    public void act(){
+
+    }
+
+    @Override
     public void draw(Batch batch, float parentAlpha){
         ninePatch.draw(batch, 0,0,ninePatch.getTotalWidth(),ninePatch.getTotalHeight());
     }

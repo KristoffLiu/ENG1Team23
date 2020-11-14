@@ -23,7 +23,7 @@ public class HealthBar extends VerticalGroup {
         TextureRegion[][] cellRegions = TextureRegion.split(hitbarTexture, perCellWidth, perCellHeight);
 
         bar = new NinePatchImage(new TextureRegion(cellRegions[6][0]));
-        bar.setNinePatch(30,20,10,10,new TextureRegion(cellRegions[6][0]));
+        bar.setNinePatch(0,0,0,0,new TextureRegion(cellRegions[6][0]));
         bar.setMiddleWidth(300);
         bar.setX(30);
         bar.setY(30);
