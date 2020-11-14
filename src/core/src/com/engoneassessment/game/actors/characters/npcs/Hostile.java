@@ -32,17 +32,19 @@ public class Hostile extends NPC {
 
     public void useAbility(Player player, Random random){
         if(!abilityActivated) {
-            if (ability == "Sprint") {
+            if (ability.equals("Sprint")) {
                 setSpeed(3);
                 abilityActivated = true;
                 abilityTimer = 100;
                 abilityCooldown = 200;
             }
-            else if (ability == "Invisibility") {
+            else if (ability.equals("Invisibility")){
                 setVisible(false);
+                abilityTimer = 100;
+                abilityCooldown = 200;
                 abilityActivated = true;
             }
-            else if (ability == "Teleport") {
+            else if (ability.equals("Teleport")){
                 if(checkIfPlayerInRange(player,100)){
                     //Moves the hostile to a random point in the room
                     setPosition(random.nextInt(getCurrentScreen().getMaxX()-getCurrentScreen().getMinX())+getCurrentScreen().getMinX(),random.nextInt(getCurrentScreen().getMaxY()-getCurrentScreen().getMinY())+getCurrentScreen().getMinY());
@@ -57,10 +59,10 @@ public class Hostile extends NPC {
 
     public void deactivateAbility(){
         abilityActivated = false;
-        if (ability == "Sprint") {
+        if (ability.equals("Sprint")){
             setSpeed(0.8f);
         }
-        else if (ability == "Invisibility") {
+        else if (ability.equals("Invisibility")){
             setVisible(true);
         }
     }

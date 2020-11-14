@@ -165,7 +165,7 @@ public class RoomScreen implements Screen {
     }
 
     public void spawnHostiles(){
-        if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 1) {
+        if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 1000) {
             //System.out.println("Sabotage");
             gameEntry.sabotage();
             gameEntry.setSpawnTime(System.currentTimeMillis());
@@ -184,8 +184,9 @@ public class RoomScreen implements Screen {
             }
 
             if(hostile.getAbilityTimer()!=0){
-                hostile.setAbilityTimer(hostile.getAbilityCooldown()-1);
+                hostile.setAbilityTimer(hostile.getAbilityTimer()-1);
             }
+
             else if(hostile.getAbilityActivated()){
                 hostile.deactivateAbility();
             }

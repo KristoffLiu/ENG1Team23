@@ -11,15 +11,14 @@ public class NPC extends Character {
     private float movement_x;
     private float movement_y;
     private static Random random;
-    private RoomScreen currentScreen;
+
 
     public NPC(TextureRegion textureRegion, RoomScreen screen) {
-        super(textureRegion);
+        super(textureRegion, screen);
         //Used for generating random numbers
         random = new Random();
         movement_x -= ((float)random.nextInt(3)-1)*random.nextFloat();
         movement_y -= ((float)random.nextInt(3)-1)*random.nextFloat();
-        currentScreen = screen;
 
     }
 
@@ -36,28 +35,25 @@ public class NPC extends Character {
         this.moveBy(movement_x*getSpeed(),movement_y*getSpeed());
 
         //Checks if the npc has gone out of bounds and turns them around if they are
-        if(this.getY() > currentScreen.getMaxY()){
-            this.setY(currentScreen.getMaxY());
+        if(this.getY() > getCurrentScreen().getMaxY()){
+            this.setY(getCurrentScreen().getMaxY());
             movement_y = -movement_y;
         }
 
-        if(this.getY() < currentScreen.getMinY()){
-            this.setY(currentScreen.getMinY());
+        if(this.getY() < getCurrentScreen().getMinY()){
+            this.setY(getCurrentScreen().getMinY());
             movement_y = -movement_y;
         }
 
-        if(this.getX() < currentScreen.getMinX()){
-            this.setX(currentScreen.getMinX());
+        if(this.getX() < getCurrentScreen().getMinX()){
+            this.setX(getCurrentScreen().getMinX());
             movement_x = -movement_x;
         }
 
-        if(this.getX() > currentScreen.getMaxX()){
-            this.setX(currentScreen.getMaxX());
+        if(this.getX() > getCurrentScreen().getMaxX()){
+            this.setX(getCurrentScreen().getMaxX());
             movement_x = -movement_x;
         }
     }
 
-    public RoomScreen getCurrentScreen() {
-        return currentScreen;
-    }
 }

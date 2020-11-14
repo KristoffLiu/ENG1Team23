@@ -10,13 +10,15 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.actors.characters.Player;
+import com.engoneassessment.game.actors.rooms.Room;
 import com.engoneassessment.game.io.ClickEventListener;
 import com.engoneassessment.game.io.CustomInputProcessor;
+import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.ui.HUD;
 
 
 //This screeen is never shown in game.
-public class GameScreen implements Screen {
+public class GameScreen extends RoomScreen {
 
     private GameEntry gameEntry;
     public static GameScreen currentWorld;
@@ -28,13 +30,14 @@ public class GameScreen implements Screen {
     public Player auber;
     public HUD hud;
   
-    public GameScreen(GameEntry gameEntry){
+    public GameScreen(GameEntry gameEntry, String name, int numNPCs) {
+        super(gameEntry, name, numNPCs);
         currentWorld = this;
         this.gameEntry = gameEntry;
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
         stage = new Stage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT));
-        auber = new Player(new TextureRegion(new Texture("Characters/Auber/idle/idle.gif")));
+        auber = new Player(new TextureRegion(new Texture("Characters/Auber/idle/idle.gif")),this);
         stage.addActor(auber);
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new PlayerInputListener());
