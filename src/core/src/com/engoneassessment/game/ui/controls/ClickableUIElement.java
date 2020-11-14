@@ -2,6 +2,7 @@ package com.engoneassessment.game.ui.controls;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.ui.UIElement;
+import com.engoneassessment.game.ui.UIStage;
 
 public class ClickableUIElement extends UIElement {
     TextureRegion normalTexture     ;
@@ -10,9 +11,9 @@ public class ClickableUIElement extends UIElement {
 
     ButtonUIState buttonUIState = com.engoneassessment.game.ui.controls.Button.ButtonUIState.normal;
 
-    public ClickableUIElement(TextureRegion normalTexture,TextureRegion hoveringTexture,
-                  TextureRegion pressedTexture) {
-        super(normalTexture);
+    public ClickableUIElement(UIStage parentUIStage, TextureRegion normalTexture, TextureRegion hoveringTexture,
+                              TextureRegion pressedTexture) {
+        super(parentUIStage, normalTexture);
 
         this.normalTexture = normalTexture;
         this.hoveringTexture = hoveringTexture;
@@ -22,7 +23,7 @@ public class ClickableUIElement extends UIElement {
     //Switches the texture of the button to be highlighted or not highlighted
     public void setButtonUIState(com.engoneassessment.game.ui.controls.Button.ButtonUIState buttonUIStateInput){
         if(buttonUIStateInput != this.buttonUIState){
-            switch (buttonUIState){
+            switch (buttonUIStateInput){
                 case normal:
                     this.setTextureRegion(normalTexture);
                     break;

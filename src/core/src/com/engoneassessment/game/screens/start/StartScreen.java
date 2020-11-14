@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.GameEntry;
+import com.engoneassessment.game.ui.UIStage;
 import com.engoneassessment.game.ui.controls.ClickableUIElement;
 import com.engoneassessment.game.ui.startui.PlayButton;
 
@@ -22,7 +23,7 @@ public class StartScreen implements Screen {
 
     private GameEntry gameEntry;
     private Texture logoTexture;
-    private Stage stage;
+    private UIStage uiStage;
     private CustomActor customActor;
     private TextField usernameTextField;
     private PlayButton playButton;
@@ -33,14 +34,18 @@ public class StartScreen implements Screen {
 
         this.gameEntry = gameEntry;
 
-        stage = new Stage(new StretchViewport(GameEntry.VIEW_WIDTH, GameEntry.VIEW_HEIGHT));
+        uiStage = new UIStage(new StretchViewport(GameEntry.VIEW_WIDTH, GameEntry.VIEW_HEIGHT));
 
         labelGameTitle = new Label("Auber Game",gameEntry.getStyle());
-        labelGameTitle.setPosition(stage.getWidth()/2-labelGameTitle.getWidth()/2,800);
+        labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,800);
 
         //Creates the menu button and move it to the correct place
-        playButton = new PlayButton(new TextureRegion(new Texture("Menu/Buttons/playNormal.jpg")),new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")));
-        playButton.setPosition(stage.getWidth()/2-playButton.getWidth()/2,400);
+        playButton = new PlayButton(
+                this.uiStage,
+                new TextureRegion(new Texture("Menu/Buttons/playNormal.jpg")),
+                new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")),
+                new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")));
+        playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,400);
 
         //Detects any inputs related to the play button
         playButton.addListener(new ClickListener(){
@@ -58,14 +63,15 @@ public class StartScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 playButton.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
+                gameEntry.setScreen(gameEntry.getInfirmaryScreen());
                 super.clicked(event, x, y);
             }
         });
 
-        stage.addActor(labelGameTitle);
-        stage.addActor(playButton);
+        uiStage.addActor(labelGameTitle);
+        uiStage.addActor(playButton);
 
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(uiStage);
     }
 
     /**
@@ -73,7 +79,7 @@ public class StartScreen implements Screen {
      */
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(uiStage);
     }
 
     /**
@@ -85,8 +91,8 @@ public class StartScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.39f, 0.58f, 0.92f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        stage.act();
-        stage.draw();
+        uiStage.act();
+        uiStage.draw();
     }
 
     /**
