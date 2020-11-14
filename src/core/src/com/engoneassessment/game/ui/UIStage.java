@@ -11,6 +11,10 @@ public class UIStage extends Stage implements IUIStage{
 
     public void addUIElement(UIElement uiElement) {
         super.addActor(uiElement);
-        uiElement.setStage(this);
+        uiElement.setParentStage(this);
+    }
+
+    public void removeUIElement(UIElement uiElement) {
+
     }
 }

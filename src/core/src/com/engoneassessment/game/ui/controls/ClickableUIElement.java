@@ -26,7 +26,7 @@ public class ClickableUIElement extends UIElement {
                 case normal:
                     this.setTextureRegion(normalTexture);
                     break;
-                case hovering:
+                case hovered:
                     this.setTextureRegion(hoveringTexture);
                     break;
                 case pressed:
@@ -37,7 +37,7 @@ public class ClickableUIElement extends UIElement {
         }
     }
 
-    enum ButtonUIState{
-        normal, hovering, pressed
+    public enum ButtonUIState{
+        normal, hovered, pressed
     }
 }

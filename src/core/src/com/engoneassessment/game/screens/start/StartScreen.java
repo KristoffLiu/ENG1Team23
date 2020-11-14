@@ -15,7 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.GameEntry;
-import com.engoneassessment.game.ui.MenuButton;
+import com.engoneassessment.game.ui.controls.ClickableUIElement;
+import com.engoneassessment.game.ui.startui.PlayButton;
 
 public class StartScreen implements Screen {
 
@@ -24,7 +25,7 @@ public class StartScreen implements Screen {
     private Stage stage;
     private CustomActor customActor;
     private TextField usernameTextField;
-    private MenuButton playButton;
+    private PlayButton playButton;
 
     private Label labelGameTitle;
 
@@ -38,25 +39,25 @@ public class StartScreen implements Screen {
         labelGameTitle.setPosition(stage.getWidth()/2-labelGameTitle.getWidth()/2,800);
 
         //Creates the menu button and move it to the correct place
-        playButton = new MenuButton(new TextureRegion(new Texture("Menu/Buttons/playNormal.jpg")),new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")));
+        playButton = new PlayButton(new TextureRegion(new Texture("Menu/Buttons/playNormal.jpg")),new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")));
         playButton.setPosition(stage.getWidth()/2-playButton.getWidth()/2,400);
 
         //Detects any inputs related to the play button
         playButton.addListener(new ClickListener(){
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                playButton.switchHighlighted();
+                playButton.setButtonUIState(ClickableUIElement.ButtonUIState.hovered);
                 super.enter(event, x, y, pointer, fromActor);
             }
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                playButton.switchHighlighted();
+                playButton.setButtonUIState(ClickableUIElement.ButtonUIState.normal);
                 super.enter(event, x, y, pointer, fromActor);
             }
 
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gameEntry.setScreen(gameEntry.getInfirmaryScreen());
+                playButton.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
                 super.clicked(event, x, y);
             }
         });

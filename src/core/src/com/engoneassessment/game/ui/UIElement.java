@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.actors.CustomActor;
 
 public class UIElement extends CustomActor implements IUIElement{
-    UIStage uiStage;
+    UIStage parentStage;
     HorizontalAlignment horizontalAlignment;
     VerticalAlignment verticalAlignment;
     float relativeX;
@@ -14,12 +14,12 @@ public class UIElement extends CustomActor implements IUIElement{
         super(textureRegion);
     }
 
-    public void setStage(UIStage _uiStage){
-        this.uiStage = _uiStage;
+    public void setParentStage(UIStage _uiStage){
+        this.parentStage = _uiStage;
     }
 
-    public enum Visibility{
-        visible, collapsed
+    public UIStage getParentStage() {
+        return parentStage;
     }
 
     public void setRelativeX(float relativeX){
@@ -29,11 +29,11 @@ public class UIElement extends CustomActor implements IUIElement{
                 this.setX(offset + relativeX);
                 break;
             case centreAlignment:
-                offset = this.uiStage.getWidth() / 2 - this.getWidth() / 2;
+                offset = this.parentStage.getWidth() / 2 - this.getWidth() / 2;
                 this.setX(offset + relativeX);
                 break;
             case rightAlignment:
-                offset = this.uiStage.getWidth();
+                offset = this.parentStage.getWidth();
                 this.setX(offset - relativeX);
                 break;
         }
@@ -43,11 +43,11 @@ public class UIElement extends CustomActor implements IUIElement{
         float offset = 0f;
         switch (this.verticalAlignment){
             case topAlignment:
-                offset = this.uiStage.getHeight();
+                offset = this.parentStage.getHeight();
                 this.setY(offset - relativeY);
                 break;
             case centreAlignment:
-                offset = this.uiStage.getHeight() / 2 - this.getWidth() / 2;
+                offset = this.parentStage.getHeight() / 2 - this.getWidth() / 2;
                 this.setY(offset + relativeY);
                 break;
             case bottomAlignment:
@@ -73,5 +73,9 @@ public class UIElement extends CustomActor implements IUIElement{
 
     public enum VerticalAlignment{
         topAlignment, centreAlignment, bottomAlignment
+    }
+
+    public enum Visibility{
+        visible, collapsed
     }
 }
