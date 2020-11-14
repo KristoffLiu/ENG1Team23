@@ -1,37 +1,25 @@
 package com.engoneassessment.game.actors.characters.npcs;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
-import com.engoneassessment.game.actors.buildings.Building;
 import com.engoneassessment.game.actors.characters.Character;
-import com.engoneassessment.game.actors.rooms.Room;
+import com.engoneassessment.game.screens.RoomScreen;
 
 import java.util.Random;
 
 public class NPC extends Character {
 
-    private System targetSystem;
-    private Room targetRoom;
-    private Array<Float> path;
     private float movement_x;
     private float movement_y;
-    private float movement_speed;
+    private static Random random;
+    private RoomScreen currentScreen;
 
-    public NPC(TextureRegion textureRegion) {
+    public NPC(TextureRegion textureRegion, RoomScreen screen) {
         super(textureRegion);
-        movement_speed = (float)0.8;
-
-    }
-
-    public void setTargetSystem(System target){
-
-    }
-
-    public Boolean checkTarget(Building target){
-        return true;
-    }
-
-    private void workOutPathToSystem(){
+        //Used for generating random numbers
+        random = new Random();
+        movement_x -= ((float)random.nextInt(3)-1)*random.nextFloat();
+        movement_y -= ((float)random.nextInt(3)-1)*random.nextFloat();
+        currentScreen = screen;
 
     }
 
@@ -40,32 +28,36 @@ public class NPC extends Character {
         movement_y -= ((float)random.nextInt(3)-1)*random.nextFloat();
     }
 
-    public void randomMove(Random random, int x_min, int x_max, int y_min, int y_max){
+    public void randomMove(){
         if(Math.random() < 0.05){
             this.changeDirectionRandom(random);
         }
 
-        this.moveBy(movement_x*movement_speed,movement_y*movement_speed);
+        this.moveBy(movement_x*getSpeed(),movement_y*getSpeed());
 
-        if(this.getY() > y_max){
-            this.setY(y_max);
+        //Checks if the npc has gone out of bounds and turns them around if they are
+        if(this.getY() > currentScreen.getMaxY()){
+            this.setY(currentScreen.getMaxY());
             movement_y = -movement_y;
         }
-        if(this.getY() < y_min){
-            this.setY(y_min);
+
+        if(this.getY() < currentScreen.getMinY()){
+            this.setY(currentScreen.getMinY());
             movement_y = -movement_y;
         }
-        if(this.getX() < x_min){
-            this.setX(x_min);
-            this.changeDirectionRandom(random);
-            movement_x = -movement_x;
 
-        }
-        if(this.getX() > x_max){
-            this.setX(x_max);
-            this.changeDirectionRandom(random);
+        if(this.getX() < currentScreen.getMinX()){
+            this.setX(currentScreen.getMinX());
             movement_x = -movement_x;
-
         }
+
+        if(this.getX() > currentScreen.getMaxX()){
+            this.setX(currentScreen.getMaxX());
+            movement_x = -movement_x;
+        }
+    }
+
+    public RoomScreen getCurrentScreen() {
+        return currentScreen;
     }
 }

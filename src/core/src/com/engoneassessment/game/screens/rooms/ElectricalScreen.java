@@ -5,10 +5,8 @@ import com.engoneassessment.game.screens.RoomScreen;
 
 
 public class ElectricalScreen extends RoomScreen {
-    String name;
+    public ElectricalScreen(GameEntry gameEntry, String name, int numNPCs) {
+        super(gameEntry, name, numNPCs);
 
-    public ElectricalScreen(GameEntry gameEntry, String name) {
-        super(gameEntry);
-        this.name = name;
     }
 }

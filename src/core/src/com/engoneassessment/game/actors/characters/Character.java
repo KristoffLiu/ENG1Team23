@@ -22,7 +22,7 @@ public class Character extends CustomActor implements ICharacter {
 
     Array<Texture> actionTextures;
 
-    private int speed; // i set the speed as integer initially, because using double may be more complicated
+    private float speed;
     private String ability; // every hostile has a ability, abilities such as be invisible, speeding up...
 
     private Double health = 100.0;
@@ -34,6 +34,7 @@ public class Character extends CustomActor implements ICharacter {
 
     public Character(TextureRegion textureRegion) {
         super(textureRegion);
+        speed = (float)0.8;
     }
 
 
@@ -86,7 +87,11 @@ public class Character extends CustomActor implements ICharacter {
         return health;
     }
 
-    public void setSpeed(int s) {
+    public void setSpeed(float s) {
         speed = s;
+    }
+
+    public float getSpeed() {
+        return speed;
     }
 }

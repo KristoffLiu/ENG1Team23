@@ -5,10 +5,9 @@ import com.engoneassessment.game.screens.RoomScreen;
 
 
 public class OxygenScreen extends RoomScreen {
-    String name;
 
-    public OxygenScreen(GameEntry gameEntry, String name) {
-        super(gameEntry);
-        this.name = name;
+    public OxygenScreen(GameEntry gameEntry, String name, int numNPCs) {
+        super(gameEntry, name, numNPCs);
+
     }
 }

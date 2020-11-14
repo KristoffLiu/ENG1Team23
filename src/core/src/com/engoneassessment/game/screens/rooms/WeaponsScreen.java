@@ -5,10 +5,9 @@ import com.engoneassessment.game.screens.RoomScreen;
 
 
 public class WeaponsScreen extends RoomScreen {
-    String name;
 
-    public WeaponsScreen(GameEntry gameEntry, String name) {
-        super(gameEntry);
-        this.name = name;
+    public WeaponsScreen(GameEntry gameEntry, String name, int numNPCs) {
+        super(gameEntry, name, numNPCs);
+
     }
 }

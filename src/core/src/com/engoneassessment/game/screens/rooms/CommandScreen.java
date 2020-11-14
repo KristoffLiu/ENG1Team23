@@ -5,10 +5,9 @@ import com.engoneassessment.game.screens.RoomScreen;
 
 
 public class CommandScreen extends RoomScreen {
-    String name;
 
-    public CommandScreen(GameEntry gameEntry, String name) {
-        super(gameEntry);
-        this.name = name;
+    public CommandScreen(GameEntry gameEntry, String name, int numNPCs) {
+        super(gameEntry, name, numNPCs);
+
     }
 }

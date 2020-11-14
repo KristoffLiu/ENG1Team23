@@ -5,10 +5,9 @@ import com.engoneassessment.game.screens.RoomScreen;
 
 
 public class CargoScreen extends RoomScreen {
-    String name;
 
-    public CargoScreen(GameEntry gameEntry, String name) {
-        super(gameEntry);
-        this.name = name;
+    public CargoScreen(GameEntry gameEntry, String name, int numNPCs) {
+        super(gameEntry, name, numNPCs);
+
     }
 }

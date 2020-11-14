@@ -3,12 +3,10 @@ package com.engoneassessment.game.screens.rooms;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.screens.RoomScreen;
 
-
 public class QuartersScreen extends RoomScreen {
-    String name;
 
-    public QuartersScreen(GameEntry gameEntry, String name) {
-        super(gameEntry);
-        this.name = name;
+    public QuartersScreen(GameEntry gameEntry, String name, int numNPCs) {
+        super(gameEntry, name, numNPCs);
+
     }
 }

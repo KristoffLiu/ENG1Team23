@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.characters.Player;
+import com.engoneassessment.game.actors.characters.npcs.Hostile;
 import com.engoneassessment.game.actors.characters.npcs.NonHostile;
 import com.engoneassessment.game.actors.rooms.Room;
 
@@ -21,23 +22,29 @@ public class RoomScreen implements Screen {
     final Room walls;
     public Stage stage;
     public Player auber;
-    final int min_x;
-    final int min_y;
-    final int max_x;
-    final int max_y;
+    final int minX;
+    final int minY;
+    final int maxX;
+    final int maxY;
+    public Array<NonHostile> nonHostiles;
+    public Array<Hostile> hostiles;
+    private String name;
 
-    private Array<NonHostile> nonHostiles;
 
-
-    public RoomScreen(GameEntry gameEntry){
+    public RoomScreen(GameEntry gameEntry,String name, int numNPCs){
         this.gameEntry = gameEntry;
-
         //Sets the boundaries of the room
-        min_x = 424;
-        min_y = 14;
-        max_x = 1451;
-        max_y = 795;
+        minX = 424;
+        minY = 14;
+        maxX = 1451;
+        maxY = 795;
+
+        //Sets the name of the room for use in the UI
+        this.name = name;
+
+        //Initialises nonHostiles and hostiles Arrays
         nonHostiles = new Array<>();
+        hostiles = new Array<>();
 
         stage = new Stage(new StretchViewport(GameEntry.VIEW_WIDTH, GameEntry.VIEW_HEIGHT));
 
@@ -48,13 +55,11 @@ public class RoomScreen implements Screen {
         stage.addActor(walls);
 
         //Creates the non hostiles in the rooms and gives them a random starting position
-        for (int i = 0;i < 100; i ++){
-            nonHostiles.add(new NonHostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif"))));
-            nonHostiles.get(nonHostiles.size-1).setPosition(GameEntry.getRandom().nextInt(max_x-min_x)+min_x, GameEntry.getRandom().nextInt(max_y-min_y)+min_y);
+        for (int i = 1;i <= numNPCs; i ++){
+            nonHostiles.add(new NonHostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")),this));
+            nonHostiles.get(nonHostiles.size-1).setPosition(GameEntry.getRandom().nextInt(this.getMaxX()-this.getMinX())+this.getMinX(), GameEntry.getRandom().nextInt(this.getMaxY()-this.getMinY())+this.getMinY());
             stage.addActor(nonHostiles.get(nonHostiles.size-1));
         }
-
-        //Gets the auber from game entry and sets it to the centre of the room
 
         stage.addListener(gameEntry.getKeyboardInputHandler());
         Gdx.input.setInputProcessor(stage);
@@ -65,9 +70,11 @@ public class RoomScreen implements Screen {
 
     @Override
     public void show() {
+        //Gets the auber from game entry and sets it to the centre of the room
         auber = gameEntry.getAuber();
         stage.addActor(auber);
         auber.setPosition(stage.getWidth()/2-auber.getWidth()/2,stage.getHeight()/2-auber.getHeight()/2);
+
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -75,8 +82,12 @@ public class RoomScreen implements Screen {
     public void render(float delta) {
         //Checks for movement keys being held
         keysPressed();
+        //Runs a function to spawn hostiles randomly in different rooms
+        spawnHostiles();
         //Moves the hostiles and non hostiles
         moveNPCS();
+        //Uses the hostile abilities
+        useAbilities();
         //Sets the camera position to the centre of the player
         stage.getViewport().getCamera().position.set(auber.getX()+auber.getWidth()/2,auber.getY()+auber.getHeight()/2,0);
         stage.getViewport().getCamera().update();
@@ -95,7 +106,6 @@ public class RoomScreen implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
@@ -105,7 +115,7 @@ public class RoomScreen implements Screen {
 
     @Override
     public void hide() {
-        gameEntry.setAuber(auber);
+        //gameEntry.setAuber(auber);
     }
 
     @Override
@@ -129,24 +139,77 @@ public class RoomScreen implements Screen {
         }
 
         //If the auber is out of bounds, move him back in
-        if(auber.getY() > max_y){
-            auber.setY(max_y);
+        if(auber.getY() > maxY){
+            auber.setY(maxY);
         }
-        if(auber.getY() < min_y){
-            auber.setY(min_y);
+        if(auber.getY() < minY){
+            auber.setY(minY);
         }
-        if(auber.getX() < min_x){
-            auber.setX(min_x);
+        if(auber.getX() < minX){
+            auber.setX(minX);
         }
-        if(auber.getX() > max_x){
-            auber.setX(max_x);
+        if(auber.getX() > maxX){
+            auber.setX(maxX);
         }
     }
 
     public void moveNPCS(){
-        //Goes through every hostile in the non hostiles array and moves them
+        //Goes through every non hostile and hostile and moves them
         for(NonHostile nonHostile:nonHostiles){
-            nonHostile.randomMove(GameEntry.getRandom(),424,1451,14,795);
+            nonHostile.randomMove();
         }
+
+        for(Hostile hostile:hostiles) {
+            hostile.randomMove();
+        }
+    }
+
+    public void spawnHostiles(){
+        if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 1) {
+            //System.out.println("Sabotage");
+            gameEntry.sabotage();
+            gameEntry.setSpawnTime(System.currentTimeMillis());
+        }
+    }
+
+    public void useAbilities(){
+        for(Hostile hostile:hostiles) {
+            //If the ability is on cooldown decrease the cooldown by one, otherwise use the ability
+            if(hostile.getAbilityCooldown()!=0){
+                hostile.setAbilityCooldown(hostile.getAbilityCooldown()-1);
+            }
+
+            else {
+                hostile.useAbility(auber, GameEntry.getRandom());
+            }
+
+            if(hostile.getAbilityTimer()!=0){
+                hostile.setAbilityTimer(hostile.getAbilityCooldown()-1);
+            }
+            else if(hostile.getAbilityActivated()){
+                hostile.deactivateAbility();
+            }
+
+        }
+    }
+
+    public int getMinX() {
+        return minX;
+    }
+
+    public int getMaxX() {
+        return maxX;
+    }
+
+    public int getMinY() {
+        return minY;
+    }
+
+    public int getMaxY() {
+        return maxY;
+    }
+
+    public String getName(){
+        return name;
     }
 }
