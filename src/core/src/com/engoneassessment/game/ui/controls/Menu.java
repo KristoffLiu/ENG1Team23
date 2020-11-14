@@ -1,4 +1,4 @@
-package com.engoneassessment.game.ui;
+package com.engoneassessment.game.ui.controls;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
