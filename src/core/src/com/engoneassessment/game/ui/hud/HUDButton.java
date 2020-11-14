@@ -17,8 +17,4 @@ public class HUDButton extends Button {
         buttonStyle.down = new TextureRegionDrawable(downTextureRegion);
         return buttonStyle;
     }
-
-    public
-
-
 }

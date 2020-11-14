@@ -3,7 +3,7 @@ package com.engoneassessment.game.ui;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.actors.CustomActor;
 
-public class UIElement extends CustomActor {
+public class UIElement extends CustomActor implements IUIElement{
     UIStage uiStage;
     HorizontalAlignment horizontalAlignment;
     VerticalAlignment verticalAlignment;
