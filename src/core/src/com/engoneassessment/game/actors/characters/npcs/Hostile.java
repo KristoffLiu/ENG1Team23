@@ -1,5 +1,6 @@
 package com.engoneassessment.game.actors.characters.npcs;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.screens.RoomScreen;
@@ -12,6 +13,7 @@ public class Hostile extends NPC {
 
     public int NumOfDestroy = 0; // record the number of systems the hostile destroy
 
+
     private String ability;
 
     private boolean abilityActivated;
@@ -20,7 +22,8 @@ public class Hostile extends NPC {
     private int abilityTimer;
 
     public Hostile(TextureRegion region, RoomScreen roomScreen, String ability) {
-        super(region, roomScreen);
+        super(region, roomScreen, new Texture("Characters/other/run/run.png"),
+                new Texture("Characters/other/idle/idle.png")););
         this.ability = ability;
         //Keeps track of if the ability is activated
         abilityActivated = false;

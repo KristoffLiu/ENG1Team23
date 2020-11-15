@@ -1,5 +1,6 @@
 package com.engoneassessment.game.actors.characters.npcs;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.actors.characters.Character;
 import com.engoneassessment.game.screens.RoomScreen;
@@ -12,9 +13,8 @@ public class NPC extends Character {
     private float movement_y;
     private static Random random;
 
-
-    public NPC(TextureRegion textureRegion, RoomScreen screen) {
-        super(textureRegion, screen);
+    public NPC(TextureRegion textureRegion, Texture runTexture, Texture idleTexture, RoomScreen screen) {
+        super(textureRegion, screen, runTexture, idleTexture);
         //Used for generating random numbers
         random = new Random();
         movement_x -= ((float)random.nextInt(3)-1)*random.nextFloat();
