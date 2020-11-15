@@ -10,11 +10,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.actors.characters.Player;
-import com.engoneassessment.game.actors.rooms.Room;
-import com.engoneassessment.game.io.ClickEventListener;
-import com.engoneassessment.game.io.CustomInputProcessor;
 import com.engoneassessment.game.screens.RoomScreen;
-import com.engoneassessment.game.ui.HUD;
 import com.engoneassessment.game.ui.hud.HUDStage;
 
 //This screeen is never shown in game.

@@ -30,7 +30,6 @@ public class RoomScreen implements Screen {
     final int maxY;
     public Array<NonHostile> nonHostiles;
     public Array<Hostile> hostiles;
-    private String name;
     public HUDStage hudStage;
 
     public RoomScreen(GameEntry gameEntry,String name, int numNPCs){
@@ -168,7 +167,7 @@ public class RoomScreen implements Screen {
     }
 
     public void spawnHostiles(){
-        if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 1000) {
+        if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 1000 && gameEntry.getNumHostiles() < 8) {
             //System.out.println("Sabotage");
             gameEntry.sabotage();
             gameEntry.setSpawnTime(System.currentTimeMillis());

@@ -8,6 +8,7 @@ public class NonHostile extends NPC {
     public NonHostile(TextureRegion textureRegion, RoomScreen screen) {
         super(textureRegion, screen, new Texture("Characters/other/run/run.png"),
                 new Texture("Characters/other/idle/idle.png"));
+    }
 
     public void SelectRandomSystem(){
 

@@ -31,5 +31,7 @@ public class InfirmaryScreen extends RoomScreen {
         //Acts and draws the stage
         stage.act();
         stage.draw();
+        hudStage.act();
+        hudStage.draw();
     }
 }

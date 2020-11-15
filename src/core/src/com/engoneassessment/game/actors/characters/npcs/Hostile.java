@@ -22,8 +22,8 @@ public class Hostile extends NPC {
     private int abilityTimer;
 
     public Hostile(TextureRegion region, RoomScreen roomScreen, String ability) {
-        super(region, roomScreen, new Texture("Characters/other/run/run.png"),
-                new Texture("Characters/other/idle/idle.png")););
+        super(region, roomScreen, new Texture("Characters/other/run/run.png"), new Texture("Characters/other/idle/idle.png"));
+
         this.ability = ability;
         //Keeps track of if the ability is activated
         abilityActivated = false;

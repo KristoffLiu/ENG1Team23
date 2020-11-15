@@ -31,6 +31,6 @@ public class RoomIndicator {
     }
 
     public void update(RoomScreen room){
-        RoomName.setText(room.getRoomName());
+        RoomName.setText(room.getName());
     }
 }

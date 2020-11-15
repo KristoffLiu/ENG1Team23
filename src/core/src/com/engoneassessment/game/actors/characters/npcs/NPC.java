@@ -13,7 +13,7 @@ public class NPC extends Character {
     private float movement_y;
     private static Random random;
 
-    public NPC(TextureRegion textureRegion, Texture runTexture, Texture idleTexture, RoomScreen screen) {
+    public NPC(TextureRegion textureRegion, RoomScreen screen, Texture runTexture, Texture idleTexture) {
         super(textureRegion, screen, runTexture, idleTexture);
         //Used for generating random numbers
         random = new Random();
