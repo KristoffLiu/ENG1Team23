@@ -5,9 +5,9 @@ import com.engoneassessment.game.screens.RoomScreen;
 
 public class HangerScreen extends RoomScreen {
 
-    public HangerScreen(GameEntry gameEntry, String name) {
-        super(gameEntry);
-        this.name = name;
+    public HangerScreen(GameEntry gameEntry, String name, int numNPCs) {
+        super(gameEntry, name, numNPCs);
+
     }
 
 }
