@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.Array;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.screens.RoomScreen;
 
-
 public class Character extends CustomActor implements ICharacter {
     public enum FacingDirection{
         LEFT, RIGHT, UP, DOWN
@@ -52,7 +51,6 @@ public class Character extends CustomActor implements ICharacter {
         runAnimation = this.makeAnimation(runTexture, 1f/12f, 56,90);
         idleAnimation = this.makeAnimation(idleTexture, 1f/12f, 56,90);
     }
-
 
     public void changeX(int change){
     }
@@ -134,7 +132,6 @@ public class Character extends CustomActor implements ICharacter {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         elapsedTime += Gdx.graphics.getDeltaTime();
-        super.draw(batch, parentAlpha);
         batch.draw(
                 (TextureRegion) currentAnimation.getKeyFrame(elapsedTime, true),
                 getX(), getY()
