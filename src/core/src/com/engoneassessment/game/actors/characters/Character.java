@@ -136,15 +136,16 @@ public class Character extends CustomActor implements ICharacter {
         elapsedTime += Gdx.graphics.getDeltaTime();
         super.draw(batch, parentAlpha);
         batch.draw(
-                (TextureRegion) currentAnimation.getKeyFrame(elapsedTime,true),
+                (TextureRegion) currentAnimation.getKeyFrame(elapsedTime, true),
                 getX(), getY()
         );
+    }
 
     public float getSpeed() {
         return speed;
     }
 
-    public RoomScreen getCurrentScreen() {
+    public RoomScreen getCurrentScreen(){
         return currentScreen;
     }
 
