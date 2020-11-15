@@ -1,5 +1,6 @@
 package com.engoneassessment.game.actors.characters.npcs;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.actors.characters.npcs.NPC;
 
@@ -12,7 +13,8 @@ public class Hostile extends NPC {
     public int NumOfDestroy = 0; // record the number of systems the hostile destroy
 
     public Hostile(TextureRegion region) {
-        super(region);
+        super(region, new Texture("Characters/other/run/run.png"),
+                new Texture("Characters/other/idle/idle.png"));
         this.hostile = hostile;
     }
 
