@@ -4,11 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.utils.Array;
 import com.engoneassessment.game.actors.CustomActor;
+import com.engoneassessment.game.screens.RoomScreen;
+
 
 public class Character extends CustomActor implements ICharacter {
     public enum FacingDirection{
@@ -21,7 +24,7 @@ public class Character extends CustomActor implements ICharacter {
 
     Array<Texture> actionTextures;
 
-    private int speed; // i set the speed as integer initially, because using double may be more complicated
+    private float speed;
     private String ability; // every hostile has a ability, abilities such as be invisible, speeding up...
 
     private Double health = 100.0;
@@ -35,10 +38,13 @@ public class Character extends CustomActor implements ICharacter {
     public float elapsedTime;
     public Texture runTexture;
     public Texture idleTexture;
+    private RoomScreen currentScreen;
 
-
-    public Character(TextureRegion textureRegion, Texture runTexture, Texture idleTexture) {
+    public Character(TextureRegion textureRegion, RoomScreen screen, Texture runTexture, Texture idleTexture) {
         super(textureRegion);
+        currentScreen = screen;
+        speed = (float)0.8;
+        
         this.runTexture = runTexture;
         this.idleTexture = idleTexture;
 
@@ -121,7 +127,7 @@ public class Character extends CustomActor implements ICharacter {
         return health;
     }
 
-    public void setSpeed(int s) {
+    public void setSpeed(float s) {
         speed = s;
     }
 
@@ -133,5 +139,16 @@ public class Character extends CustomActor implements ICharacter {
                 (TextureRegion) currentAnimation.getKeyFrame(elapsedTime,true),
                 getX(), getY()
         );
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public RoomScreen getCurrentScreen() {
+        return currentScreen;
+    }
+
+    public void setCurrentScreen(RoomScreen currentScreen) {
+        this.currentScreen = currentScreen;
     }
 }

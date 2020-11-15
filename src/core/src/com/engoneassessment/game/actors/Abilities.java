@@ -5,13 +5,12 @@ import com.engoneassessment.game.actors.characters.npcs.Hostile;
 
 import java.util.Random;
 
-public class Abilities extends Hostile {
+public class Abilities{
 
     private boolean iMode = true; // when mode = true means hostile is currently invisible
     private boolean sMode = false; // initially not speeding up
 
-    public Abilities(TextureRegion region) {
-        super(region);
+    public Abilities() {
     }
 
     public void iModeChange() {
@@ -33,14 +32,12 @@ public class Abilities extends Hostile {
 
     public void sprint() {
         if (sMode = true) {
-            setSpeed(5); // which is a faster speed
         }
     }
 
     public void transfer() {
         Random location = new Random(100); // random number input, need to be changed
         String loc = location.toString();
-        setPos(loc);
     }
 
 }
