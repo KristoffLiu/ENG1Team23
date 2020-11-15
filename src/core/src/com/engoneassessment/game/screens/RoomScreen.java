@@ -14,9 +14,11 @@ import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.actors.characters.npcs.Hostile;
 import com.engoneassessment.game.actors.characters.npcs.NonHostile;
 import com.engoneassessment.game.actors.rooms.Room;
+import com.engoneassessment.game.ui.hud.HUDStage;
 
 public class RoomScreen implements Screen {
     private final GameEntry gameEntry;
+    protected String name;
 
     final Room floor;
     final Room walls;
@@ -29,7 +31,7 @@ public class RoomScreen implements Screen {
     public Array<NonHostile> nonHostiles;
     public Array<Hostile> hostiles;
     private String name;
-
+    public HUDStage hudStage;
 
     public RoomScreen(GameEntry gameEntry,String name, int numNPCs){
         this.gameEntry = gameEntry;
@@ -64,8 +66,7 @@ public class RoomScreen implements Screen {
         stage.addListener(gameEntry.getKeyboardInputHandler());
         Gdx.input.setInputProcessor(stage);
 
-
-
+        hudStage = gameEntry.hudStage;
     }
 
     @Override
@@ -97,6 +98,8 @@ public class RoomScreen implements Screen {
         //Acts and draws the stage
         stage.act();
         stage.draw();
+        hudStage.act();
+        hudStage.draw();
     }
 
     @Override

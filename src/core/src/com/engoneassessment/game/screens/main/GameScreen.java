@@ -15,7 +15,7 @@ import com.engoneassessment.game.io.ClickEventListener;
 import com.engoneassessment.game.io.CustomInputProcessor;
 import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.ui.HUD;
-
+import com.engoneassessment.game.ui.hud.HUDStage;
 
 //This screeen is never shown in game.
 public class GameScreen extends RoomScreen {
@@ -28,7 +28,7 @@ public class GameScreen extends RoomScreen {
 
     public Stage UIstage;
     public Player auber;
-    public HUD hud;
+    public HUDStage hudStage;
   
     public GameScreen(GameEntry gameEntry, String name, int numNPCs) {
         super(gameEntry, name, numNPCs);
@@ -42,7 +42,7 @@ public class GameScreen extends RoomScreen {
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new PlayerInputListener());
 
-        hud = new HUD(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT),auber);
+        hudStage = new HUDStage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT),auber);
     }
   
     /**
@@ -70,8 +70,8 @@ public class GameScreen extends RoomScreen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
-        hud.act();
-        hud.draw();
+        hudStage.act();
+        hudStage.draw();
     }
 
     /**

@@ -11,6 +11,7 @@ public class InfirmaryScreen extends RoomScreen {
         super(gameEntry, name, numNPCs);
 
     }
+    
     public void render(float delta) {
         if (auber.getHealth() < 100) {
             auber.setHealth(auber.getHealth()+delta/1);
