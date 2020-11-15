@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -17,6 +16,7 @@ import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.ui.UIStage;
 import com.engoneassessment.game.ui.controls.ClickableUIElement;
+import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 import com.engoneassessment.game.ui.startui.PlayButton;
 
 public class StartScreen implements Screen {
@@ -36,7 +36,7 @@ public class StartScreen implements Screen {
 
         uiStage = new UIStage(new StretchViewport(GameEntry.VIEW_WIDTH, GameEntry.VIEW_HEIGHT));
 
-        labelGameTitle = new Label("Auber Game",gameEntry.getStyle());
+        labelGameTitle = new Label("Auber Game", LabelStyles.getGameTitleLabelStyle());
         labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,800);
 
         //Creates the menu button and move it to the correct place

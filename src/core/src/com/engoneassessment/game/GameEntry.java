@@ -1,16 +1,14 @@
 package com.engoneassessment.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.actors.characters.Player;
+import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.screens.main.GameScreen;
 import com.engoneassessment.game.screens.rooms.*;
 import com.engoneassessment.game.screens.setting.SettingScreen;
@@ -35,6 +33,7 @@ public class GameEntry extends Game {
     public static final float VIEW_HEIGHT = 1080;
 
     private Player auber;
+    private Screen CurrentScreen;
     public HUDStage hudStage;
 
     private InputListener inputHandler;
@@ -44,6 +43,8 @@ public class GameEntry extends Game {
     private SettingScreen settingScreen;
     private GameScreen gameScreen;
 
+
+    //All the room screens
     private CargoScreen cargoScreen;
     private CommandScreen commandScreen;
     private ElectricalScreen electricalScreen;
@@ -55,13 +56,7 @@ public class GameEntry extends Game {
     private WeaponsScreen weaponsScreen;
     private BrigScreen brigScreen;
 
-    public Stage stage;
-
-    private Label.LabelStyle style;
-
     private static Random random;
-
-    BitmapFont font;
 
     /**
      * Called when the game is first created.
@@ -118,14 +113,6 @@ public class GameEntry extends Game {
             }
         };
 
-        //Creates the font for text on screen
-        font = new BitmapFont(Gdx.files.internal("font/ImpactFont.fnt"));
-        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear); //Make the font much clearer on the edge
-        font.getData().setScale(2.0f);
-        font.setColor(100,256,256,256);
-        style = new Label.LabelStyle();
-        style.font = font;
-
         //Creates the initial auber
         auber = new Player(new TextureRegion(new Texture("Characters/auber/idle/idle.gif")));
         hudStage = new HUDStage(new StretchViewport(this.VIEW_WIDTH, this.VIEW_HEIGHT),auber);
@@ -169,8 +156,17 @@ public class GameEntry extends Game {
     }
 
     //Changes the current screen to the one passed in
-    public void switchScreen(Screen nextScreen){
-        setScreen(nextScreen);
+    @Override
+    public void setScreen(Screen nextScreen){
+        super.setScreen(nextScreen);
+        if( CurrentScreen != nextScreen &&
+                RoomScreen.class.isInstance(nextScreen)){
+            hudStage.updateRoomName((RoomScreen) nextScreen);
+        }
+    }
+
+    public Screen getCurrentScreen(){
+        return CurrentScreen;
     }
 
 
@@ -230,14 +226,6 @@ public class GameEntry extends Game {
 
     public InputListener getKeyboardInputHandler() {
         return inputHandler;
-    }
-
-    public BitmapFont getFont() {
-        return font;
-    }
-
-    public Label.LabelStyle getStyle() {
-        return style;
     }
 
     public Player getAuber() {

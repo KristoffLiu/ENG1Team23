@@ -153,4 +153,8 @@ public class RoomScreen implements Screen {
             nonHostile.randomMove(GameEntry.getRandom(),424,1451,14,795);
         }
     }
+
+    public String getRoomName(){
+        return name;
+    }
 }

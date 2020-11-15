@@ -1,24 +1,28 @@
-package com.engoneassessment.game.ui;
+package com.engoneassessment.game.ui.layouts;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.engoneassessment.game.actors.CustomActor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.engoneassessment.game.ui.IUIElement;
+import com.engoneassessment.game.ui.UIElement;
+import com.engoneassessment.game.ui.UIStage;
 
-public class UIElement extends CustomActor implements IUIElement{
+public class UIGroup extends Group implements IUIElement {
+
     UIStage parentStage = null;
+    UIGroup parentGroup = null;
     UIElement.HorizontalAlignment horizontalAlignment = UIElement.HorizontalAlignment.leftAlignment;
     UIElement.VerticalAlignment verticalAlignment = UIElement.VerticalAlignment.bottomAlignment;
     float relativeX = 0;
     float relativeY = 0;
 
 
-    public UIElement(TextureRegion textureRegion) {
-        super(textureRegion);
+    public UIGroup(TextureRegion textureRegion) {
+
     }
 
-    public UIElement(UIStage stage, TextureRegion textureRegion) {
-        super(textureRegion);
+    public UIGroup(UIStage stage, TextureRegion textureRegion) {
         setParentStage(stage);
-        stage.addUIElement(this);
+        stage.addUIGroup(this);
     }
 
     public void setParentStage(UIStage _uiStage){
@@ -56,10 +60,6 @@ public class UIElement extends CustomActor implements IUIElement{
                     break;
             }
         }
-        else{
-            setX(relativeX);
-        }
-        this.relativeX = relativeX;
     }
 
     public void setRelativeY(float relativeY){
@@ -79,55 +79,33 @@ public class UIElement extends CustomActor implements IUIElement{
                     break;
             }
         }
-        else{
-            setY(relativeY);
-        }
-        this.relativeY = relativeY;
     }
 
     @Override
-    public HorizontalAlignment getHorizontalAlignment() {
+    public UIElement.HorizontalAlignment getHorizontalAlignment() {
         return horizontalAlignment;
     }
 
     @Override
-    public VerticalAlignment getVerticalAlignment() {
+    public UIElement.VerticalAlignment getVerticalAlignment() {
         return verticalAlignment;
     }
 
-    public void setHorizontalAlignment(HorizontalAlignment alignment){
+    public void setHorizontalAlignment(UIElement.HorizontalAlignment alignment){
         horizontalAlignment = alignment;
         setRelativeX(relativeX);
     }
 
-    public void setVerticalAlignment(VerticalAlignment alignment){
+    public void setVerticalAlignment(UIElement.VerticalAlignment alignment){
         verticalAlignment = alignment;
         setRelativeY(relativeY);
     }
 
     @Override
-    public void setRelativePosition(float relativeX, float relativeY, HorizontalAlignment horizontalAlignment, VerticalAlignment verticalAlignment) {
+    public void setRelativePosition(float relativeX, float relativeY, UIElement.HorizontalAlignment horizontalAlignment, UIElement.VerticalAlignment verticalAlignment) {
         this.relativeX = relativeX;
         this.relativeY = relativeY;
         setHorizontalAlignment(horizontalAlignment);
         setVerticalAlignment(verticalAlignment);
-    }
-
-    public void setSize(float width, float height){
-        this.setWidth(width);
-        this.setHeight(height);
-    }
-
-
-    public enum HorizontalAlignment{
-        leftAlignment, centreAlignment, rightAlignment
-    }
-
-    public enum VerticalAlignment{
-        topAlignment, centreAlignment, bottomAlignment
-    }
-
-    public enum Visibility{
-        visible, collapsed
     }
 }

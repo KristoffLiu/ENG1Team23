@@ -3,49 +3,77 @@ package com.engoneassessment.game.ui.controls;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.engoneassessment.game.actors.CustomActor;
+import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
 
-public class NinePatchImage extends Image {
+    public class NinePatchImage extends UIElement {
 
-    NinePatch ninePatch;
-    int left, right, top, bottom = 0;
+    NinePatch ninePatch         ;
+    float ninePatch_X           ;
+    float ninePatch_Y           ;
+    float ninePatch_width       ;
+    float ninePatch_height      ;
 
-    public NinePatchImage(TextureRegion textureRegion) {
+    public NinePatchImage(TextureRegion textureRegion,
+                          int left, int right, int top, int bottom) {
         super(textureRegion);
+        setImage(textureRegion, left, right, top, bottom);
     }
 
-    public NinePatchImage(UIStage stage, TextureRegion textureRegion) {
+    public NinePatchImage(UIStage stage, TextureRegion textureRegion,
+                          int left, int right, int top, int bottom) {
         super(stage, textureRegion);
+        setImage(textureRegion, left, right, top, bottom);
     }
 
-    public void setNinePatch(int left, int right, int top, int bottom,
-                             TextureRegion textureRegion){
+    public void setImage(TextureRegion textureRegion,
+                               int left, int right, int top, int bottom){
         ninePatch = new NinePatch(textureRegion, left, right, top, bottom);
     }
 
-    public void setMiddleWidth(float width){
-        ninePatch.setMiddleWidth(width);
+    @Override
+    public float getX(){
+        return ninePatch_X;
     }
 
     @Override
-    public void setX(float X){
-        super.setX(X);
-        ninePatch.setPadLeft(X);
+    public float getY(){
+        return ninePatch_Y;
     }
 
     @Override
-    public void setY(float Y){
-        super.setY(Y);
-        ninePatch.setPadBottom(Y);
+    public void setX(float x){
+        ninePatch_X = x;
     }
 
     @Override
-    public void act(){
+    public void setY(float y){
+        ninePatch_Y = y;
+    }
 
+    public void setNinePatch(float leftWidth, float middleWidth, float rightWidth,
+                             float topHeight, float middleHeight, float bottomHeight){
+        ninePatch.setLeftWidth(leftWidth);
+        ninePatch.setMiddleWidth(middleWidth);
+        ninePatch.setRightWidth(rightWidth);
+        ninePatch.setTopHeight(topHeight);
+        ninePatch.setMiddleHeight(middleHeight);
+        ninePatch.setBottomHeight(bottomHeight);
     }
 
     @Override
-    public void draw(Batch batch, float parentAlpha){
-        ninePatch.draw(batch, 0,0,ninePatch.getTotalWidth(),ninePatch.getTotalHeight());
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if (batch == null || !isVisible()) {
+            return;
+        }
+        ninePatch.draw(
+                batch,
+                ninePatch_X,
+                ninePatch_Y,
+                ninePatch_width,
+                ninePatch_height
+        );
     }
 }
