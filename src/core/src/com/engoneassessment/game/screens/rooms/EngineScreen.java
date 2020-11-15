@@ -5,7 +5,6 @@ import com.engoneassessment.game.screens.RoomScreen;
 
 
 public class EngineScreen extends RoomScreen {
-    String name;
 
     public EngineScreen(GameEntry gameEntry, String name) {
         super(gameEntry);

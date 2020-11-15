@@ -5,7 +5,7 @@ import com.engoneassessment.game.screens.RoomScreen;
 
 
 public class BrigScreen extends RoomScreen {
-    String name;
+
     public BrigScreen(GameEntry gameEntry, String name) {
         super(gameEntry);
         this.name = name;
