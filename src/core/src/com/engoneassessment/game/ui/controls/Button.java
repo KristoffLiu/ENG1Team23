@@ -1,6 +1,9 @@
 package com.engoneassessment.game.ui.controls;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
 
@@ -17,7 +20,7 @@ public class Button extends ClickableUIElement implements IButton{
      * @param texture
      */
     public Button(UIStage parentUIStage, TextureRegion texture) {
-        super(parentUIStage, texture, texture, texture);
+        super(parentUIStage, texture, texture, texture, texture);
     }
 
     /**
@@ -29,9 +32,11 @@ public class Button extends ClickableUIElement implements IButton{
      * @param normalTexture
      * @param pressedTexture
      */
-    public Button(UIStage parentUIStage, TextureRegion normalTexture,
+    public Button(UIStage parentUIStage,
+                  TextureRegion normalTexture,
                   TextureRegion pressedTexture) {
-        super(parentUIStage, normalTexture, normalTexture, pressedTexture);
+        super(parentUIStage, normalTexture, pressedTexture,
+                pressedTexture, null);
     }
 
     /**
@@ -43,8 +48,11 @@ public class Button extends ClickableUIElement implements IButton{
      * @param hoveringTexture
      * @param pressedTexture
      */
-    public Button(UIStage parentUIStage, TextureRegion normalTexture, TextureRegion hoveringTexture,
-                  TextureRegion pressedTexture) {
-        super(parentUIStage, normalTexture, hoveringTexture, pressedTexture);
+    public Button(UIStage parentUIStage,
+                  TextureRegion normalTexture, TextureRegion hoveringTexture,
+                  TextureRegion pressedTexture, TextureRegion notActivatedTexture) {
+        super(parentUIStage, normalTexture, hoveringTexture, pressedTexture, notActivatedTexture);
     }
+
+
 }

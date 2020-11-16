@@ -1,4 +1,4 @@
-package com.engoneassessment.game.ui.minimap;
+package com.engoneassessment.game.ui.hud;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

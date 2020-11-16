@@ -5,17 +5,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.ui.UIStage;
-import com.engoneassessment.game.ui.controls.ClickableUIElement;
+import com.engoneassessment.game.ui.controls.ButtonClickListener;
+import com.engoneassessment.game.ui.controls.ClickableUIElementClickListener;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 import com.engoneassessment.game.ui.startui.PlayButton;
 
@@ -40,31 +39,18 @@ public class StartScreen implements Screen {
         labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,800);
 
         //Creates the menu button and move it to the correct place
-        playButton = new PlayButton(
-                this.uiStage,
-                new TextureRegion(new Texture("Menu/Buttons/playNormal.jpg")),
-                new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")),
-                new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")));
+        playButton = new PlayButton(this.uiStage);
         playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,400);
 
         //Detects any inputs related to the play button
-        playButton.addListener(new ClickListener(){
+        playButton.setClickListener(new ButtonClickListener(){
+            /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
+             * button or touch. The touchUp event is always {@link Event#handle() handled}.
+             * @see ButtonClickListener */
             @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                playButton.setButtonUIState(ClickableUIElement.ButtonUIState.hovered);
-                super.enter(event, x, y, pointer, fromActor);
-            }
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                playButton.setButtonUIState(ClickableUIElement.ButtonUIState.normal);
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                playButton.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
-                gameEntry.setScreen(gameEntry.getInfirmaryScreen());
+            public void clicked (InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                gameEntry.setScreen(gameEntry.getInfirmaryScreen());
             }
         });
 

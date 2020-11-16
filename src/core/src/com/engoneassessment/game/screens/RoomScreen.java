@@ -2,6 +2,7 @@ package com.engoneassessment.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +32,9 @@ public class RoomScreen implements Screen {
     public Array<NonHostile> nonHostiles;
     public Array<Hostile> hostiles;
     public HUDStage hudStage;
+
+    //since we have two stages - the stage and the UIStage, we need multiple InputProcessor to handle the listener events.
+    InputMultiplexer multiplexer;
 
     public RoomScreen(GameEntry gameEntry,String name, int numNPCs){
         this.gameEntry = gameEntry;
@@ -63,9 +67,13 @@ public class RoomScreen implements Screen {
         }
 
         stage.addListener(gameEntry.getKeyboardInputHandler());
-        Gdx.input.setInputProcessor(stage);
-
         hudStage = gameEntry.hudStage;
+
+
+        multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(hudStage);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
@@ -75,7 +83,9 @@ public class RoomScreen implements Screen {
         stage.addActor(auber);
         auber.setPosition(stage.getWidth()/2-auber.getWidth()/2,stage.getHeight()/2-auber.getHeight()/2);
 
-        Gdx.input.setInputProcessor(stage);
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(hudStage);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override

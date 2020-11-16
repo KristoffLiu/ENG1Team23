@@ -1,25 +1,14 @@
 package com.engoneassessment.game.ui.hud;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
-import com.engoneassessment.game.ui.controls.Image;
-import com.engoneassessment.game.ui.controls.labels.LabelStyles;
-import com.engoneassessment.game.ui.minimap.Minimap;
-
-import java.util.Map;
 
 public class HUDStage extends UIStage {
     private Player player;
@@ -30,25 +19,19 @@ public class HUDStage extends UIStage {
 
     private HealthBar healthBar;
     private RoomIndicator roomIndicator;
+    private Minimap minimap;
 
     public HUDStage(Viewport viewport, Player auber){
         super(viewport);
 
-        mapButton = new MapButton(
-                this,
-                new TextureRegion(
-                        new Texture("UI/Icons/Map.png")));
-        beamButton = new BeamButton(
-                this,
-                new TextureRegion(
-                        new Texture("UI/Icons/Beam.png")));
-        teleportButton = new TeleportButton(
-                this,
-                new TextureRegion(
-                        new Texture("UI/Icons/Teleport.png")));
+        mapButton = new MapButton(this);
+        beamButton = new BeamButton(this);
+        teleportButton = new TeleportButton(this);
+
 
         healthBar = new HealthBar(player);
         roomIndicator = new RoomIndicator(this);
+        //minimap = new Minimap();
 
         mapButton.setRelativePosition(20,20, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.bottomAlignment);
         beamButton.setRelativePosition(120,20, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.bottomAlignment);
@@ -59,6 +42,7 @@ public class HUDStage extends UIStage {
         this.addActor(healthBar.hpIndicator);
         this.addActor(roomIndicator.Title);
         this.addActor(roomIndicator.RoomName);
+
     }
 
     public void updateRoomName(RoomScreen screen){
