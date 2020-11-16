@@ -33,12 +33,15 @@ public class ClickableUIElement extends UIElement {
                 case pressed:
                     this.setTextureRegion(pressedTexture);
                     break;
+                case notActivited:
+                    this.setTextureRegion(pressedTexture);
+                    break;
             }
             this.buttonUIState = buttonUIStateInput;
         }
     }
 
     public enum ButtonUIState{
-        normal, hovered, pressed
+        normal, hovered, pressed, notActivited
     }
 }
