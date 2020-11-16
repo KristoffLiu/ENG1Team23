@@ -2,6 +2,8 @@ package com.engoneassessment.game.screens.rooms;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.screens.RoomScreen;
 
@@ -9,7 +11,7 @@ public class InfirmaryScreen extends RoomScreen {
 
     public InfirmaryScreen(GameEntry gameEntry, String name, int numNPCs) {
         super(gameEntry, name, numNPCs);
-
+        setFloorTexture(new TextureRegion(new Texture("Rooms/General Square/TutorialFloor.png")));
     }
     
     public void render(float delta) {
@@ -19,7 +21,7 @@ public class InfirmaryScreen extends RoomScreen {
         //Checks for movement keys being held
         keysPressed();
         //Runs a function to spawn hostiles randomly in different rooms
-        spawnHostiles();
+        sabotage();
         //Moves the hostiles and non hostiles
         moveNPCS();
         //Sets the camera position to the centre of the player

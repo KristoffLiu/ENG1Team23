@@ -134,7 +134,6 @@ public class Character extends CustomActor implements ICharacter {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         elapsedTime += Gdx.graphics.getDeltaTime();
-        super.draw(batch, parentAlpha);
         batch.draw(
                 (TextureRegion) currentAnimation.getKeyFrame(elapsedTime, true),
                 getX(), getY()

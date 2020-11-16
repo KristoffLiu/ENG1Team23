@@ -64,6 +64,7 @@ public class StartScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 playButton.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
                 gameEntry.setScreen(gameEntry.getInfirmaryScreen());
+                gameEntry.setSpawnTime(System.currentTimeMillis());
                 super.clicked(event, x, y);
             }
         });

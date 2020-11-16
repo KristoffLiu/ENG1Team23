@@ -23,8 +23,8 @@ public class NPC extends Character {
     }
 
     public void changeDirectionRandom(Random random){
-        movement_x -= ((float)random.nextInt(3)-1)*random.nextFloat();
-        movement_y -= ((float)random.nextInt(3)-1)*random.nextFloat();
+        movement_x -= ((float)random.nextInt(2)-1)*random.nextFloat();
+        movement_y -= ((float)random.nextInt(2)-1)*random.nextFloat();
     }
 
     public void randomMove(){

@@ -1,11 +1,7 @@
 package com.engoneassessment.game.actors.characters;
 
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Array;
-import com.engoneassessment.game.actors.characters.Character;
 import com.engoneassessment.game.actors.CustomActor;
-import com.engoneassessment.game.screens.main.GameScreen;
 import com.engoneassessment.game.utils.CollisionDetector;
 
 
@@ -36,7 +32,7 @@ public class CharacterCollisionDetector extends CollisionDetector {
         }
     }
 
-    public boolean checkCollision(Rectangle bounds, Character.FacingDirection facingDirection) {
+    /**public boolean checkCollision(Rectangle bounds, Character.FacingDirection facingDirection) {
         Array<Actor> actors = GameScreen.currentWorld.stage.getActors();
         generateCollisionDetectionBounds(bounds, facingDirection);
 
@@ -48,8 +44,8 @@ public class CharacterCollisionDetector extends CollisionDetector {
                 return true;
             }
         }
-        return false;
-    }
+        return false;*/
+
 
     public void handleCollisionIssue(CustomActor customActor, Character.FacingDirection facingDirection){
         Rectangle currentBounds = customActor.getBounds();
