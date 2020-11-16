@@ -45,6 +45,8 @@ public class ClickableUIElement extends UIElement {
     //Switches the texture of the button to be highlighted or not highlighted
     public void setButtonUIState(com.engoneassessment.game.ui.controls.Button.ButtonUIState buttonUIStateInput){
         if(buttonUIStateInput != this.buttonUIState){
+            float previousWidth  = this.getWidth();
+            float previousHeight = this.getHeight();
             switch (buttonUIStateInput){
                 case normal:
                     this.setTextureRegion(normalTexture);
@@ -60,6 +62,8 @@ public class ClickableUIElement extends UIElement {
                     break;
             }
             this.buttonUIState = buttonUIStateInput;
+            this.setWidth(previousWidth);
+            this.setHeight(previousHeight);
         }
     }
 

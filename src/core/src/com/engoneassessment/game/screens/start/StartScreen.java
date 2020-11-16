@@ -40,7 +40,9 @@ public class StartScreen implements Screen {
 
         //Creates the menu button and move it to the correct place
         playButton = new PlayButton(this.uiStage);
-        playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,400);
+        playButton.setWidth(playButton.getWidth()/1.5f);
+        playButton.setHeight(playButton.getHeight()/1.5f);
+        playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,500);
 
         //Detects any inputs related to the play button
         playButton.setClickListener(new ButtonClickListener(){
