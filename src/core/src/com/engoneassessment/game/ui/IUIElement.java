@@ -1,14 +1,14 @@
 package com.engoneassessment.game.ui;
 
 public interface IUIElement {
-    UIStage parentStage = null;
+    Object uiParent = null;
     UIElement.HorizontalAlignment horizontalAlignment = UIElement.HorizontalAlignment.leftAlignment;
     UIElement.VerticalAlignment verticalAlignment = UIElement.VerticalAlignment.bottomAlignment;
     float relativeX = 0;
     float relativeY = 0;
 
-    public void setParentStage(UIStage parentStage);
-    public UIStage getParentStage();
+    public void setUIParent(Object parentStage);
+    public Object getParent();
 
     public float getRelativeX();
     public float getRelativeY();

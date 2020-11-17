@@ -214,6 +214,7 @@ public class GameEntry extends Game {
         super.setScreen(nextScreen);
         if (CurrentScreen != nextScreen && RoomScreen.class.isInstance(nextScreen)) {
             hudStage.updateRoomName((RoomScreen) nextScreen);
+            hudStage.teleport();
         }
     }
 

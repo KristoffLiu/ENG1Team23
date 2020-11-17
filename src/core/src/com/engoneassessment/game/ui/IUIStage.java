@@ -1,6 +1,10 @@
 package com.engoneassessment.game.ui;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Array;
+
 public interface IUIStage {
-    public void addUIElement(UIElement uiElement);
+    public void addUIElement(Actor uiElement);
     public void removeUIElement(UIElement uiElement);
+    public Array<Actor> getUIElementsAll();
 }

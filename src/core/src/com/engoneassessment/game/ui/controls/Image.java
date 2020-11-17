@@ -10,7 +10,7 @@ public class Image extends UIElement {
         super(textureRegion);
     }
 
-    public Image(UIStage stage, TextureRegion textureRegion) {
-        super(stage, textureRegion);
+    public Image(Object parent, TextureRegion textureRegion) {
+        super(parent, textureRegion);
     }
 }

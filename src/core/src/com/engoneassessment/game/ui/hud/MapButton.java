@@ -26,7 +26,6 @@ public class MapButton extends Button {
                         new Texture("UI/Icons/MapNotAble.png")));
 
         setClickListener(new ButtonClickListener(){
-
         });
     }
 

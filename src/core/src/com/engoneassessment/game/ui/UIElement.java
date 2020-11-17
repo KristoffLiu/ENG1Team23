@@ -2,9 +2,10 @@ package com.engoneassessment.game.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.actors.CustomActor;
+import com.engoneassessment.game.ui.layouts.UIGroup;
 
 public class UIElement extends CustomActor implements IUIElement{
-    UIStage parentStage = null;
+    Object uiParent = null;
     UIElement.HorizontalAlignment horizontalAlignment = UIElement.HorizontalAlignment.leftAlignment;
     UIElement.VerticalAlignment verticalAlignment = UIElement.VerticalAlignment.bottomAlignment;
     float relativeX = 0;
@@ -15,18 +16,25 @@ public class UIElement extends CustomActor implements IUIElement{
         super(textureRegion);
     }
 
-    public UIElement(UIStage stage, TextureRegion textureRegion) {
+    public UIElement(Object parent, TextureRegion textureRegion) {
         super(textureRegion);
-        setParentStage(stage);
-        stage.addUIElement(this);
+        setUIParent(parent);
+        if(parent instanceof UIStage){
+            UIStage _parent = (UIStage) parent;
+            _parent.addUIElement(this);
+        }
+        else if(parent instanceof UIGroup){
+            UIGroup _parent = (UIGroup) parent;
+            _parent.addUIElement(this);
+        }
     }
 
-    public void setParentStage(UIStage _uiStage){
-        this.parentStage = _uiStage;
+    public void setUIParent(Object _uiParent){
+        this.uiParent = _uiParent;
     }
 
-    public UIStage getParentStage() {
-        return parentStage;
+    public Object getUIParent() {
+        return uiParent;
     }
 
     @Override
@@ -40,20 +48,39 @@ public class UIElement extends CustomActor implements IUIElement{
     }
 
     public void setRelativeX(float relativeX){
-        if(parentStage != null){
+        if(uiParent != null){
             float offset = 0f;
-            switch (this.horizontalAlignment){
-                case leftAlignment:
-                    this.setX(offset + relativeX);
-                    break;
-                case centreAlignment:
-                    offset = this.parentStage.getWidth() / 2 - this.getWidth() / 2;
-                    this.setX(offset + relativeX);
-                    break;
-                case rightAlignment:
-                    offset = this.parentStage.getWidth() - this.getWidth();
-                    this.setX(offset - relativeX);
-                    break;
+            if(uiParent instanceof UIStage){
+                UIStage _parent = (UIStage) uiParent;
+                switch (this.horizontalAlignment){
+                    case leftAlignment:
+                        this.setX(offset + relativeX);
+                        break;
+                    case centreAlignment:
+                        offset = _parent.getWidth() / 2 - this.getWidth() / 2;
+                        this.setX(offset + relativeX);
+                        break;
+                    case rightAlignment:
+                        offset = _parent.getWidth() - this.getWidth();
+                        this.setX(offset - relativeX);
+                        break;
+                }
+            }
+            else if(uiParent instanceof UIGroup){
+                UIGroup _parent = (UIGroup) uiParent;
+                switch (this.horizontalAlignment){
+                    case leftAlignment:
+                        this.setX(offset + relativeX);
+                        break;
+                    case centreAlignment:
+                        offset = _parent.getWidth() / 2 - this.getWidth() / 2;
+                        this.setX(offset + relativeX);
+                        break;
+                    case rightAlignment:
+                        offset = _parent.getWidth() - this.getWidth();
+                        this.setX(offset - relativeX);
+                        break;
+                }
             }
         }
         else{
@@ -63,20 +90,39 @@ public class UIElement extends CustomActor implements IUIElement{
     }
 
     public void setRelativeY(float relativeY){
-        if(parentStage != null) {
+        if(uiParent != null){
             float offset = 0f;
-            switch (this.verticalAlignment) {
-                case topAlignment:
-                    offset = this.parentStage.getHeight() - this.getHeight();
-                    this.setY(offset - relativeY);
-                    break;
-                case centreAlignment:
-                    offset = this.parentStage.getHeight() / 2 - this.getHeight() / 2;
-                    this.setY(offset + relativeY);
-                    break;
-                case bottomAlignment:
-                    this.setY(offset + relativeY);
-                    break;
+            if(uiParent instanceof UIStage){
+                UIStage _parent = (UIStage) uiParent;
+                switch (this.verticalAlignment) {
+                    case topAlignment:
+                        offset = _parent.getHeight() - this.getHeight();
+                        this.setY(offset - relativeY);
+                        break;
+                    case centreAlignment:
+                        offset = _parent.getHeight() / 2 - this.getHeight() / 2;
+                        this.setY(offset + relativeY);
+                        break;
+                    case bottomAlignment:
+                        this.setY(offset + relativeY);
+                        break;
+                }
+            }
+            else if(uiParent instanceof UIGroup){
+                UIGroup _parent = (UIGroup) uiParent;
+                switch (this.verticalAlignment) {
+                    case topAlignment:
+                        offset = _parent.getHeight() - this.getHeight();
+                        this.setY(offset - relativeY);
+                        break;
+                    case centreAlignment:
+                        offset = _parent.getHeight() / 2 - this.getHeight() / 2;
+                        this.setY(offset + relativeY);
+                        break;
+                    case bottomAlignment:
+                        this.setY(offset + relativeY);
+                        break;
+                }
             }
         }
         else{
