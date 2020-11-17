@@ -1,5 +1,6 @@
 package com.engoneassessment.game.ui.hud;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -33,6 +34,9 @@ public class Minimap extends UIGroup {
     Image OxygenRoomImage       ;
     Image QuartersRoomImage     ;
     Image WeaponsRoomImage      ;
+    Color originalRoomColor     ;
+
+    public MapButton mapButton;
 
     Label theSpaceStationLabel;
 
@@ -56,7 +60,7 @@ public class Minimap extends UIGroup {
         opened_x = ((UIStage)getUIParent()).getWidth()/2 + 400;
         opened_y = ((UIStage)getUIParent()).getHeight()/2 + 350;
 
-        MapBackground         = new Image(this, new TextureRegion(new Texture("Ship/ShipPlain.png")));
+        MapBackground         = new Image(this, new TextureRegion(new Texture("Ship/ShipPlain_ThickBorder.png")));
 
         BrigRoomImage         = new Image(this, new TextureRegion(new Texture("Ship/Room1.png")));
         CargoRoomImage        = new Image(this, new TextureRegion(new Texture("Ship/Room2.png")));
@@ -66,13 +70,20 @@ public class Minimap extends UIGroup {
         HangerRoomImage       = new Image(this, new TextureRegion(new Texture("Ship/Room6.png")));
         InfirmaryRoomImage    = new Image(this, new TextureRegion(new Texture("Ship/Room7.png")));
         OxygenRoomImage       = new Image(this, new TextureRegion(new Texture("Ship/Room8.png")));
-        theSpaceStationLabel = new Label("The Space Station Map", LabelStyles.usingImpactFontStyle(
+        theSpaceStationLabel  = new Label("The Space Station Map", LabelStyles.usingImpactFontStyle(
                 true, 0.5f,
                 1,1,1,1
         ));
         //QuartersRoomImage     = new Image(new TextureRegion(new Texture("Ship/Room9.png")));
         //WeaponsRoomImage      = new Image(new TextureRegion(new Texture("Ship/Room0.png")));
+        originalRoomColor = BrigRoomImage.getColor();
 
+        mapButton             = new MapButton(this);
+        mapButton.setScale(2.0f,2.0f);
+        mapButton.getColor().a = 0f;
+
+
+        mapButton             .setRelativePosition(270 ,180, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
         MapBackground         .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
         BrigRoomImage         .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
         CargoRoomImage        .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
@@ -136,6 +147,8 @@ public class Minimap extends UIGroup {
         this.removeActor(theSpaceStationLabel);
     }
 
+
+
     public void Teleport(){
         RoomScreen roomScreen = auber.getCurrentScreen();
         Actor teleportedLocation;
@@ -171,10 +184,11 @@ public class Minimap extends UIGroup {
 //        }
         for (Image roomImage : RoomImages ) {
             if(roomImage == teleportedLocation){
-                roomImage.getColor().a = 1.0f;
+                roomImage.setColor(1,1,1,1);
             }
             else{
-                roomImage.getColor().a = 0.1f;
+                roomImage.getColor().set(new Color(originalRoomColor));
+                roomImage.getColor().a = 0.3f;
             }
         }
     }

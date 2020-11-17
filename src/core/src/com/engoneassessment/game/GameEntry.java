@@ -34,6 +34,8 @@ import java.util.Random;
 
 public class GameEntry extends Game {
 
+    public static GameEntry current;
+
     public static final float VIEW_WIDTH = 1920;
     public static final float VIEW_HEIGHT = 1080;
 
@@ -80,6 +82,7 @@ public class GameEntry extends Game {
      */
     @Override
     public void create() {
+        current = this;
         //Stores the time the last hostile was spawned
         spawnTime = System.currentTimeMillis();
         //Used for generating random numbers
@@ -159,7 +162,7 @@ public class GameEntry extends Game {
 
         //Creates the initial auber
         auber = new Player(new TextureRegion(new Texture("Characters/auber/idle/idle.gif")), null);
-        hudStage = new HUDStage(new StretchViewport(this.VIEW_WIDTH, this.VIEW_HEIGHT), auber);
+        hudStage = new HUDStage(new StretchViewport(this.VIEW_WIDTH, this.VIEW_HEIGHT), this);
 
         // Create StartScreen
         startScreen = new StartScreen(this);

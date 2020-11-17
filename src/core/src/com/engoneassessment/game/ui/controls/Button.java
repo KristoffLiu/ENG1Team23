@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
+import com.engoneassessment.game.ui.layouts.UIGroup;
 
 /**
  * A button class which extends from ClickableUIElement class
@@ -28,14 +29,14 @@ public class Button extends ClickableUIElement implements IButton{
      * in this case, the texture parameter will be normalTexture, hoveringTexture, pressedTexture at the same time.
      * the pressed parameter will be normalTexture, hoveringTexture, pressedTexture at the same time.
      *
-     * @param parentUIStage
+     * @param uiParent
      * @param normalTexture
      * @param pressedTexture
      */
-    public Button(UIStage parentUIStage,
+    public Button(Object uiParent,
                   TextureRegion normalTexture,
                   TextureRegion pressedTexture) {
-        super(parentUIStage, normalTexture, pressedTexture,
+        super(uiParent, normalTexture, pressedTexture,
                 pressedTexture, null);
     }
 
@@ -43,15 +44,15 @@ public class Button extends ClickableUIElement implements IButton{
      * Constructor of a Button
      * the texture input will be its mapping texture.
      *
-     * @param parentUIStage
+     * @param uiParent
      * @param normalTexture
      * @param hoveringTexture
      * @param pressedTexture
      */
-    public Button(UIStage parentUIStage,
+    public Button(Object uiParent,
                   TextureRegion normalTexture, TextureRegion hoveringTexture,
                   TextureRegion pressedTexture, TextureRegion notActivatedTexture) {
-        super(parentUIStage, normalTexture, hoveringTexture, pressedTexture, notActivatedTexture);
+        super(uiParent, normalTexture, hoveringTexture, pressedTexture, notActivatedTexture);
     }
 
 

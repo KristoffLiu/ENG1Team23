@@ -17,10 +17,10 @@ public class ClickableUIElement extends UIElement {
     ClickableUIElementClickListener clickableUIElementClickListener;
     ButtonUIState buttonUIState = com.engoneassessment.game.ui.controls.Button.ButtonUIState.normal;
 
-    public ClickableUIElement(UIStage parentUIStage,
+    public ClickableUIElement(Object uiParent,
                               TextureRegion normalTexture, TextureRegion hoveredTexture,
                               TextureRegion pressedTexture, TextureRegion notActivatedTexture) {
-        super(parentUIStage, normalTexture);
+        super(uiParent, normalTexture);
 
         this.normalTexture = normalTexture;
         this.hoveredTexture = hoveredTexture;

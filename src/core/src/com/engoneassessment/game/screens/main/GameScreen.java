@@ -38,7 +38,7 @@ public class GameScreen extends RoomScreen {
         Gdx.input.setInputProcessor(stage);
         stage.addListener(new PlayerInputListener());
 
-        hudStage = new HUDStage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT),auber);
+        //hudStage = new HUDStage(new StretchViewport(gameEntry.VIEW_WIDTH, gameEntry.VIEW_HEIGHT),auber);
     }
   
     /**

@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.engoneassessment.game.ui.UIStage;
 import com.engoneassessment.game.ui.controls.Button;
 import com.engoneassessment.game.ui.controls.ButtonClickListener;
+import com.engoneassessment.game.ui.layouts.UIGroup;
 
 public class MapButton extends Button {
 
@@ -12,10 +13,10 @@ public class MapButton extends Button {
      * Constructor of a MapButton
      * the texture input will be its mapping texture.
      *
-     * @param parentUIStage
+     * @param uiParent
      */
-    public MapButton(UIStage parentUIStage) {
-        super(  parentUIStage,
+    public MapButton(Object uiParent) {
+        super(  uiParent,
                 new TextureRegion(
                         new Texture("UI/Icons/Map.png")),
                 new TextureRegion(
