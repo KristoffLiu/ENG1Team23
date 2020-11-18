@@ -24,7 +24,7 @@ public class TeleportButton extends Button {
                         new Texture("UI/Icons/TeleportHover.png")),
                 new TextureRegion(
                         new Texture("UI/Icons/TeleportNotAble.png")));
-
+        setButtonUIState(ButtonUIState.notActivated);
         setClickListener(new ButtonClickListener(){
 
         });

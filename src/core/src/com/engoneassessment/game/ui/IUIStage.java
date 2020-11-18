@@ -7,4 +7,6 @@ public interface IUIStage {
     public void addUIElement(Actor uiElement);
     public void removeUIElement(UIElement uiElement);
     public Array<Actor> getUIElementsAll();
+    public void hide();
+    public void appear();
 }

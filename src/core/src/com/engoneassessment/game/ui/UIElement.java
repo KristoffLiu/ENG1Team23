@@ -1,6 +1,9 @@
 package com.engoneassessment.game.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
+import com.badlogic.gdx.utils.Null;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.ui.layouts.UIGroup;
 
@@ -173,7 +176,100 @@ public class UIElement extends CustomActor implements IUIElement{
         topAlignment, centreAlignment, bottomAlignment
     }
 
-    public enum Visibility{
-        visible, collapsed
+    public void hide(){
+        AlphaAction uiElementAlphaAction = Actions.alpha(0f,0f);
+        VisibleAction uiElementVisibleAction = Actions.visible(false);
+        this.addAction(uiElementAlphaAction);
+        this.addAction(uiElementVisibleAction);
+    }
+
+    public void hide(float duration){
+        AlphaAction uiElementAlphaAction = Actions.alpha(0,duration);
+        VisibleAction uiElementVisibleAction = Actions.visible(false);
+        DelayAction uiElementDelayAction = Actions.delay(duration,uiElementVisibleAction);
+        this.addAction(uiElementAlphaAction);
+        this.addAction(uiElementDelayAction);
+    }
+
+    public void appear(){
+        VisibleAction uiElementVisibleAction = Actions.visible(true);
+        AlphaAction uiElementAlphaAction = Actions.alpha(1f,0f);
+        this.addAction(uiElementVisibleAction);
+        this.addAction(uiElementAlphaAction);
+    }
+
+    public void appear(float duration){
+        VisibleAction uiElementVisibleAction = Actions.visible(true);
+        AlphaAction uiElementAlphaAction = Actions.alpha(1f,duration);
+        this.addAction(uiElementVisibleAction);
+        this.addAction(uiElementAlphaAction);
+    }
+
+    public void fadeOut(float duration){
+        fadeOut(0f, 0f, duration, null);
+    }
+
+    public void fadeOut(float value, boolean isHorizontalShift, float duration){
+        if(isHorizontalShift) fadeOut(value, 0f, duration, null); else fadeOut(0f, value, duration, null);
+
+    }
+
+    public void fadeOut(float x, float y, float duration){
+        fadeOut(x, y, duration, null);
+    }
+
+    float last_x = -999;
+    float last_y = -999;
+
+    public void fadeOut(float x, float y, float duration, @Null Interpolation interpolation){
+        if(this.isVisible()){
+
+        }
+        last_x = this.getX();
+        last_y = this.getY();
+        AlphaAction uiElementAlphaAction = Actions.alpha(0f, duration, interpolation);
+        MoveByAction uiElementMoveByAction = Actions.moveBy(x, y, duration, interpolation);
+        //VisibleAction uiElementVisibleAction = Actions.visible(false);
+        //DelayAction uiElementDelayAction = Actions.delay(duration,uiElementVisibleAction);
+        this.addAction(uiElementAlphaAction);
+        this.addAction(uiElementMoveByAction);
+        //this.addAction(uiElementDelayAction);
+    }
+
+    public void fadeIn(float duration){
+        fadeIn(0f, 0f, duration, null);
+    }
+
+    public void fadeIn(float value, boolean isHorizontalShift, float duration){
+        if(isHorizontalShift) fadeIn(value, 0f, duration, null); else fadeIn(0f, value, duration, null);
+
+    }
+
+    public void fadeIn(float x, float y, float duration){
+        fadeIn(x, y, duration, null);
+    }
+
+    public void fadeIn(float x, float y, float duration, @Null Interpolation interpolation){
+        if(!this.isVisible()){
+
+        }
+        float start_x;
+        float start_y;
+        if(last_x == -999){
+            start_x = this.getX() - x;
+            start_y = this.getY() - y;
+        }
+        else{
+            start_x = last_x - x;
+            start_y = last_y - y;
+        }
+        //VisibleAction uiElementVisibleAction = Actions.visible(true);
+        //this.addAction(uiElementVisibleAction);
+        this.setX(start_x);
+        this.setY(start_y);
+        AlphaAction uiElementAlphaAction = Actions.alpha(1f, duration, interpolation);
+        MoveByAction uiElementMoveByAction = Actions.moveBy(x, y, duration, interpolation);
+        this.addAction(uiElementAlphaAction);
+        this.addAction(uiElementMoveByAction);
     }
 }

@@ -33,4 +33,14 @@ public class UIStage extends Stage implements IUIStage{
     public Array<Actor> getUIElementsAll() {
         return uiElements;
     }
+
+    @Override
+    public void hide(){
+
+    }
+
+    @Override
+    public void appear(){
+
+    }
 }

@@ -1,7 +1,6 @@
 package com.engoneassessment.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
@@ -211,14 +210,37 @@ public class GameEntry extends Game {
         setScreen(startScreen);
     }
 
+    Screen nextScreen;
     //Changes the current screen to the one passed in
     @Override
     public void setScreen(Screen nextScreen) {
-        super.setScreen(nextScreen);
-        if (CurrentScreen != nextScreen && RoomScreen.class.isInstance(nextScreen)) {
-            hudStage.updateRoomName((RoomScreen) nextScreen);
-            hudStage.teleport();
+        this.nextScreen = nextScreen;
+        if(this.getCurrentScreen() != this.nextScreen){
+            if(RoomScreen.class.isInstance(this.nextScreen)){
+                if(StartScreen.class.isInstance(this.getCurrentScreen())){
+                    SwitchScreen();
+                    hudStage.appearAll();
+                }
+                else{
+                    hudStage.hideAll();
+                }
+            }
+            else{
+                SwitchScreen();
+            }
+            this.CurrentScreen = nextScreen;
         }
+    }
+
+    public void setScreen_Finished(){
+        SwitchScreen();
+        hudStage.appearAll();
+        hudStage.updateRoomName((RoomScreen) getCurrentScreen());
+        hudStage.teleport();
+    }
+
+    public void SwitchScreen(){
+        super.setScreen(nextScreen);
     }
 
     public Screen getCurrentScreen() {

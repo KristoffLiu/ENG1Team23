@@ -225,4 +225,5 @@ public class RoomScreen implements Screen {
     public String getName(){
         return name;
     }
+
 }

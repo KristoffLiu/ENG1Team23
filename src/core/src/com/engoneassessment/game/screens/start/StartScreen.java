@@ -22,7 +22,7 @@ public class StartScreen implements Screen {
 
     private GameEntry gameEntry;
     private Texture logoTexture;
-    private UIStage uiStage;
+    public UIStage uiStage;
     private CustomActor customActor;
     private TextField usernameTextField;
     private PlayButton playButton;
