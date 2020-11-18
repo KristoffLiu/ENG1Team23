@@ -1,15 +1,17 @@
-package com.engoneassessment.game.ui.hud;
+package com.engoneassessment.game.ui.hud.minimap;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
+import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.screens.rooms.*;
@@ -19,25 +21,31 @@ import com.engoneassessment.game.ui.controls.Button;
 import com.engoneassessment.game.ui.controls.ClickableUIElement;
 import com.engoneassessment.game.ui.controls.Image;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
+import com.engoneassessment.game.ui.hud.MapButton;
 import com.engoneassessment.game.ui.layouts.UIGroup;
 
-public class Minimap extends UIGroup {
+public class MiniMap extends UIGroup {
+    GameEntry gameEntry;
     Player auber;
     Array<Button> RoomImages;
 
+    public boolean isOpen;
+
     Image MapBackground;
 
-    Button BrigRoomImage         ;
-    Button CargoRoomImage        ;
-    Button CommandRoomImage      ;
-    Button ElectricalRoomImage   ;
-    Button EngineRoomImage       ;
-    Button HangerRoomImage       ;
-    Button InfirmaryRoomImage    ;
-    Button OxygenRoomImage       ;
-    Button QuartersRoomImage     ;
-    Button WeaponsRoomImage      ;
+    RoomButton BrigRoomImage         ;
+    RoomButton CargoRoomImage        ;
+    RoomButton CommandRoomImage      ;
+    RoomButton ElectricalRoomImage   ;
+    RoomButton EngineRoomImage       ;
+    RoomButton HangerRoomImage       ;
+    RoomButton InfirmaryRoomImage    ;
+    RoomButton OxygenRoomImage       ;
+    RoomButton QuartersRoomImage     ;
+    RoomButton WeaponsRoomImage      ;
     Color originalRoomColor     ;
+
+    Label CurrentRoomName;
 
     public MapButton mapButton;
 
@@ -51,9 +59,12 @@ public class Minimap extends UIGroup {
     float opened_y;
     float openedScale;
 
-    public Minimap(UIStage uiStage, Player auber){
+    public MiniMap(UIStage uiStage, GameEntry gameEntry){
         super(uiStage);
-        this.auber = auber;
+        this.gameEntry = gameEntry;
+        this.auber = gameEntry.getAuber();
+
+        isOpen = false;
 
         closedScale = 0.5f;
         closed_x = uiStage.getWidth() - 20;
@@ -65,62 +76,71 @@ public class Minimap extends UIGroup {
 
         MapBackground         = new Image(this, new TextureRegion(new Texture("Ship/ShipPlain_ThickBorder.png")));
 
-        BrigRoomImage         = new Button(
-                this,
+        //room 5
+        EngineRoomImage       = new RoomButton(
+                this,this, "EngineRoom",
+                new TextureRegion(new Texture("Ship/Room5_Normal.png")),
+                new TextureRegion(new Texture("Ship/Room5_Hovered.png")),
+                new TextureRegion(new Texture("Ship/Room5_Pressed.png")),
+                null
+        );
+        //room 1
+        BrigRoomImage         = new RoomButton(
+                this,this, "BrigRoom",
                 new TextureRegion(new Texture("Ship/Room1_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room1_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room1_Pressed.png")),
                 null
                 );
-        CargoRoomImage        = new Button(
-                this,
+        //room 2
+        CargoRoomImage        = new RoomButton(
+                this,this, "CargoRoom",
                 new TextureRegion(new Texture("Ship/Room2_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room2_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room2_Pressed.png")),
                 null
         );
-        CommandRoomImage      = new Button(
-                this,
-                new TextureRegion(new Texture("Ship/Room3_Normal.png")),
-                new TextureRegion(new Texture("Ship/Room3_Hovered.png")),
-                new TextureRegion(new Texture("Ship/Room3_Pressed.png")),
-                null
-        );
-        ElectricalRoomImage   = new Button(
-                this,
-                new TextureRegion(new Texture("Ship/Room4_Normal.png")),
-                new TextureRegion(new Texture("Ship/Room4_Hovered.png")),
-                new TextureRegion(new Texture("Ship/Room4_Pressed.png")),
-                null
-                );
-        EngineRoomImage       = new Button(
-                this,
-                new TextureRegion(new Texture("Ship/Room5_Normal.png")),
-                new TextureRegion(new Texture("Ship/Room5_Hovered.png")),
-                new TextureRegion(new Texture("Ship/Room5_Pressed.png")),
-                null
-                );
-        HangerRoomImage       = new Button(
-                this,
+        //room 6
+        HangerRoomImage       = new RoomButton(
+                this,this, "HangerRoom",
                 new TextureRegion(new Texture("Ship/Room6_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room6_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room6_Pressed.png")),
                 null
                 );
-        InfirmaryRoomImage    = new Button(
-                this,
+        //room 7
+        InfirmaryRoomImage    = new RoomButton(
+                this,this, "InfirmaryRoom",
                 new TextureRegion(new Texture("Ship/Room7_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room7_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room7_Pressed.png")),
                 null
                 );
-        OxygenRoomImage       = new Button(
-                this,
+        //room 8
+        OxygenRoomImage       = new RoomButton(
+                this,this, "OxygenRoom",
                 new TextureRegion(new Texture("Ship/Room8_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room8_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room8_Pressed.png")),
                 null
                 );
+        //room 4
+        ElectricalRoomImage   = new RoomButton(
+                this,this, "ElectricalRoom",
+                new TextureRegion(new Texture("Ship/Room4_Normal.png")),
+                new TextureRegion(new Texture("Ship/Room4_Hovered.png")),
+                new TextureRegion(new Texture("Ship/Room4_Pressed.png")),
+                null
+        );
+        //room 3
+        CommandRoomImage      = new RoomButton(
+                this,this, "CommandRoom",
+                new TextureRegion(new Texture("Ship/Room3_Normal.png")),
+                new TextureRegion(new Texture("Ship/Room3_Hovered.png")),
+                new TextureRegion(new Texture("Ship/Room3_Pressed.png")),
+                null
+        );
+
         theSpaceStationLabel  = new Label("The Space Station Map", LabelStyles.usingImpactFontStyle(
                 true, 0.5f,
                 1,1,1,1
@@ -133,17 +153,16 @@ public class Minimap extends UIGroup {
         mapButton.setScale(2.0f,2.0f);
         mapButton.getColor().a = 0f;
 
-
         mapButton             .setRelativePosition(270 ,180, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
         MapBackground         .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
-        BrigRoomImage         .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
-        CargoRoomImage        .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
-        CommandRoomImage      .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
-        ElectricalRoomImage   .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
-        EngineRoomImage       .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
-        HangerRoomImage       .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
-        InfirmaryRoomImage    .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
-        OxygenRoomImage       .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+        BrigRoomImage         .setRelativePosition(135,62, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+        CargoRoomImage        .setRelativePosition(34,159, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+        CommandRoomImage      .setRelativePosition(135,263, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+        ElectricalRoomImage   .setRelativePosition(326,251, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+        EngineRoomImage       .setRelativePosition(326,84, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+        HangerRoomImage       .setRelativePosition(218,148, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+        InfirmaryRoomImage    .setRelativePosition(326,161, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+        OxygenRoomImage       .setRelativePosition(445,161, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
         theSpaceStationLabel.setPosition(-420,-420);
 
         RoomImages = new Array<Button>();
@@ -157,18 +176,11 @@ public class Minimap extends UIGroup {
         RoomImages.add(OxygenRoomImage       );
 
         this.addActor(MapBackground       );
-        this.addActor(BrigRoomImage       );
-        this.addActor(CargoRoomImage      );
-        this.addActor(CommandRoomImage    );
-        this.addActor(ElectricalRoomImage );
-        this.addActor(EngineRoomImage     );
-        this.addActor(HangerRoomImage     );
-        this.addActor(InfirmaryRoomImage  );
-        this.addActor(OxygenRoomImage     );
         this.setScale(closedScale,closedScale);
     }
 
     public void OpenMap(float duration){
+        isOpen = true;
         Interpolation interpolation = Interpolation.pow3;
         ScaleToAction scaleToAction = Actions.scaleTo(
                 openedScale,
@@ -185,9 +197,13 @@ public class Minimap extends UIGroup {
         this.addAction(scaleToAction);
         this.addAction(moveToAction);
         this.addActor(theSpaceStationLabel);
+
+        VisibleAction mapButtonVisibleAction = Actions.visible(false);
+        mapButton.addAction(mapButtonVisibleAction);
     }
 
     public void CloseMap(float duration){
+        isOpen = false;
         Interpolation interpolation = Interpolation.pow3;
         ScaleToAction scaleToAction = Actions.scaleTo(
                 closedScale,
@@ -202,6 +218,11 @@ public class Minimap extends UIGroup {
         this.addAction(scaleToAction);
         this.addAction(moveToAction);
         this.removeActor(theSpaceStationLabel);
+
+        AlphaAction alphaAction = Actions.alpha(0f);
+        mapButton.setVisible(true);
+        mapButton.addAction(alphaAction);
+
     }
 
 

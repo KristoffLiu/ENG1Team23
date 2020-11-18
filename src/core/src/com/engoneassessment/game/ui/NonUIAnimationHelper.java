@@ -92,6 +92,7 @@ public class NonUIAnimationHelper {
         if(!actor.isVisible()){
 
         }
+        actor.setVisible(true);
         float start_x;
         float start_y;
         if(last_x == -999){

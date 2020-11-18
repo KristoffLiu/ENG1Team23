@@ -5,6 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -12,9 +16,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.GameEntry;
+import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
 import com.engoneassessment.game.ui.controls.ButtonClickListener;
 import com.engoneassessment.game.ui.controls.ClickableUIElementClickListener;
+import com.engoneassessment.game.ui.controls.Image;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 import com.engoneassessment.game.ui.startui.PlayButton;
 
@@ -28,6 +34,11 @@ public class StartScreen implements Screen {
     private PlayButton playButton;
 
     private Label labelGameTitle;
+
+    SpriteBatch backgroundBatch;
+    private TextureRegion[] walkFrames;
+    private Animation walkAnimation;
+    private TextureRegion currentFrame;
 
     public StartScreen(final GameEntry gameEntry){
 
@@ -56,6 +67,24 @@ public class StartScreen implements Screen {
             }
         });
 
+
+
+        int background_frameCols = 2;
+        int background_frameRows = 2;
+        Texture hitbarTexture = new Texture(Gdx.files.internal("Background/space.png"));
+        int perCellWidth = hitbarTexture.getWidth() / background_frameCols;
+        int perCellHeight = hitbarTexture.getHeight() / background_frameRows;
+        TextureRegion[][] background_cellRegions = TextureRegion.split(hitbarTexture, perCellWidth, perCellHeight);
+        walkFrames = new TextureRegion[background_frameRows * background_frameCols];
+        int index = 0;
+        for (int row = 0; row < background_frameRows; row++) {
+            for (int col = 0; col < background_frameCols; col++) {
+                walkFrames[index++] = background_cellRegions[row][col];
+            }
+        }
+        walkAnimation = new Animation(0.5F, walkFrames);
+        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
         uiStage.addActor(labelGameTitle);
         uiStage.addActor(playButton);
 
@@ -67,8 +96,11 @@ public class StartScreen implements Screen {
      */
     @Override
     public void show() {
+        backgroundBatch = new SpriteBatch();
         Gdx.input.setInputProcessor(uiStage);
     }
+
+    float stateTime = 0f;
 
     /**
      * Called when the screen should render itself.
@@ -79,6 +111,13 @@ public class StartScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.39f, 0.58f, 0.92f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = (TextureRegion) walkAnimation.getKeyFrame(stateTime);
+        backgroundBatch.begin();
+        backgroundBatch.draw(currentFrame, 0, 0);
+        backgroundBatch.end();
+
         uiStage.act();
         uiStage.draw();
     }

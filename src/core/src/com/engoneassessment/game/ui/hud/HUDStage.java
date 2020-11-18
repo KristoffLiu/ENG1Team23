@@ -1,10 +1,8 @@
 package com.engoneassessment.game.ui.hud;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
@@ -16,10 +14,8 @@ import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.ui.NonUIAnimationHelper;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
-import com.engoneassessment.game.ui.controls.ButtonClickListener;
-import com.engoneassessment.game.ui.controls.ClickableUIElementClickListener;
 import com.engoneassessment.game.ui.controls.Image;
-import com.engoneassessment.game.utils.BlurShaderHelper;
+import com.engoneassessment.game.ui.hud.minimap.MiniMap;
 
 public class HUDStage extends UIStage {
 
@@ -32,7 +28,7 @@ public class HUDStage extends UIStage {
 
     private HealthBar healthBar;
     private RoomIndicator roomIndicator;
-    private Minimap minimap;
+    private MiniMap minimap;
     private Image minimapMask;
     private Image minimapBackground;
 
@@ -67,9 +63,7 @@ public class HUDStage extends UIStage {
 
         minimapMask = new Image(this,new TextureRegion(new Texture("UI/Colors/Black.jpg")));
         minimapMask.getColor().a = 0f;
-        minimapBackground = new Image(this,new TextureRegion(new Texture("Background/space.gif")));
-        minimapBackground.getColor().a = 0f;
-        minimapBackground.addListener(new ClickListener(){
+        minimapMask.addListener(new ClickListener(){
             /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
              * button or touch. The touchUp event is always {@link Event#handle() handled}.
              * @see MapButton */
@@ -79,7 +73,7 @@ public class HUDStage extends UIStage {
                 closeMiniMap();
             }
         });
-        minimap     = new Minimap(this, auber);
+        minimap     = new MiniMap(this, gameEntry);
 
 //        beamButton              .setVisible(false);
 //        teleportButton          .setVisible(false);
@@ -111,8 +105,13 @@ public class HUDStage extends UIStage {
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
                 super.enter(event, x, y, pointer, fromActor);
-                AlphaAction mapButtonAlphaAction = Actions.alpha(0.7F, 0.2F);
-                minimap.mapButton.addAction(mapButtonAlphaAction);
+                if(!minimap.isOpen){
+                    AlphaAction mapButtonAlphaAction = Actions.alpha(1.0F, 0.2F);
+                    minimap.mapButton.addAction(mapButtonAlphaAction);
+
+                    AlphaAction minimapAlphaAction = Actions.alpha(1.0F, 0.2F);
+                    minimap.addAction(minimapAlphaAction);
+                }
             }
 
             /** Called any time the mouse cursor or a finger touch is moved out of an actor. On the desktop, this event occurs even when no
@@ -124,6 +123,11 @@ public class HUDStage extends UIStage {
                 super.exit(event, x, y, pointer, toActor);
                 AlphaAction mapButtonAlphaAction = Actions.alpha(0F, 0.2F);
                 minimap.mapButton.addAction(mapButtonAlphaAction);
+                if(!minimap.isOpen){
+                    AlphaAction minimapAlphaAction = Actions.alpha(0.5F, 0.2F);
+                    minimap.addAction(minimapAlphaAction);
+                }
+
             }
 
             /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
@@ -148,23 +152,26 @@ public class HUDStage extends UIStage {
     public void openMiniMap(){
         float duration = 0.30F;
         minimap.OpenMap(duration);
+        VisibleAction minimapVisibleAction = Actions.visible(true);
+        AlphaAction minimapMaskAlphaAction = Actions.alpha(0.85F, duration);
+        SequenceAction sequenceAction = Actions.sequence(minimapVisibleAction, minimapMaskAlphaAction);
+        minimapMask.addAction(sequenceAction);
 
-        AlphaAction minimapMaskAlphaAction = Actions.alpha(0.7F, duration);
         AlphaAction mapButtonDisappearAction = Actions.alpha(0F, duration);
-        minimapMask.addAction(minimapMaskAlphaAction);
-        minimap.mapButton.addAction(mapButtonDisappearAction);
+        //minimap.mapButton.addAction(mapButtonDisappearAction);
+
         hideWhenMapOpen();
     }
 
     public void closeMiniMap(){
         float duration = 0.30F;
         minimap.CloseMap(duration);
-        AlphaAction action = Actions.alpha(0F, duration);
-        minimapMask.addAction(action);
-        minimap.mapButton.appear(duration);
+        AlphaAction alphaAction = Actions.alpha(0F, duration);
+        VisibleAction visibleAction = Actions.visible(false);
+        SequenceAction sequenceAction = Actions.sequence(alphaAction, visibleAction);
+        minimapMask.addAction(sequenceAction);
+
         appearWhenMapClose();
-        //AlphaAction minimapBackgroundAlphaAction = Actions.alpha(0F, duration);
-        //minimapBackground.addAction(minimapBackgroundAlphaAction);
     }
 
 

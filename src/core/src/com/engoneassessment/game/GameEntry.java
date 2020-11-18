@@ -266,6 +266,10 @@ public class GameEntry extends Game {
         }
     }
 
+    public BrigScreen getBrigScreen() {
+        return brigScreen;
+    }
+
     public CargoScreen getCargoScreen() {
         return cargoScreen;
     }
