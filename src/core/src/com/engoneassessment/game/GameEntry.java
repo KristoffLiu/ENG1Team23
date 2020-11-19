@@ -144,27 +144,7 @@ public class GameEntry extends Game {
                 }
 
                 if (keycode == Input.Keys.SPACE) {
-                    for (Hostile hostile : auber.getCurrentScreen().hostiles) {
-                        if (auber.getBounds().overlaps(hostile.getBounds())) {
-                            hostile.remove();
-                            //Creates a new hostile to spawn
-                            Hostile new_hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), brigScreen, abilities.random());
-                            //Adds the hostile to the room and moves it to the location of a non hostile in the room
-                            brigScreen.hostiles.add(new_hostile);
-                            new_hostile.setPosition(random.nextInt(brigScreen.getMaxX() - brigScreen.getMinX()) + brigScreen.getMinX(), random.nextInt(brigScreen.getMaxY() - brigScreen.getMinY()) + brigScreen.getMinY());
-                            brigScreen.stage.addActor(hostile);
-
-                            caughtHostiles += 1;
-                        }
-                    }
-                    if(caughtHostiles == 8){
-                        endScreen.updateGameWon();
-                        endGame();
-                    }
-                }
-
-                if (keycode == Input.Keys.M){
-                    setScreen(endScreen);
+                    beamHostiles();
                 }
 
                 return super.keyDown(event, keycode);

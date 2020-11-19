@@ -69,26 +69,6 @@ public class HUDStage extends UIStage {
         this.addActor(roomIndicator.RoomName);
         this.addActor(sabotageIndicator.RoomName);
 
-        //Detects any inputs related to the play button
-        beamButton.addListener(new ClickListener(){
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                beamButton.setButtonUIState(ClickableUIElement.ButtonUIState.hovered);
-                super.enter(event, x, y, pointer, fromActor);
-            }
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                beamButton.setButtonUIState(ClickableUIElement.ButtonUIState.normal);
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                beamButton.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
-                super.clicked(event, x, y);
-                gameEntry.beamHostiles();
-            }
-        });
     }
 
     public void updateRoomName(RoomScreen screen){
