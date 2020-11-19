@@ -56,7 +56,7 @@ public class Hostile extends NPC {
                     abilityActivated = true;
                 }
             }
-
+            
         }
     }
 

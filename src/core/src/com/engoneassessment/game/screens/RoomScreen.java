@@ -32,6 +32,7 @@ public class RoomScreen implements Screen {
     public Array<NonHostile> nonHostiles;
     public Array<Hostile> hostiles;
     public HUDStage hudStage;
+    private boolean sabotaged;
 
     public RoomScreen(GameEntry gameEntry,String name, int numNPCs){
         this.gameEntry = gameEntry;
@@ -41,8 +42,11 @@ public class RoomScreen implements Screen {
         maxX = 1451;
         maxY = 795;
 
+        sabotaged = false;
+
         //Sets the name of the room for use in the UI
         this.name = name;
+
 
         //Initialises nonHostiles and hostiles Arrays
         nonHostiles = new Array<>();
@@ -90,6 +94,8 @@ public class RoomScreen implements Screen {
         moveNPCS();
         //Uses the hostile abilities
         useAbilities();
+        //Runs any passive effects for the room like healing or taking damage
+        passiveEffects(delta);
         //Sets the camera position to the centre of the player
         stage.getViewport().getCamera().position.set(auber.getX()+auber.getWidth()/2,auber.getY()+auber.getHeight()/2,0);
         stage.getViewport().getCamera().update();
@@ -224,5 +230,22 @@ public class RoomScreen implements Screen {
 
     public void setWallsTexture(TextureRegion walls) {
         this.walls.setTextureRegion(walls);
+    }
+
+    public void passiveEffects(float delta){
+        if (gameEntry.getOxygenScreen().isSabotaged()) {
+            auber.setHealth(auber.getHealth()-delta/1);
+        }
+        System.out.println(isSabotaged());
+        System.out.println(auber.getHealth());
+
+    }
+
+    public void setSabotaged(boolean sabotaged) {
+        this.sabotaged = sabotaged;
+    }
+
+    public boolean isSabotaged() {
+        return sabotaged;
     }
 }

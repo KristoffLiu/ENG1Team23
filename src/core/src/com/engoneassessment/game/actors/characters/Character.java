@@ -43,7 +43,7 @@ public class Character extends CustomActor implements ICharacter {
     public Character(TextureRegion textureRegion, RoomScreen screen, Texture runTexture, Texture idleTexture) {
         super(textureRegion);
         currentScreen = screen;
-        speed = (float)0.8;
+        speed = 0.8f;
         
         this.runTexture = runTexture;
         this.idleTexture = idleTexture;

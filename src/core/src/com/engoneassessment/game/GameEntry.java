@@ -331,6 +331,7 @@ public class GameEntry extends Game {
         RoomScreen sabotagedRoom = spawnableScreens.random();
         //Tells the player which room has been sabotaged
         hudStage.updateLastSabotaged(sabotagedRoom);
+        sabotagedRoom.setSabotaged(true);
         if(numHostiles < 8) {
             //Creates a new hostile to spawn
             Hostile hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), sabotagedRoom, abilities.random());
