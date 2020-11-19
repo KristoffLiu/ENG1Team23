@@ -220,6 +220,8 @@ public class GameEntry extends Game {
                 if(StartScreen.class.isInstance(this.getCurrentScreen())){
                     SwitchScreen();
                     hudStage.appearAll();
+                    hudStage.updateRoomName((RoomScreen) this.nextScreen );
+                    hudStage.teleport();
                 }
                 else{
                     hudStage.hideAll();

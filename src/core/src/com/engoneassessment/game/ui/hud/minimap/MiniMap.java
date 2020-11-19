@@ -194,12 +194,22 @@ public class MiniMap extends UIGroup {
                 interpolation);
         this.setColor(0,0,0,1);
 
-        this.addAction(scaleToAction);
-        this.addAction(moveToAction);
+        ParallelAction parallelAction = Actions.parallel(scaleToAction, moveToAction);
+        RunnableAction runnableAction = Actions.run(new Runnable() {
+            @Override
+            public void run() {
+                setAnimationOrigin(getX(), getY());
+
+            }
+        });
+        SequenceAction sequenceAction = Actions.sequence(parallelAction, runnableAction);
+        this.addAction(sequenceAction);
+
         this.addActor(theSpaceStationLabel);
 
         VisibleAction mapButtonVisibleAction = Actions.visible(false);
         mapButton.addAction(mapButtonVisibleAction);
+
     }
 
     public void CloseMap(float duration){
@@ -222,7 +232,7 @@ public class MiniMap extends UIGroup {
         AlphaAction alphaAction = Actions.alpha(0f);
         mapButton.setVisible(true);
         mapButton.addAction(alphaAction);
-
+        setAnimationOrigin(getX(), getY());
     }
 
 

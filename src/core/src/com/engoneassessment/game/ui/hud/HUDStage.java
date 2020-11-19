@@ -75,27 +75,24 @@ public class HUDStage extends UIStage {
         });
         minimap     = new MiniMap(this, gameEntry);
 
-//        beamButton              .setVisible(false);
-//        teleportButton          .setVisible(false);
-//        healthBar.hpBar         .setVisible(false);
-//        healthBar.PlayerName    .setVisible(false);
-//        healthBar.hpIndicator   .setVisible(false);
-//        roomIndicator.Title     .setVisible(false);
-//        roomIndicator.RoomName  .setVisible(false);
-//        roomIndicator.RoomName  .setVisible(false);
-//        minimap                 .setVisible(false);
-//        minimapMask             .setVisible(false);
-
         hpIndicatorNonUIAnimationHelper    = new NonUIAnimationHelper(healthBar.hpIndicator  );
         RoomNameNonUIAnimationHelper       = new NonUIAnimationHelper(roomIndicator.RoomName );
         PlayerNameNonUIAnimationHelper     = new NonUIAnimationHelper(healthBar.PlayerName   );
         TitleNonUIAnimationHelper          = new NonUIAnimationHelper(roomIndicator.Title    );
 
-
-
         beamButton          .setRelativePosition(20,20, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.bottomAlignment);
         teleportButton      .setRelativePosition(120,20, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.bottomAlignment);
         minimap             .setRelativePosition(20,10, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+
+
+        beamButton                          .setAnimationOrigin(beamButton            .getX(), beamButton            .getY() );
+        teleportButton                      .setAnimationOrigin(teleportButton        .getX(), teleportButton        .getY() );
+        healthBar.hpBar                     .setAnimationOrigin(healthBar.hpBar       .getX(), healthBar.hpBar       .getY() );
+        hpIndicatorNonUIAnimationHelper     .setAnimationOrigin(healthBar.hpIndicator .getX(), healthBar.hpIndicator .getY() );
+        PlayerNameNonUIAnimationHelper      .setAnimationOrigin(healthBar.PlayerName  .getX(), healthBar.PlayerName  .getY() );
+        RoomNameNonUIAnimationHelper        .setAnimationOrigin(roomIndicator.RoomName.getX(), roomIndicator.RoomName.getY() );
+        TitleNonUIAnimationHelper           .setAnimationOrigin(roomIndicator.Title   .getX(), roomIndicator.Title   .getY() );
+        minimap                             .setAnimationOrigin(minimap               .getX(), minimap               .getY() );
 
         minimap.addListener(new ClickListener(){
             /** Called any time the mouse cursor or a finger touch is moved over an actor. On the desktop, this event occurs even when no
@@ -152,6 +149,7 @@ public class HUDStage extends UIStage {
     public void openMiniMap(){
         float duration = 0.30F;
         minimap.OpenMap(duration);
+
         VisibleAction minimapVisibleAction = Actions.visible(true);
         AlphaAction minimapMaskAlphaAction = Actions.alpha(0.85F, duration);
         SequenceAction sequenceAction = Actions.sequence(minimapVisibleAction, minimapMaskAlphaAction);
@@ -166,6 +164,7 @@ public class HUDStage extends UIStage {
     public void closeMiniMap(){
         float duration = 0.30F;
         minimap.CloseMap(duration);
+
         AlphaAction alphaAction = Actions.alpha(0F, duration);
         VisibleAction visibleAction = Actions.visible(false);
         SequenceAction sequenceAction = Actions.sequence(alphaAction, visibleAction);
@@ -180,32 +179,31 @@ public class HUDStage extends UIStage {
     }
 
     public void appearAll(){
-        beamButton          .fadeIn(0,50,0.5f,null);
-        teleportButton      .fadeIn(0,50,0.5f,null);
-        healthBar.hpBar     .fadeIn(0,50,0.5f,null);
-        hpIndicatorNonUIAnimationHelper  .fadeIn(0,50,0.5f,null);
-        PlayerNameNonUIAnimationHelper   .fadeIn(0,50,0.5f,null);
+        beamButton                          .fadeIn(0,50,0.5f,null);
+        teleportButton                      .fadeIn(0,50,0.5f,null);
+        healthBar.hpBar                     .fadeIn(0,50,0.5f,null);
+        hpIndicatorNonUIAnimationHelper     .fadeIn(0,50,0.5f,null);
+        PlayerNameNonUIAnimationHelper      .fadeIn(0,50,0.5f,null);
 
-        RoomNameNonUIAnimationHelper     .fadeIn(0,-50,0.5f,null);
-        TitleNonUIAnimationHelper        .fadeIn(0,-50,0.5f,null);
-        minimap                          .fadeIn(0,-50,0.5f,null);
+        RoomNameNonUIAnimationHelper        .fadeIn(0,-50,0.5f,null);
+        TitleNonUIAnimationHelper           .fadeIn(0,-50,0.5f,null);
+        minimap                             .fadeIn(0,-50,0.5f,null);
     }
 
     public void hideAll(){
-        beamButton          .fadeOut(0,-50,0.5f,null);
-        teleportButton      .fadeOut(0,-50,0.5f,null);
-        healthBar.hpBar     .fadeOut(0,-50,0.5f,null);
-        PlayerNameNonUIAnimationHelper   .fadeOut(0,-50,0.5f,null);
-        hpIndicatorNonUIAnimationHelper  .fadeOut(0,-50,0.5f,null);
+        beamButton                          .fadeOut(0,-50,0.5f,null);
+        teleportButton                      .fadeOut(0,-50,0.5f,null);
+        healthBar.hpBar                     .fadeOut(0,-50,0.5f,null);
+        PlayerNameNonUIAnimationHelper      .fadeOut(0,-50,0.5f,null);
+        hpIndicatorNonUIAnimationHelper     .fadeOut(0,-50,0.5f,null);
 
-        RoomNameNonUIAnimationHelper     .fadeOut(0,50,0.5f,null);
-        TitleNonUIAnimationHelper        .fadeOut(0,50,0.5f,null);
-        minimap                          .fadeOut(0,50,0.5f,null);
+        RoomNameNonUIAnimationHelper        .fadeOut(0,50,0.5f,null);
+        TitleNonUIAnimationHelper           .fadeOut(0,50,0.5f,null);
+        minimap                             .fadeOut(0,50,0.5f,null);
 
         RunnableAction switchScreenAction = Actions.run(new Runnable() {
             @Override
             public void run() {
-                Gdx.app.log("hhhhhhh", "演员的其他所有动作都已经执行完了");
                 gameEntry.setScreen_Finished();
             }
         });
@@ -217,9 +215,9 @@ public class HUDStage extends UIStage {
     }
 
     public void appearWhenMapClose(){
-        beamButton          .fadeIn(0,50,0.5f,null);
-        teleportButton      .fadeIn(0,50,0.5f,null);
-        healthBar.hpBar     .fadeIn(0,50,0.5f,null);
+        beamButton                       .fadeIn(0,50,0.5f,null);
+        teleportButton                   .fadeIn(0,50,0.5f,null);
+        healthBar.hpBar                  .fadeIn(0,50,0.5f,null);
         hpIndicatorNonUIAnimationHelper  .fadeIn(0,50,0.5f,null);
         PlayerNameNonUIAnimationHelper   .fadeIn(0,50,0.5f,null);
 
@@ -228,9 +226,9 @@ public class HUDStage extends UIStage {
     }
 
     public void hideWhenMapOpen(){
-        beamButton          .fadeOut(0,-50,0.5f,null);
-        teleportButton      .fadeOut(0,-50,0.5f,null);
-        healthBar.hpBar     .fadeOut(0,-50,0.5f,null);
+        beamButton                       .fadeOut(0,-50,0.5f,null);
+        teleportButton                   .fadeOut(0,-50,0.5f,null);
+        healthBar.hpBar                  .fadeOut(0,-50,0.5f,null);
         PlayerNameNonUIAnimationHelper   .fadeOut(0,-50,0.5f,null);
         hpIndicatorNonUIAnimationHelper  .fadeOut(0,-50,0.5f,null);
 

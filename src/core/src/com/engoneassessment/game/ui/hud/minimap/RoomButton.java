@@ -44,8 +44,10 @@ public class RoomButton extends Button {
                 if(miniMap.isOpen){
                     super.enter(event, x, y, pointer, fromActor);
                     label.setVisible(true);
-                    label.setPosition(getX() + (getWidth() - label.getWidth()) / 2,getY()+ getHeight() + 10);
-                    labelNonUIAnimationHelper.fadeIn(0.3f);
+                    float _x = getX() + (getWidth() - label.getWidth()) / 2;
+                    float _y = getY()+ getHeight() + 10;
+                    labelNonUIAnimationHelper.setAnimationOrigin(_x, _y);
+                    labelNonUIAnimationHelper.fadeIn(_x, _y, 0f, 0f, 0.2f, null);
                 }
             }
 
@@ -57,7 +59,7 @@ public class RoomButton extends Button {
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 if(miniMap.isOpen) {
                     super.exit(event, x, y, pointer, toActor);
-                    labelNonUIAnimationHelper.fadeOut(0.3f);
+                    labelNonUIAnimationHelper.fadeOut(0.2f);
                 }
             }
 
@@ -69,7 +71,9 @@ public class RoomButton extends Button {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 if(miniMap.isOpen) {
-                    return super.touchDown(event, x, y, pointer, button);
+                    if(false){
+                        return super.touchDown(event, x, y, pointer, button);
+                    }
                 }
                 return false;
             }
@@ -90,7 +94,12 @@ public class RoomButton extends Button {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 if(miniMap.isOpen) {
-                    super.clicked(event, x, y);
+                    if(this.isOver()){
+                        setButtonUIState(ButtonUIState.hovered);
+                    }
+                    else {
+                        setButtonUIState(ButtonUIState.normal);
+                    }
                 }
             }
         });

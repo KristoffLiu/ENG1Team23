@@ -47,13 +47,13 @@ public class StartScreen implements Screen {
         uiStage = new UIStage(new StretchViewport(GameEntry.VIEW_WIDTH, GameEntry.VIEW_HEIGHT));
 
         labelGameTitle = new Label("Auber Game", LabelStyles.getGameTitleLabelStyle());
-        labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,800);
+        labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,600);
 
         //Creates the menu button and move it to the correct place
         playButton = new PlayButton(this.uiStage);
         playButton.setWidth(playButton.getWidth()/1.5f);
         playButton.setHeight(playButton.getHeight()/1.5f);
-        playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,500);
+        playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,300);
 
         //Detects any inputs related to the play button
         playButton.setClickListener(new ButtonClickListener(){
