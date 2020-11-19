@@ -16,4 +16,8 @@ public class Room extends CustomActor {
     public Room(TextureRegion textureRegion) {
         super(textureRegion);
     }
+
+    public void setTextureRegion(Texture texture) {
+        this.texture = texture;
+    }
 }

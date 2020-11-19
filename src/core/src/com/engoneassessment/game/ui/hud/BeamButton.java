@@ -42,4 +42,6 @@ public class BeamButton extends Button {
     public BeamButton(UIStage parentUIStage, TextureRegion normalTexture, TextureRegion hoveringTexture, TextureRegion pressedTexture) {
         super(parentUIStage, normalTexture, hoveringTexture, pressedTexture);
     }
+
+
 }

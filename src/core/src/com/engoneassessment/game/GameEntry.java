@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.actors.characters.npcs.Hostile;
 import com.engoneassessment.game.screens.RoomScreen;
-import com.engoneassessment.game.screens.main.GameScreen;
+import com.engoneassessment.game.screens.end.EndScreen;
 import com.engoneassessment.game.screens.rooms.*;
 import com.engoneassessment.game.screens.setting.SettingScreen;
 import com.engoneassessment.game.screens.start.StartScreen;
@@ -44,9 +44,8 @@ public class GameEntry extends Game {
 
     //Screens Objects
     private StartScreen startScreen;
+    private EndScreen endScreen;
     private SettingScreen settingScreen;
-    private GameScreen gameScreen;
-
 
     //All the room screens
     private CargoScreen cargoScreen;
@@ -74,13 +73,20 @@ public class GameEntry extends Game {
 
     private int numHostiles;
 
+    private int caughtHostiles;
+
+    private int sabotagedSystems;
+
+    private boolean gameWon;
+
     /**
      * Called when the game is first created.
      */
     @Override
     public void create() {
-        //Stores the time the last hostile was spawned
-        spawnTime = System.currentTimeMillis();
+        numHostiles = 0;
+        sabotagedSystems = 0;
+        caughtHostiles = 0;
         //Used for generating random numbers
         random = new Random();
         //Creates the input handler for keyboard based events
@@ -138,18 +144,7 @@ public class GameEntry extends Game {
                 }
 
                 if (keycode == Input.Keys.SPACE) {
-                    for (Hostile hostile : auber.getCurrentScreen().hostiles) {
-                        if (auber.getBounds().overlaps(hostile.getBounds())) {
-                            System.out.println("Beam");
-                            hostile.remove();
-                            //Creates a new hostile to spawn
-                            Hostile new_hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), brigScreen, abilities.random());
-                            //Adds the hostile to the room and moves it to the location of a non hostile in the room
-                            brigScreen.hostiles.add(new_hostile);
-                            new_hostile.setPosition(random.nextInt(brigScreen.getMaxX() - brigScreen.getMinX()) + brigScreen.getMinX(), random.nextInt(brigScreen.getMaxY() - brigScreen.getMinY()) + brigScreen.getMinY());
-                            brigScreen.stage.addActor(hostile);
-                        }
-                    }
+                    beamHostiles();
                 }
 
                 return super.keyDown(event, keycode);
@@ -158,13 +153,13 @@ public class GameEntry extends Game {
 
         //Creates the initial auber
         auber = new Player(new TextureRegion(new Texture("Characters/auber/idle/idle.gif")), null);
-        hudStage = new HUDStage(new StretchViewport(this.VIEW_WIDTH, this.VIEW_HEIGHT), auber);
+        hudStage = new HUDStage(new StretchViewport(this.VIEW_WIDTH, this.VIEW_HEIGHT), auber, this);
 
         // Create StartScreen
         startScreen = new StartScreen(this);
 
-        // Create MainGameScreen
-        gameScreen = new GameScreen(this, "Game", 10);
+        //Creates EndScreen
+        endScreen = new EndScreen(this);
 
         //Create Cargo Bay Screen
         cargoScreen = new CargoScreen(this, "Cargo", 10);
@@ -216,6 +211,13 @@ public class GameEntry extends Game {
         }
     }
 
+    public void endGame(){
+        if(caughtHostiles == 7){
+            gameWon = true;
+        }
+        setScreen(endScreen);
+    }
+
     public Screen getCurrentScreen() {
         return CurrentScreen;
     }
@@ -232,10 +234,6 @@ public class GameEntry extends Game {
         if (startScreen != null) {
             startScreen.dispose();
             startScreen = null;
-        }
-        if (gameScreen != null) {
-            gameScreen.dispose();
-            gameScreen = null;
         }
     }
 
@@ -275,6 +273,10 @@ public class GameEntry extends Game {
         return weaponsScreen;
     }
 
+    public StartScreen getStartScreen() {
+        return startScreen;
+    }
+
     public InputListener getKeyboardInputHandler() {
         return inputHandler;
     }
@@ -299,24 +301,66 @@ public class GameEntry extends Game {
         this.spawnTime = spawnTime;
     }
 
-    public void sabotage() {
-        //Picks a random screen to spawn a hostile on
+    public void sabotage(){
+        sabotagedSystems += 1;
+        //If 15 systems have been sabotaged end the game
+        if(sabotagedSystems == 15){
+            endGame();
+        }
+        //Picks a random screen to sabotage
         RoomScreen sabotagedRoom = spawnableScreens.random();
-        //System.out.println(sabotagedRoom.getName());
-
-        //Creates a new hostile to spawn
-        Hostile hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), sabotagedRoom, abilities.random());
-        //Adds the hostile to the room and moves it to the location of a non hostile in the room
-        sabotagedRoom.hostiles.add(hostile);
-        hostile.setPosition(sabotagedRoom.nonHostiles.get(sabotagedRoom.nonHostiles.size - 1).getX(), sabotagedRoom.nonHostiles.get(sabotagedRoom.nonHostiles.size - 1).getY());
-        //Removes the non hostile that got replaced from the room
-        sabotagedRoom.nonHostiles.pop().remove();
-        sabotagedRoom.stage.addActor(hostile);
-        numHostiles += 1;
+        //Tells the player which room has been sabotaged
+        hudStage.updateLastSabotaged(sabotagedRoom);
+        sabotagedRoom.setSabotaged(true);
+        if(numHostiles < 8) {
+            //Creates a new hostile to spawn
+            Hostile hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), sabotagedRoom, abilities.random());
+            //Adds the hostile to the room and moves it to the location of a non hostile in the room
+            sabotagedRoom.hostiles.add(hostile);
+            hostile.setPosition(sabotagedRoom.nonHostiles.get(sabotagedRoom.nonHostiles.size - 1).getX(), sabotagedRoom.nonHostiles.get(sabotagedRoom.nonHostiles.size - 1).getY());
+            //Removes the non hostile that got replaced from the room
+            sabotagedRoom.nonHostiles.pop().remove();
+            sabotagedRoom.stage.addActor(hostile);
+            numHostiles += 1;
+        }
     }
 
     public int getNumHostiles() {
         return numHostiles;
+    }
+
+    public int getSabotagedSystems() {
+        return sabotagedSystems;
+    }
+
+    public int getCaughtHostiles() {
+        return caughtHostiles;
+    }
+
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    public void beamHostiles() {
+        if(getCurrentScreen()!=brigScreen && getCurrentScreen()!=infirmaryScreen){
+            for (Hostile hostile : auber.getCurrentScreen().hostiles) {
+                if (auber.getBounds().overlaps(hostile.getBounds())) {
+                    hostile.remove();
+                    //Creates a new hostile to spawn
+                    Hostile new_hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), brigScreen, abilities.random());
+                    //Adds the hostile to the room and moves it to the location of a non hostile in the room
+                    brigScreen.hostiles.add(new_hostile);
+                    new_hostile.setPosition(random.nextInt(brigScreen.getMaxX() - brigScreen.getMinX()) + brigScreen.getMinX(), random.nextInt(brigScreen.getMaxY() - brigScreen.getMinY()) + brigScreen.getMinY());
+                    brigScreen.stage.addActor(hostile);
+
+                    caughtHostiles += 1;
+                }
+            }
+            if (caughtHostiles == 8) {
+                endScreen.updateGameWon();
+                endGame();
+            }
+        }
     }
 }
 

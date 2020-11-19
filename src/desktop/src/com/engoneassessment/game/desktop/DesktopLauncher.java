@@ -12,6 +12,7 @@ public class DesktopLauncher {
 		config.title = "Auber Game - York CS ENG1 Assessment - Team 23";
 		config.width = (int) (1920 * scale);
 		config.height = (int) (1080 * scale);
+		//config.fullscreen = true;
 
 		config.resizable = true;
 		new LwjglApplication(new GameEntry(), config);

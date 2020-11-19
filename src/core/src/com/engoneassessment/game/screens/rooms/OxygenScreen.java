@@ -10,4 +10,5 @@ public class OxygenScreen extends RoomScreen {
         super(gameEntry, name, numNPCs);
 
     }
+
 }

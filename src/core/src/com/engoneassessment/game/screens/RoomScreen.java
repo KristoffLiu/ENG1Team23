@@ -2,6 +2,7 @@ package com.engoneassessment.game.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -20,8 +21,8 @@ public class RoomScreen implements Screen {
     private final GameEntry gameEntry;
     protected String name;
 
-    final Room floor;
-    final Room walls;
+    private Room floor;
+    private Room walls;
     public Stage stage;
     public Player auber;
     final int minX;
@@ -31,6 +32,7 @@ public class RoomScreen implements Screen {
     public Array<NonHostile> nonHostiles;
     public Array<Hostile> hostiles;
     public HUDStage hudStage;
+    private boolean sabotaged;
 
     public RoomScreen(GameEntry gameEntry,String name, int numNPCs){
         this.gameEntry = gameEntry;
@@ -40,8 +42,11 @@ public class RoomScreen implements Screen {
         maxX = 1451;
         maxY = 795;
 
+        sabotaged = false;
+
         //Sets the name of the room for use in the UI
         this.name = name;
+
 
         //Initialises nonHostiles and hostiles Arrays
         nonHostiles = new Array<>();
@@ -74,8 +79,9 @@ public class RoomScreen implements Screen {
         auber = gameEntry.getAuber();
         stage.addActor(auber);
         auber.setPosition(stage.getWidth()/2-auber.getWidth()/2,stage.getHeight()/2-auber.getHeight()/2);
-
-        Gdx.input.setInputProcessor(stage);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,hudStage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
+        auber.setCurrentScreen(this);
     }
 
     @Override
@@ -83,11 +89,13 @@ public class RoomScreen implements Screen {
         //Checks for movement keys being held
         keysPressed();
         //Runs a function to spawn hostiles randomly in different rooms
-        spawnHostiles();
+        sabotage();
         //Moves the hostiles and non hostiles
         moveNPCS();
         //Uses the hostile abilities
         useAbilities();
+        //Runs any passive effects for the room like healing or taking damage
+        passiveEffects(delta);
         //Sets the camera position to the centre of the player
         stage.getViewport().getCamera().position.set(auber.getX()+auber.getWidth()/2,auber.getY()+auber.getHeight()/2,0);
         stage.getViewport().getCamera().update();
@@ -166,9 +174,9 @@ public class RoomScreen implements Screen {
         }
     }
 
-    public void spawnHostiles(){
-        if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 1000 && gameEntry.getNumHostiles() < 8) {
-            //System.out.println("Sabotage");
+    public void sabotage(){
+        if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 5000) {
+            System.out.println("Sabotage");
             gameEntry.sabotage();
             gameEntry.setSpawnTime(System.currentTimeMillis());
         }
@@ -214,5 +222,30 @@ public class RoomScreen implements Screen {
 
     public String getName(){
         return name;
+    }
+
+    public void  setFloorTexture(TextureRegion floor) {
+        this.floor.setTextureRegion(floor);
+    }
+
+    public void setWallsTexture(TextureRegion walls) {
+        this.walls.setTextureRegion(walls);
+    }
+
+    public void passiveEffects(float delta){
+        if (gameEntry.getOxygenScreen().isSabotaged()) {
+            auber.setHealth(auber.getHealth()-delta/1);
+        }
+        System.out.println(isSabotaged());
+        System.out.println(auber.getHealth());
+
+    }
+
+    public void setSabotaged(boolean sabotaged) {
+        this.sabotaged = sabotaged;
+    }
+
+    public boolean isSabotaged() {
+        return sabotaged;
     }
 }
