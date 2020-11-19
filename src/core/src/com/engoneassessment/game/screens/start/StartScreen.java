@@ -5,17 +5,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.GameEntry;
+import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
-import com.engoneassessment.game.ui.controls.ClickableUIElement;
+import com.engoneassessment.game.ui.controls.ButtonClickListener;
+import com.engoneassessment.game.ui.controls.ClickableUIElementClickListener;
+import com.engoneassessment.game.ui.controls.Image;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 import com.engoneassessment.game.ui.startui.PlayButton;
 
@@ -23,12 +28,18 @@ public class StartScreen implements Screen {
 
     private GameEntry gameEntry;
     private Texture logoTexture;
-    private UIStage uiStage;
+    public UIStage uiStage;
     private CustomActor customActor;
     private TextField usernameTextField;
     private PlayButton playButton;
 
     private Label labelGameTitle;
+
+    SpriteBatch backgroundBatch;
+    private TextureRegion[] walkFrames;
+    private Animation walkAnimation;
+    private TextureRegion currentFrame;
+
 
     public StartScreen(final GameEntry gameEntry){
 
@@ -37,37 +48,42 @@ public class StartScreen implements Screen {
         uiStage = new UIStage(new StretchViewport(GameEntry.VIEW_WIDTH, GameEntry.VIEW_HEIGHT));
 
         labelGameTitle = new Label("Auber Game", LabelStyles.getGameTitleLabelStyle());
-        labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,800);
+        labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,600);
 
         //Creates the menu button and move it to the correct place
-        playButton = new PlayButton(
-                this.uiStage,
-                new TextureRegion(new Texture("Menu/Buttons/playNormal.jpg")),
-                new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")),
-                new TextureRegion(new Texture("Menu/Buttons/playHighlighted.jpg")));
-        playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,400);
+        playButton = new PlayButton(this.uiStage);
+        playButton.setWidth(playButton.getWidth()/1.5f);
+        playButton.setHeight(playButton.getHeight()/1.5f);
+        playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,300);
 
         //Detects any inputs related to the play button
-        playButton.addListener(new ClickListener(){
-            @Override
-            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                playButton.setButtonUIState(ClickableUIElement.ButtonUIState.hovered);
-                super.enter(event, x, y, pointer, fromActor);
-            }
-            @Override
-            public void exit(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                playButton.setButtonUIState(ClickableUIElement.ButtonUIState.normal);
-                super.enter(event, x, y, pointer, fromActor);
-            }
-
+        playButton.setClickListener(new ButtonClickListener(){
+            /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
+             * button or touch. The touchUp event is always {@link Event#handle() handled}.
+             * @see ButtonClickListener */
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                playButton.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
+                super.clicked(event, x, y);
                 gameEntry.setScreen(gameEntry.getInfirmaryScreen());
                 gameEntry.setSpawnTime(System.currentTimeMillis());
-                super.clicked(event, x, y);
             }
         });
+
+        int background_frameCols = 2;
+        int background_frameRows = 2;
+        Texture hitbarTexture = new Texture(Gdx.files.internal("Background/space.png"));
+        int perCellWidth = hitbarTexture.getWidth() / background_frameCols;
+        int perCellHeight = hitbarTexture.getHeight() / background_frameRows;
+        TextureRegion[][] background_cellRegions = TextureRegion.split(hitbarTexture, perCellWidth, perCellHeight);
+        walkFrames = new TextureRegion[background_frameRows * background_frameCols];
+        int index = 0;
+        for (int row = 0; row < background_frameRows; row++) {
+            for (int col = 0; col < background_frameCols; col++) {
+                walkFrames[index++] = background_cellRegions[row][col];
+            }
+        }
+        walkAnimation = new Animation(0.5F, walkFrames);
+        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         uiStage.addActor(labelGameTitle);
         uiStage.addActor(playButton);
@@ -80,8 +96,11 @@ public class StartScreen implements Screen {
      */
     @Override
     public void show() {
+        backgroundBatch = new SpriteBatch();
         Gdx.input.setInputProcessor(uiStage);
     }
+
+    float stateTime = 0f;
 
     /**
      * Called when the screen should render itself.
@@ -92,6 +111,13 @@ public class StartScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.39f, 0.58f, 0.92f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = (TextureRegion) walkAnimation.getKeyFrame(stateTime);
+        backgroundBatch.begin();
+        backgroundBatch.draw(currentFrame, 0, 0);
+        backgroundBatch.end();
+
         uiStage.act();
         uiStage.draw();
     }

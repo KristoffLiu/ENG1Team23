@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.ui.UIElement;
+import com.engoneassessment.game.ui.controls.Image;
 import com.engoneassessment.game.ui.controls.NinePatchImage;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 
@@ -15,7 +16,8 @@ public class HealthBar {
     Player auber;
     Label PlayerName;
     Label hpIndicator;
-    NinePatchImage hpBar;
+    //NinePatchImage hpBar;
+    Image hpBar;
     TextureRegion[][] hpBar_cellRegions;
     int bar_frameRows = 10;
     int bar_frameCols = 1;
@@ -30,8 +32,7 @@ public class HealthBar {
         hpBar_cellRegions = TextureRegion.split(hitbarTexture, perCellWidth, perCellHeight);
 
         //Init HP bar
-        hpBar = new NinePatchImage(new TextureRegion(hpBar_cellRegions[0][0]),
-                30, 30, 0, 0);
+        hpBar = new Image(new TextureRegion(hpBar_cellRegions[0][0]));
         hpBar.setSize(400, 40);
         hpBar.setRelativePosition(20, 20, UIElement.HorizontalAlignment.leftAlignment, UIElement.VerticalAlignment.bottomAlignment);
 
@@ -53,8 +54,7 @@ public class HealthBar {
     }
 
     private void updateHpBarImage(int healthLevel){
-        hpBar.setImage(new TextureRegion(hpBar_cellRegions[9][0]),
-                30, 30, 0, 0);
+        hpBar.setTextureRegion(new TextureRegion(hpBar_cellRegions[healthLevel][0]));
     }
 
     private void updateHpIndicatorText(String currentHPText){

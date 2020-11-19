@@ -34,6 +34,9 @@ public class RoomScreen implements Screen {
     public HUDStage hudStage;
     private boolean sabotaged;
 
+    //since we have two stages - the stage and the UIStage, we need multiple InputProcessor to handle the listener events.
+    InputMultiplexer multiplexer;
+
     public RoomScreen(GameEntry gameEntry,String name, int numNPCs){
         this.gameEntry = gameEntry;
         //Sets the boundaries of the room
@@ -68,9 +71,13 @@ public class RoomScreen implements Screen {
         }
 
         stage.addListener(gameEntry.getKeyboardInputHandler());
-        Gdx.input.setInputProcessor(stage);
-
         hudStage = gameEntry.hudStage;
+
+
+        multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(hudStage);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override
@@ -79,9 +86,11 @@ public class RoomScreen implements Screen {
         auber = gameEntry.getAuber();
         stage.addActor(auber);
         auber.setPosition(stage.getWidth()/2-auber.getWidth()/2,stage.getHeight()/2-auber.getHeight()/2);
-        InputMultiplexer inputMultiplexer = new InputMultiplexer(stage,hudStage);
-        Gdx.input.setInputProcessor(inputMultiplexer);
         auber.setCurrentScreen(this);
+
+        multiplexer.addProcessor(stage);
+        multiplexer.addProcessor(hudStage);
+        Gdx.input.setInputProcessor(multiplexer);
     }
 
     @Override

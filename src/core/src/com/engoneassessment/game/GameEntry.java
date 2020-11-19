@@ -18,6 +18,7 @@ import com.engoneassessment.game.screens.rooms.*;
 import com.engoneassessment.game.screens.setting.SettingScreen;
 import com.engoneassessment.game.screens.start.StartScreen;
 import com.engoneassessment.game.ui.hud.HUDStage;
+import com.engoneassessment.game.ui.hud.minimap.RoomButton;
 
 import java.util.Random;
 
@@ -33,11 +34,15 @@ import java.util.Random;
 
 public class GameEntry extends Game {
 
+    public static GameEntry current;
+
     public static final float VIEW_WIDTH = 1920;
     public static final float VIEW_HEIGHT = 1080;
 
+    private Screen currentScreen;
+    private RoomScreen currentRoomScreen;
+
     private Player auber;
-    private Screen CurrentScreen;
     public HUDStage hudStage;
 
     private InputListener inputHandler;
@@ -87,6 +92,9 @@ public class GameEntry extends Game {
         numHostiles = 0;
         sabotagedSystems = 0;
         caughtHostiles = 0;
+        current = this;
+        //Stores the time the last hostile was spawned
+        spawnTime = System.currentTimeMillis();
         //Used for generating random numbers
         random = new Random();
         //Creates the input handler for keyboard based events
@@ -202,12 +210,20 @@ public class GameEntry extends Game {
         setScreen(startScreen);
     }
 
+
     //Changes the current screen to the one passed in
     @Override
     public void setScreen(Screen nextScreen) {
-        super.setScreen(nextScreen);
-        if (CurrentScreen != nextScreen && RoomScreen.class.isInstance(nextScreen)) {
-            hudStage.updateRoomName((RoomScreen) nextScreen);
+        if(getCurrentScreen() != nextScreen){
+            if(StartScreen.class.isInstance(getCurrentScreen())){
+                hudStage.updateRoomName((RoomScreen) nextScreen);
+            }
+            super.setScreen(nextScreen);
+            setCurrentScreen(nextScreen);
+            if(RoomScreen.class.isInstance(nextScreen)){
+                setCurrentRoomScreen((RoomScreen) nextScreen);
+                auber.setCurrentScreen((RoomScreen)nextScreen);
+            }
         }
     }
 
@@ -218,10 +234,20 @@ public class GameEntry extends Game {
         setScreen(endScreen);
     }
 
-    public Screen getCurrentScreen() {
-        return CurrentScreen;
+    public void setScreenFromStartScreen(Screen nextScreen){
+        setScreen(nextScreen);
+
     }
 
+    public void setRoomScreen(Screen nextScreen) {
+        if(this.getCurrentScreen() != nextScreen){
+            hudStage.teleport(nextScreen);
+        }
+    }
+
+    public void setRoomScreen_Finished(Screen nextScreen){
+        setScreen(nextScreen);
+    }
 
     @Override
     public void dispose() {
@@ -235,6 +261,10 @@ public class GameEntry extends Game {
             startScreen.dispose();
             startScreen = null;
         }
+    }
+
+    public BrigScreen getBrigScreen() {
+        return brigScreen;
     }
 
     public CargoScreen getCargoScreen() {
@@ -254,8 +284,7 @@ public class GameEntry extends Game {
     }
 
     public HangerScreen getHangerScreen() {
-        return hangerScreen;
-    }
+        return hangerScreen;    }
 
     public InfirmaryScreen getInfirmaryScreen() {
         return infirmaryScreen;
@@ -362,5 +391,23 @@ public class GameEntry extends Game {
             }
         }
     }
+    public Screen getCurrentScreen() {
+        return currentScreen;
+    }
+
+    private void setCurrentScreen(Screen nextScreen) {
+        currentScreen = nextScreen;
+    }
+
+
+    public RoomScreen getCurrentRoomScreen(){
+        return currentRoomScreen;
+    }
+
+    public void setCurrentRoomScreen(RoomScreen roomScreen){
+        currentRoomScreen = roomScreen;
+    }
+
+
 }
 

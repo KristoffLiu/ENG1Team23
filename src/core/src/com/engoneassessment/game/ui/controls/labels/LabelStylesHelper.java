@@ -1,6 +1,7 @@
 package com.engoneassessment.game.ui.controls.labels;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -17,10 +18,11 @@ public class LabelStylesHelper {
         if (isClearer) {
             bitmapFont.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         }
-        setBitmapFontScale(bitmapFont, scale);
-        setBitmapFontColor(bitmapFont, r, g, b , a);
+        bitmapFont.getData().setScale(scale);
+
         LabelStyle labelStyle = new LabelStyle();
         labelStyle.font = bitmapFont;
+        labelStyle.fontColor = new Color(r,g,b,a);
         return labelStyle;
     }
 

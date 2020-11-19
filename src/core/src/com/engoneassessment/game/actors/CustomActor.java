@@ -1,5 +1,6 @@
 package com.engoneassessment.game.actors;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -83,6 +84,11 @@ public class CustomActor extends Actor {
         if (textureRegion == null || !isVisible()) {
             return;
         }
+
+        Color tempBatchColor = batch.getColor();
+        Color color = getColor();
+        batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
+
         batch.draw(
                 textureRegion,
                 getX(), getY(),
