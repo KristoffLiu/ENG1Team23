@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.ui.UIStage;
+import com.engoneassessment.game.ui.controls.Button;
 import com.engoneassessment.game.ui.controls.ClickableUIElement;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 import com.engoneassessment.game.ui.startui.PlayButton;
@@ -20,7 +21,7 @@ public class EndScreen implements Screen {
     private GameEntry gameEntry;
 
     private UIStage uiStage;
-    private PlayButton menuButton;
+    private Button menuButton;
     private Label labelResult;
 
 
@@ -35,11 +36,12 @@ public class EndScreen implements Screen {
 
 
         //Creates the menu button and move it to the correct place
-        menuButton = new PlayButton(
+        menuButton = new Button(
                 this.uiStage,
                 new TextureRegion(new Texture("Menu/Buttons/menuNormal.jpg")),
                 new TextureRegion(new Texture("Menu/Buttons/menuHighlighted.jpg")),
-                new TextureRegion(new Texture("Menu/Buttons/menuClicked.jpg")));
+                new TextureRegion(new Texture("Menu/Buttons/menuClicked.jpg")),
+                        null);
         menuButton.setPosition(uiStage.getWidth()/2- menuButton.getWidth()/2,400);
 
         //Detects any inputs related to the play button

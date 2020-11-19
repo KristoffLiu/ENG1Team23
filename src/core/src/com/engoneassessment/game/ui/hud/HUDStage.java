@@ -44,6 +44,22 @@ public class HUDStage extends UIStage {
     private RoomIndicator roomIndicator;
     private SabotageIndicator sabotageIndicator;
 
+    NonUIAnimationHelper hpIndicatorNonUIAnimationHelper  ;
+    NonUIAnimationHelper RoomNameNonUIAnimationHelper     ;
+    NonUIAnimationHelper PlayerNameNonUIAnimationHelper   ;
+    NonUIAnimationHelper TitleNonUIAnimationHelper        ;
+
+    Image minimapMask;
+    MiniMap minimap;
+
+    private Image minimapBackground;
+    private Label teleportingIndicator;
+
+    private RoomScreen currentRoomScreen;
+
+    private boolean isMiniMapOpen;
+    Animation<TextureRegion> loopAnimation;
+
     public HUDStage(Viewport viewport, Player player, final GameEntry gameEntry){
         super(viewport);
         this.player = player;
@@ -57,13 +73,11 @@ public class HUDStage extends UIStage {
         roomIndicator = new RoomIndicator(this);
         sabotageIndicator = new SabotageIndicator(this);
 
-        mapButton.setRelativePosition(20,20, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.bottomAlignment);
         beamButton.setRelativePosition(120,20, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.bottomAlignment);
         teleportButton.setRelativePosition(220,20, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.bottomAlignment);
         this.gameEntry = gameEntry;
         auber = gameEntry.getAuber();
         invisibleActor = new Actor();
-        isMiniMapOpen = false;
 
         this.addActor(invisibleActor);
         this.addActor(healthBar.PlayerName);
