@@ -40,6 +40,7 @@ public class StartScreen implements Screen {
     private Animation walkAnimation;
     private TextureRegion currentFrame;
 
+
     public StartScreen(final GameEntry gameEntry){
 
         this.gameEntry = gameEntry;
@@ -66,8 +67,6 @@ public class StartScreen implements Screen {
                 gameEntry.setScreen(gameEntry.getInfirmaryScreen());
             }
         });
-
-
 
         int background_frameCols = 2;
         int background_frameRows = 2;

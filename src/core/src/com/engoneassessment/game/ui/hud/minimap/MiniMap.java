@@ -27,9 +27,10 @@ import com.engoneassessment.game.ui.layouts.UIGroup;
 public class MiniMap extends UIGroup {
     GameEntry gameEntry;
     Player auber;
-    Array<Button> RoomImages;
+    Array<RoomButton> RoomImages;
 
     public boolean isOpen;
+    boolean isTeleportEnable;
 
     Image MapBackground;
 
@@ -49,9 +50,12 @@ public class MiniMap extends UIGroup {
 
     public MapButton mapButton;
 
-    Label theSpaceStationLabel;
+    public Label theSpaceStationLabel;
 
-
+    float original_x;
+    float original_y;
+    float original_width;
+    float original_height;
     float closed_x;
     float closed_y;
     float closedScale;
@@ -59,26 +63,26 @@ public class MiniMap extends UIGroup {
     float opened_y;
     float openedScale;
 
+
+
+
     public MiniMap(UIStage uiStage, GameEntry gameEntry){
         super(uiStage);
         this.gameEntry = gameEntry;
         this.auber = gameEntry.getAuber();
 
         isOpen = false;
+        isTeleportEnable = true;
 
         closedScale = 0.5f;
         closed_x = uiStage.getWidth() - 20;
         closed_y = uiStage.getHeight() - 10;
 
-        openedScale = 1.6f;
-        opened_x = ((UIStage)getUIParent()).getWidth()/2 + 400;
-        opened_y = ((UIStage)getUIParent()).getHeight()/2 + 350;
-
         MapBackground         = new Image(this, new TextureRegion(new Texture("Ship/ShipPlain_ThickBorder.png")));
 
         //room 5
         EngineRoomImage       = new RoomButton(
-                this,this, "EngineRoom",
+                this, "EngineRoom",
                 new TextureRegion(new Texture("Ship/Room5_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room5_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room5_Pressed.png")),
@@ -86,7 +90,7 @@ public class MiniMap extends UIGroup {
         );
         //room 1
         BrigRoomImage         = new RoomButton(
-                this,this, "BrigRoom",
+                this, "BrigRoom",
                 new TextureRegion(new Texture("Ship/Room1_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room1_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room1_Pressed.png")),
@@ -94,7 +98,7 @@ public class MiniMap extends UIGroup {
                 );
         //room 2
         CargoRoomImage        = new RoomButton(
-                this,this, "CargoRoom",
+                this,"CargoRoom",
                 new TextureRegion(new Texture("Ship/Room2_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room2_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room2_Pressed.png")),
@@ -102,7 +106,7 @@ public class MiniMap extends UIGroup {
         );
         //room 6
         HangerRoomImage       = new RoomButton(
-                this,this, "HangerRoom",
+                this, "HangerRoom",
                 new TextureRegion(new Texture("Ship/Room6_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room6_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room6_Pressed.png")),
@@ -110,7 +114,7 @@ public class MiniMap extends UIGroup {
                 );
         //room 7
         InfirmaryRoomImage    = new RoomButton(
-                this,this, "InfirmaryRoom",
+                this,"InfirmaryRoom",
                 new TextureRegion(new Texture("Ship/Room7_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room7_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room7_Pressed.png")),
@@ -118,7 +122,7 @@ public class MiniMap extends UIGroup {
                 );
         //room 8
         OxygenRoomImage       = new RoomButton(
-                this,this, "OxygenRoom",
+                this,"OxygenRoom",
                 new TextureRegion(new Texture("Ship/Room8_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room8_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room8_Pressed.png")),
@@ -126,7 +130,7 @@ public class MiniMap extends UIGroup {
                 );
         //room 4
         ElectricalRoomImage   = new RoomButton(
-                this,this, "ElectricalRoom",
+                this,"ElectricalRoom",
                 new TextureRegion(new Texture("Ship/Room4_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room4_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room4_Pressed.png")),
@@ -134,7 +138,7 @@ public class MiniMap extends UIGroup {
         );
         //room 3
         CommandRoomImage      = new RoomButton(
-                this,this, "CommandRoom",
+                this,"CommandRoom",
                 new TextureRegion(new Texture("Ship/Room3_Normal.png")),
                 new TextureRegion(new Texture("Ship/Room3_Hovered.png")),
                 new TextureRegion(new Texture("Ship/Room3_Pressed.png")),
@@ -155,6 +159,7 @@ public class MiniMap extends UIGroup {
 
         mapButton             .setRelativePosition(270 ,180, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
         MapBackground         .setRelativePosition(0,0, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+
         BrigRoomImage         .setRelativePosition(135,62, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
         CargoRoomImage        .setRelativePosition(34,159, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
         CommandRoomImage      .setRelativePosition(135,263, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
@@ -165,7 +170,13 @@ public class MiniMap extends UIGroup {
         OxygenRoomImage       .setRelativePosition(445,161, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
         theSpaceStationLabel.setPosition(-420,-420);
 
-        RoomImages = new Array<Button>();
+        original_x      = MapBackground.getX();
+        original_y      = MapBackground.getY();
+        original_width  = MapBackground.getWidth();
+        original_height = MapBackground.getHeight();
+
+
+        RoomImages = new Array<RoomButton>();
         RoomImages.add(BrigRoomImage         );
         RoomImages.add(CargoRoomImage        );
         RoomImages.add(CommandRoomImage      );
@@ -174,22 +185,33 @@ public class MiniMap extends UIGroup {
         RoomImages.add(HangerRoomImage       );
         RoomImages.add(InfirmaryRoomImage    );
         RoomImages.add(OxygenRoomImage       );
-
         this.addActor(MapBackground       );
         this.setScale(closedScale,closedScale);
     }
 
+    public void isTeleportEnable(boolean bool){
+        this.isTeleportEnable = bool;
+    }
+
     public void OpenMap(float duration){
         isOpen = true;
+        float target_scale = 1.6f;
+        float target_width = original_width * target_scale;
+        float target_height = original_width * target_scale;
+        float target_x = ((UIStage)getUIParent()).getWidth()/2 + target_width / 2;
+        float target_y = ((UIStage)getUIParent()).getHeight()/2 + target_height / 2;
+
+
+
         Interpolation interpolation = Interpolation.pow3;
         ScaleToAction scaleToAction = Actions.scaleTo(
-                openedScale,
-                openedScale,
+                target_scale,
+                target_scale,
                 duration,
                 interpolation);
         MoveToAction moveToAction = Actions.moveTo(
-                opened_x,
-                opened_y,
+                target_x,
+                target_y,
                 duration,
                 interpolation);
         this.setColor(0,0,0,1);
@@ -235,49 +257,38 @@ public class MiniMap extends UIGroup {
         setAnimationOrigin(getX(), getY());
     }
 
-
-
-    public void Teleport(){
-        RoomScreen roomScreen = auber.getCurrentScreen();
-        Actor teleportedLocation;
-        if (roomScreen instanceof BrigScreen){
-            teleportedLocation = BrigRoomImage;
-        }
-        else if (roomScreen instanceof CargoScreen){
-            teleportedLocation = CargoRoomImage;
-        }
-        else if (roomScreen instanceof CommandScreen){
-            teleportedLocation = CommandRoomImage;
-        }
-        else if (roomScreen instanceof ElectricalScreen){
-            teleportedLocation = ElectricalRoomImage;
-        }
-        else if (roomScreen instanceof EngineScreen){
-            teleportedLocation = EngineRoomImage;
-        }
-        else if (roomScreen instanceof HangerScreen){
-            teleportedLocation = HangerRoomImage;
-        }
-        else if (roomScreen instanceof InfirmaryScreen){
-            teleportedLocation = InfirmaryRoomImage;
-        }
-        else{
-            teleportedLocation = BrigRoomImage;
-        }
-//        else if (roomScreen instanceof QuartersScreen){
-//
-//        }
-//        else if (roomScreen instanceof WeaponsScreen){
-//
-//        }
-        for (Button roomImage : RoomImages ) {
-            if(roomImage == teleportedLocation){
+    public void setSelectedRoomImage(RoomButton roomButton){
+        for (RoomButton roomImage : RoomImages ) {
+            if(roomImage == roomButton){
+                roomImage.isCurrentRoom(true);
                 roomImage.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
             }
             else{
+                roomImage.isCurrentRoom(false);
                 roomImage.setButtonUIState(ClickableUIElement.ButtonUIState.normal);
             }
         }
     }
 
+    public void setSelectedRoomImage(RoomScreen screen){
+        for (RoomButton roomImage : RoomImages ) {
+            if(roomImage.getRoomScreen() == screen){
+                roomImage.isCurrentRoom(true);
+                roomImage.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
+            }
+            else{
+                roomImage.isCurrentRoom(false);
+                roomImage.setButtonUIState(ClickableUIElement.ButtonUIState.normal);
+            }
+        }
+    }
+
+    public RoomButton getSelectedRoomImage(){
+        for (RoomButton roomImage : RoomImages ) {
+            if(roomImage.isCurrentRoom()){
+                return roomImage;
+            }
+        }
+        return InfirmaryRoomImage;
+    }
 }

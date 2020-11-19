@@ -1,11 +1,13 @@
 package com.engoneassessment.game.ui.hud;
 
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.engoneassessment.game.GameEntry;
@@ -15,6 +17,7 @@ import com.engoneassessment.game.ui.NonUIAnimationHelper;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
 import com.engoneassessment.game.ui.controls.Image;
+import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 import com.engoneassessment.game.ui.hud.minimap.MiniMap;
 
 public class HUDStage extends UIStage {
@@ -31,6 +34,9 @@ public class HUDStage extends UIStage {
     private MiniMap minimap;
     private Image minimapMask;
     private Image minimapBackground;
+    private Label teleportingIndicator;
+
+    private RoomScreen currentRoomScreen;
 
     private boolean isMiniMapOpen;
     Animation<TextureRegion> loopAnimation;
@@ -133,18 +139,29 @@ public class HUDStage extends UIStage {
             @Override
             public void clicked (InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                openMiniMap();
+                if(minimap.isOpen){
+
+                }
+                else {
+                    openMiniMap();
+                }
             }
         });
-
 
     }
 
     public void updateRoomName(RoomScreen screen){
         roomIndicator.update(screen);
+        beamButton                          .fadeIn(0,50,0.5f,null);
+        teleportButton                      .fadeIn(0,50,0.5f,null);
+        healthBar.hpBar                     .fadeIn(0,50,0.5f,null);
+        hpIndicatorNonUIAnimationHelper     .fadeIn(0,50,0.5f,null);
+        PlayerNameNonUIAnimationHelper      .fadeIn(0,50,0.5f,null);
+        RoomNameNonUIAnimationHelper        .fadeIn(0,-50,0.5f,null);
+        TitleNonUIAnimationHelper           .fadeIn(0,-50,0.5f,null);
+        minimap                             .fadeIn(0,-50,0.5f,null);
+        minimap.setSelectedRoomImage(screen);
     }
-
-
 
     public void openMiniMap(){
         float duration = 0.30F;
@@ -156,7 +173,7 @@ public class HUDStage extends UIStage {
         minimapMask.addAction(sequenceAction);
 
         AlphaAction mapButtonDisappearAction = Actions.alpha(0F, duration);
-        //minimap.mapButton.addAction(mapButtonDisappearAction);
+        minimap.mapButton.addAction(mapButtonDisappearAction);
 
         hideWhenMapOpen();
     }
@@ -173,9 +190,113 @@ public class HUDStage extends UIStage {
         appearWhenMapClose();
     }
 
+    RoomScreen nextTeleportingRoomScreen;
+    public void teleport(Screen roomScreen){
+        nextTeleportingRoomScreen = (RoomScreen) roomScreen;
+        //MiniMap Teleporting Animation - Enlargement Step 1
+        Interpolation firstInterpolation = Interpolation.pow3Out;
+        float firstTarget_duration = 0.6f;
+        float firstTarget_scale = 1.9f;
+        float firstTarget_roomButtonWidth = minimap.getSelectedRoomImage().getWidth() * firstTarget_scale;
+        float firstTarget_roomButtonHeight = minimap.getSelectedRoomImage().getHeight() * firstTarget_scale;
+        float firstTarget_roomButtonX = minimap.getSelectedRoomImage().getRelativeX() * firstTarget_scale;
+        float firstTarget_roomButtonY = minimap.getSelectedRoomImage().getRelativeY() * firstTarget_scale;
+        float firstTarget_x = this.getWidth()/2 + firstTarget_roomButtonX + firstTarget_roomButtonWidth / 2;
+        float firstTarget_y = this.getHeight()/2 + firstTarget_roomButtonY + firstTarget_roomButtonHeight / 2;
 
-    public void teleport(){
-        minimap.Teleport();
+        ScaleToAction firstScaleToAction = Actions.scaleTo(firstTarget_scale,firstTarget_scale,firstTarget_duration,firstInterpolation);
+        MoveToAction firstMoveToAction = Actions.moveTo(firstTarget_x,firstTarget_y,firstTarget_duration,firstInterpolation);
+        ParallelAction firstParallelAction = Actions.parallel(firstScaleToAction,firstMoveToAction);
+
+
+        //MiniMap Teleporting Animation - Enlargement Step 2
+        Interpolation secondInterpolation = Interpolation.pow3Out;
+        float secondTarget_duration = 0.8f;
+        float secondTarget_scale = 60f;
+        float secondTarget_roomButtonWidth = minimap.getSelectedRoomImage().getWidth() * secondTarget_scale;
+        float secondTarget_roomButtonHeight = minimap.getSelectedRoomImage().getHeight() * secondTarget_scale;
+        float secondTarget_roomButtonX = minimap.getSelectedRoomImage().getRelativeX() * secondTarget_scale;
+        float secondTarget_roomButtonY = minimap.getSelectedRoomImage().getRelativeY() * secondTarget_scale;
+        float secondTarget_x = this.getWidth()/2 + secondTarget_roomButtonX + secondTarget_roomButtonWidth / 2;
+        float secondTarget_y = this.getHeight()/2 + secondTarget_roomButtonY + secondTarget_roomButtonHeight / 2;
+
+        ScaleToAction secondScaleToAction = Actions.scaleTo(secondTarget_scale,secondTarget_scale,secondTarget_duration,secondInterpolation);
+        MoveToAction secondMoveToAction = Actions.moveTo(secondTarget_x,secondTarget_y,secondTarget_duration,secondInterpolation);
+
+        RunnableAction runnableAction = Actions.run(new Runnable() {
+            @Override
+            public void run() {
+                gameEntry.setRoomScreen_Finished(nextTeleportingRoomScreen);
+                teleportingIndicator = new Label(
+                        "Teleporting to " + nextTeleportingRoomScreen.getName() + " Room",
+                        LabelStyles.usingImpactFontStyle(
+                                true,0.9f,
+                                1f,1f,1f,1f));
+                addActor(teleportingIndicator);
+
+                teleportingIndicator.setPosition(
+                        getWidth()/2 - teleportingIndicator.getWidth()/2,
+                        getHeight()/2 - teleportingIndicator.getHeight()/2);
+
+                AlphaAction fadeInAlphaAction = Actions.alpha(1.0f, 0.4f);
+                AlphaAction fadeOutAlphaAction = Actions.alpha(0f, 0.4f);
+                DelayAction fadeOutDelayAction = Actions.delay(0.8f,fadeOutAlphaAction);
+
+
+                ParallelAction parallelAction = Actions.parallel(fadeOutDelayAction);
+                SequenceAction teleportingIndicatorSequenceAction = Actions.sequence(fadeInAlphaAction,parallelAction);
+                teleportingIndicator.addAction(teleportingIndicatorSequenceAction);
+
+                AlphaAction minimapMaskAlphaAction = Actions.alpha(0F, 0.4f);
+                VisibleAction minimapMaskVisibleAction = Actions.visible(false);
+                SequenceAction minimapMaskSequenceAction = Actions.sequence(minimapMaskAlphaAction, minimapMaskVisibleAction);
+                DelayAction minimapMaskDelayAction = Actions.delay(0.8f,minimapMaskSequenceAction);
+                minimapMask.addAction(minimapMaskDelayAction);
+            }
+        });
+
+        DelayAction delayAction = Actions.delay(0.3f,runnableAction);
+        ParallelAction secondParallelAction = Actions.parallel(secondScaleToAction,secondMoveToAction, delayAction);
+
+
+        //MiniMap Teleporting Animation - hiding animation step 1
+        AlphaAction alphaAction = Actions.alpha(0,0.4f);
+        RunnableAction secondRunnableAction = Actions.run(new Runnable() {
+            @Override
+            public void run() {
+                minimap.isOpen = false;
+                minimap.setRelativePosition(20,10, UIElement.HorizontalAlignment.rightAlignment, UIElement.VerticalAlignment.topAlignment);
+                minimap.setScale(0.6f,0.6f);
+                minimap.setAnimationOrigin(minimap.getX(), minimap.getY());
+                minimap.removeActor(minimap.theSpaceStationLabel);
+                beamButton                          .fadeIn(0,50,0.5f,null);
+                teleportButton                      .fadeIn(0,50,0.5f,null);
+                healthBar.hpBar                     .fadeIn(0,50,0.5f,null);
+                hpIndicatorNonUIAnimationHelper     .fadeIn(0,50,0.5f,null);
+                PlayerNameNonUIAnimationHelper      .fadeIn(0,50,0.5f,null);
+                RoomNameNonUIAnimationHelper        .fadeIn(0,-50,0.5f,null);
+                TitleNonUIAnimationHelper           .fadeIn(0,-50,0.5f,null);
+                minimap                             .fadeIn(0,-50,0.5f,null);
+                roomIndicator.update(nextTeleportingRoomScreen);
+                AlphaAction alphaAction = Actions.alpha(0f);
+                minimap.mapButton.setVisible(true);
+                minimap.mapButton.addAction(alphaAction);
+            }
+        });
+        SequenceAction thirdSequenceAction = Actions.sequence(alphaAction,secondRunnableAction);
+        SequenceAction sequenceAction = Actions.sequence(firstParallelAction, secondParallelAction, thirdSequenceAction);
+        minimap.addAction(sequenceAction);
+    }
+
+    public void hideExceptMiniMap(){
+        beamButton                          .fadeOut(0,-50,0.5f,null);
+        teleportButton                      .fadeOut(0,-50,0.5f,null);
+        healthBar.hpBar                     .fadeOut(0,-50,0.5f,null);
+        PlayerNameNonUIAnimationHelper      .fadeOut(0,-50,0.5f,null);
+        hpIndicatorNonUIAnimationHelper     .fadeOut(0,-50,0.5f,null);
+
+        RoomNameNonUIAnimationHelper        .fadeOut(0,50,0.5f,null);
+        TitleNonUIAnimationHelper           .fadeOut(0,50,0.5f,null);
     }
 
     public void appearAll(){
@@ -184,7 +305,6 @@ public class HUDStage extends UIStage {
         healthBar.hpBar                     .fadeIn(0,50,0.5f,null);
         hpIndicatorNonUIAnimationHelper     .fadeIn(0,50,0.5f,null);
         PlayerNameNonUIAnimationHelper      .fadeIn(0,50,0.5f,null);
-
         RoomNameNonUIAnimationHelper        .fadeIn(0,-50,0.5f,null);
         TitleNonUIAnimationHelper           .fadeIn(0,-50,0.5f,null);
         minimap                             .fadeIn(0,-50,0.5f,null);
@@ -204,7 +324,7 @@ public class HUDStage extends UIStage {
         RunnableAction switchScreenAction = Actions.run(new Runnable() {
             @Override
             public void run() {
-                gameEntry.setScreen_Finished();
+                //gameEntry.setRoomScreen_Finished();
             }
         });
         //MoveToAction moveToAction = Actions.moveTo(50,50,0.6f);
@@ -234,6 +354,14 @@ public class HUDStage extends UIStage {
 
         RoomNameNonUIAnimationHelper     .fadeOut(0,50,0.5f,null);
         TitleNonUIAnimationHelper        .fadeOut(0,50,0.5f,null);
+    }
+
+    public RoomScreen getCurrentRoomScreen(){
+        return currentRoomScreen;
+    }
+
+    public void setCurrentRoomButton(RoomScreen roomScreen){
+        currentRoomScreen = roomScreen;
     }
 
 }

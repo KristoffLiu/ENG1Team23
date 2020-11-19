@@ -36,11 +36,6 @@ public class HealthBar {
         hpBar.setSize(400, 40);
         hpBar.setRelativePosition(20, 20, UIElement.HorizontalAlignment.leftAlignment, UIElement.VerticalAlignment.bottomAlignment);
 
-
-        //hpBar = new NinePatchImage(new TextureRegion(hpBar_cellRegions[0][0]),
-        //        30, 30, 0, 0);
-        //hpBar.setSize(400, 40);
-
         //Init Name of the Player
             PlayerName = new Label("Auber",
                 LabelStyles.usingImpactFontStyle(
