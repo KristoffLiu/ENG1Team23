@@ -72,7 +72,7 @@ public class MiniMap extends UIGroup {
         this.auber = gameEntry.getAuber();
 
         isOpen = false;
-        isTeleportEnable = true;
+        isTeleportEnable = false;
 
         closedScale = 0.5f;
         closed_x = uiStage.getWidth() - 20;
@@ -189,8 +189,12 @@ public class MiniMap extends UIGroup {
         this.setScale(closedScale,closedScale);
     }
 
-    public void isTeleportEnable(boolean bool){
-        this.isTeleportEnable = bool;
+    public boolean isTeleportEnable() {
+        return isTeleportEnable;
+    }
+
+    public void setTeleportEnable(boolean teleportEnable) {
+        isTeleportEnable = teleportEnable;
     }
 
     public void OpenMap(float duration){

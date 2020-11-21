@@ -60,8 +60,8 @@ public class EndScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 menuButton.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
-                gameEntry.setScreen(gameEntry.getStartScreen());
                 gameEntry.create();
+                gameEntry.setScreen(gameEntry.getStartScreen());
                 super.clicked(event, x, y);
             }
         });

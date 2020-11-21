@@ -11,6 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
+import com.engoneassessment.game.actors.buildings.ShipSystem;
+import com.engoneassessment.game.actors.buildings.Teleporter;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.actors.characters.npcs.Hostile;
 import com.engoneassessment.game.actors.characters.npcs.NonHostile;
@@ -23,6 +25,7 @@ public class RoomScreen implements Screen {
 
     private Room floor;
     private Room walls;
+    private Teleporter teleporter;
     public Stage stage;
     public Player auber;
     final int minX;
@@ -37,6 +40,12 @@ public class RoomScreen implements Screen {
     //since we have two stages - the stage and the UIStage, we need multiple InputProcessor to handle the listener events.
     InputMultiplexer multiplexer;
 
+    /**
+     *
+     * @param gameEntry
+     * @param name
+     * @param numNPCs
+     */
     public RoomScreen(GameEntry gameEntry,String name, int numNPCs){
         this.gameEntry = gameEntry;
         //Sets the boundaries of the room
@@ -63,6 +72,11 @@ public class RoomScreen implements Screen {
         stage.addActor(floor);
         stage.addActor(walls);
 
+        //Creates the teleporter
+        teleporter = new Teleporter(new TextureRegion(new Texture("Systems/Teleporter.png")));
+        teleporter.setPosition(floor.getWidth()/2-teleporter.getWidth()/2,floor.getHeight()/2-teleporter.getHeight()/2);
+        stage.addActor(teleporter);
+
         //Creates the non hostiles in the rooms and gives them a random starting position
         for (int i = 1;i <= numNPCs; i ++){
             nonHostiles.add(new NonHostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")),this));
@@ -70,7 +84,6 @@ public class RoomScreen implements Screen {
             stage.addActor(nonHostiles.get(nonHostiles.size-1));
         }
 
-        stage.addListener(gameEntry.getKeyboardInputHandler());
         hudStage = gameEntry.hudStage;
 
 
@@ -96,13 +109,15 @@ public class RoomScreen implements Screen {
     @Override
     public void render(float delta) {
         //Checks for movement keys being held
-        keysPressed();
+        movement();
         //Runs a function to spawn hostiles randomly in different rooms
         sabotage();
         //Moves the hostiles and non hostiles
         moveNPCS();
         //Uses the hostile abilities
         useAbilities();
+        //Checks if the player is ontop of the teleporter
+        teleporter.checkOverlap(auber,hudStage);
         //Runs any passive effects for the room like healing or taking damage
         passiveEffects(delta);
         //Sets the camera position to the centre of the player
@@ -142,19 +157,24 @@ public class RoomScreen implements Screen {
 
     }
 
-    public void keysPressed(){
-        //Moves the auber around
-        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-            auber.moveBy(0,auber.getSpeed() * Gdx.graphics.getDeltaTime());
+    public void movement(){
+        if(gameEntry.isDemo()){
+            auber.autoMove(gameEntry.getRandom(),gameEntry);
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.A)) {
-            auber.moveBy(- auber.getSpeed() * Gdx.graphics.getDeltaTime(),0);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.S)) {
-            auber.moveBy(0,- auber.getSpeed() * Gdx.graphics.getDeltaTime());
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.D)) {
-            auber.moveBy(auber.getSpeed() * Gdx.graphics.getDeltaTime(),0);
+        else {
+            //Moves the auber around
+            if (Gdx.input.isKeyPressed(Input.Keys.W)) {
+                auber.moveBy(0, auber.getSpeed() * Gdx.graphics.getDeltaTime());
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.A)) {
+                auber.moveBy(-auber.getSpeed() * Gdx.graphics.getDeltaTime(), 0);
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.S)) {
+                auber.moveBy(0, -auber.getSpeed() * Gdx.graphics.getDeltaTime());
+            }
+            if (Gdx.input.isKeyPressed(Input.Keys.D)) {
+                auber.moveBy(auber.getSpeed() * Gdx.graphics.getDeltaTime(), 0);
+            }
         }
 
         //If the auber is out of bounds, move him back in
@@ -185,7 +205,6 @@ public class RoomScreen implements Screen {
 
     public void sabotage(){
         if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 5000) {
-            System.out.println("Sabotage");
             gameEntry.sabotage();
             gameEntry.setSpawnTime(System.currentTimeMillis());
         }
@@ -243,10 +262,8 @@ public class RoomScreen implements Screen {
 
     public void passiveEffects(float delta){
         if (gameEntry.getOxygenScreen().isSabotaged()) {
-            auber.setHealth(auber.getHealth()-delta/1);
+            auber.setHealth(auber.getHealth()-delta*2);
         }
-        System.out.println(isSabotaged());
-        System.out.println(auber.getHealth());
 
     }
 
@@ -257,4 +274,17 @@ public class RoomScreen implements Screen {
     public boolean isSabotaged() {
         return sabotaged;
     }
+
+    public Teleporter getTeleporter() {
+        return teleporter;
+    }
+
+    public Room getFloor() {
+        return floor;
+    }
+
+    public Room getWalls() {
+        return walls;
+    }
+
 }

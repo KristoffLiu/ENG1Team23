@@ -25,7 +25,6 @@ import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.ui.NonUIAnimationHelper;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
-import com.engoneassessment.game.ui.controls.ClickableUIElement;
 import com.engoneassessment.game.ui.controls.Image;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 import com.engoneassessment.game.ui.hud.minimap.MiniMap;
@@ -387,4 +386,7 @@ public class HUDStage extends UIStage {
         currentRoomScreen = roomScreen;
     }
 
+    public MiniMap getMinimap() {
+        return minimap;
+    }
 }
