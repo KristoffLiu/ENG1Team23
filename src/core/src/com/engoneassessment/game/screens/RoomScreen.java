@@ -28,7 +28,6 @@ public class RoomScreen implements Screen {
     private Teleporter teleporter;
     public Stage stage;
     public Player auber;
-    private Teleporter teleporter;
     final int minX;
     final int minY;
     final int maxX;
@@ -77,12 +76,7 @@ public class RoomScreen implements Screen {
         stage.addActor(teleporter);
 
         teleporter.setScale(2f,2f);
-        teleporter.setPosition(500,100);
-
-        //Creates the teleporter
-        teleporter = new Teleporter(new TextureRegion(new Texture("Systems/Teleporter.png")));
         teleporter.setPosition(floor.getWidth()/2-teleporter.getWidth()/2,floor.getHeight()/2-teleporter.getHeight()/2);
-        stage.addActor(teleporter);
 
         //Creates the non hostiles in the rooms and gives them a random starting position
         for (int i = 1;i <= numNPCs; i ++){
@@ -219,7 +213,7 @@ public class RoomScreen implements Screen {
     }
 
     public void sabotage(){
-        if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 5000) {
+        if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 10000) {
             gameEntry.sabotage();
             gameEntry.setSpawnTime(System.currentTimeMillis());
         }

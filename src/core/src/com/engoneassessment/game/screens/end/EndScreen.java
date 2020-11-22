@@ -78,6 +78,12 @@ public class EndScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(uiStage);
+        if(gameEntry.isDemo()){
+            gameEntry.create();
+            gameEntry.setScreen(gameEntry.getInfirmaryScreen());
+            gameEntry.setSpawnTime(System.currentTimeMillis());
+            gameEntry.setDemo(true);
+        }
     }
 
     /**
