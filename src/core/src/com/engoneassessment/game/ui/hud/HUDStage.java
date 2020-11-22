@@ -390,6 +390,9 @@ public class HUDStage extends UIStage {
         currentRoomScreen = roomScreen;
     }
 
+    public MiniMap getMinimap() {
+        return minimap;
+    }
     public void isTeleportEnabled(boolean bool){
         teleportButton.isEnabled(bool);
         minimap.isTeleportEnabled(bool);
@@ -398,5 +401,4 @@ public class HUDStage extends UIStage {
     public void isBeamEnabled(boolean bool){
         teleportButton.isEnabled(bool);
     }
-
 }

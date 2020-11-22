@@ -60,8 +60,6 @@ public class GameEntry extends Game {
     private HangerScreen hangerScreen;
     private InfirmaryScreen infirmaryScreen;
     private OxygenScreen oxygenScreen;
-    private QuartersScreen quartersScreen;
-    private WeaponsScreen weaponsScreen;
     private BrigScreen brigScreen;
 
     private long spawnTime;
@@ -84,6 +82,8 @@ public class GameEntry extends Game {
 
     private boolean gameWon;
 
+    private boolean demo;
+
     /**
      * Called when the game is first created.
      */
@@ -92,72 +92,12 @@ public class GameEntry extends Game {
         numHostiles = 0;
         sabotagedSystems = 0;
         caughtHostiles = 0;
+        gameWon = false;
         current = this;
         //Stores the time the last hostile was spawned
         spawnTime = System.currentTimeMillis();
         //Used for generating random numbers
         random = new Random();
-        //Creates the input handler for keyboard based events
-        inputHandler = new InputListener() {
-            @Override
-            public boolean keyDown(InputEvent event, int keycode) {
-                if (keycode == Input.Keys.NUM_1) {
-                    setScreen(cargoScreen);
-                    auber.setCurrentScreen(cargoScreen);
-                }
-
-                if (keycode == Input.Keys.NUM_2) {
-                    setScreen(commandScreen);
-                    auber.setCurrentScreen(commandScreen);
-                }
-
-                if (keycode == Input.Keys.NUM_3) {
-                    setScreen(electricalScreen);
-                    auber.setCurrentScreen(electricalScreen);
-                }
-
-                if (keycode == Input.Keys.NUM_4) {
-                    setScreen(engineScreen);
-                    auber.setCurrentScreen(engineScreen);
-                }
-
-                if (keycode == Input.Keys.NUM_5) {
-                    setScreen(hangerScreen);
-                    auber.setCurrentScreen(hangerScreen);
-                }
-
-                if (keycode == Input.Keys.NUM_6) {
-                    setScreen(infirmaryScreen);
-                    auber.setCurrentScreen(infirmaryScreen);
-                }
-
-                if (keycode == Input.Keys.NUM_7) {
-                    setScreen(oxygenScreen);
-                    auber.setCurrentScreen(oxygenScreen);
-                }
-
-                if (keycode == Input.Keys.NUM_8) {
-                    setScreen(quartersScreen);
-                    auber.setCurrentScreen(quartersScreen);
-                }
-
-                if (keycode == Input.Keys.NUM_9) {
-                    setScreen(weaponsScreen);
-                    auber.setCurrentScreen(weaponsScreen);
-                }
-
-                if (keycode == Input.Keys.NUM_0) {
-                    setScreen(brigScreen);
-                    auber.setCurrentScreen(brigScreen);
-                }
-
-                if (keycode == Input.Keys.SPACE) {
-                    beamHostiles();
-                }
-
-                return super.keyDown(event, keycode);
-            }
-        };
 
         //Creates the initial auber
         auber = new Player(new TextureRegion(new Texture("Characters/auber/idle/idle.gif")), null);
@@ -190,18 +130,13 @@ public class GameEntry extends Game {
         //Create Oxygen Screen
         oxygenScreen = new OxygenScreen(this, "Oxygen", 10);
 
-        //Create Quarters Screen
-        quartersScreen = new QuartersScreen(this, "Quarters", 10);
-
-        //Create Weapons Screen
-        weaponsScreen = new WeaponsScreen(this, "Weapons", 10);
 
         //Create Brig Screen
         brigScreen = new BrigScreen(this, "Brig", 0);
 
         //spawnable screens keeps track of the screens enemies can spawn on
         spawnableScreens = new Array<>();
-        spawnableScreens.addAll(weaponsScreen, quartersScreen, oxygenScreen, hangerScreen, electricalScreen, engineScreen, cargoScreen, commandScreen);
+        spawnableScreens.addAll(oxygenScreen, hangerScreen, electricalScreen, engineScreen, cargoScreen, commandScreen);
 
         //Creates the abilities and the abilities array for the hostile to randomly select
         abilities = new Array<>();
@@ -228,9 +163,6 @@ public class GameEntry extends Game {
     }
 
     public void endGame(){
-        if(caughtHostiles == 7){
-            gameWon = true;
-        }
         setScreen(endScreen);
     }
 
@@ -294,13 +226,6 @@ public class GameEntry extends Game {
         return oxygenScreen;
     }
 
-    public QuartersScreen getQuartersScreen() {
-        return quartersScreen;
-    }
-
-    public WeaponsScreen getWeaponsScreen() {
-        return weaponsScreen;
-    }
 
     public StartScreen getStartScreen() {
         return startScreen;
@@ -334,6 +259,8 @@ public class GameEntry extends Game {
         sabotagedSystems += 1;
         //If 15 systems have been sabotaged end the game
         if(sabotagedSystems == 15){
+            gameWon = false;
+            System.out.println("Lost");
             endGame();
         }
         //Picks a random screen to sabotage
@@ -341,6 +268,8 @@ public class GameEntry extends Game {
         //Tells the player which room has been sabotaged
         hudStage.updateLastSabotaged(sabotagedRoom);
         sabotagedRoom.setSabotaged(true);
+        auber.addSabotaged(sabotagedRoom);
+
         if(numHostiles < 8) {
             //Creates a new hostile to spawn
             Hostile hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), sabotagedRoom, abilities.random());
@@ -375,6 +304,7 @@ public class GameEntry extends Game {
             for (Hostile hostile : auber.getCurrentScreen().hostiles) {
                 if (auber.getBounds().overlaps(hostile.getBounds())) {
                     hostile.remove();
+                    auber.getCurrentScreen().hostiles.removeValue(hostile,true);
                     //Creates a new hostile to spawn
                     Hostile new_hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), brigScreen, abilities.random());
                     //Adds the hostile to the room and moves it to the location of a non hostile in the room
@@ -408,6 +338,13 @@ public class GameEntry extends Game {
         currentRoomScreen = roomScreen;
     }
 
+    public boolean isDemo() {
+        return demo;
+    }
+
+    public void setDemo(boolean demo) {
+        this.demo = demo;
+    }
 
 }
 

@@ -13,6 +13,7 @@ import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.screens.RoomScreen;
 
 public class Character extends CustomActor implements ICharacter {
+
     public enum FacingDirection{
         LEFT, RIGHT, UP, DOWN
     }

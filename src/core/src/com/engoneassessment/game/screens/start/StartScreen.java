@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Event;
@@ -16,12 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.GameEntry;
-import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
 import com.engoneassessment.game.ui.controls.ButtonClickListener;
-import com.engoneassessment.game.ui.controls.ClickableUIElementClickListener;
-import com.engoneassessment.game.ui.controls.Image;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
+import com.engoneassessment.game.ui.startui.DemoButton;
 import com.engoneassessment.game.ui.startui.PlayButton;
 
 public class StartScreen implements Screen {
@@ -32,6 +29,7 @@ public class StartScreen implements Screen {
     private CustomActor customActor;
     private TextField usernameTextField;
     private PlayButton playButton;
+    private DemoButton demoButton;
 
     private Label labelGameTitle;
 
@@ -50,7 +48,7 @@ public class StartScreen implements Screen {
         labelGameTitle = new Label("Auber Game", LabelStyles.getGameTitleLabelStyle());
         labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,600);
 
-        //Creates the menu button and move it to the correct place
+        //Creates the play button and move it to the correct place
         playButton = new PlayButton(this.uiStage);
         playButton.setWidth(playButton.getWidth()/1.5f);
         playButton.setHeight(playButton.getHeight()/1.5f);
@@ -66,6 +64,27 @@ public class StartScreen implements Screen {
                 super.clicked(event, x, y);
                 gameEntry.setScreen(gameEntry.getInfirmaryScreen());
                 gameEntry.setSpawnTime(System.currentTimeMillis());
+                gameEntry.setDemo(false);
+            }
+        });
+
+        //Creates the demo button and move it to the correct place
+        demoButton = new DemoButton(this.uiStage);
+        demoButton.setWidth(demoButton.getWidth()/1.5f);
+        demoButton.setHeight(demoButton.getHeight()/1.5f);
+        demoButton.setPosition(uiStage.getWidth()/2-demoButton.getWidth()/2,80);
+
+        //Detects any inputs related to the demo button
+        demoButton.setClickListener(new ButtonClickListener(){
+            /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
+             * button or touch. The touchUp event is always {@link Event#handle() handled}.
+             * @see ButtonClickListener */
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                gameEntry.setScreen(gameEntry.getInfirmaryScreen());
+                gameEntry.setSpawnTime(System.currentTimeMillis());
+                gameEntry.setDemo(true);
             }
         });
 
