@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
+import com.engoneassessment.game.actors.buildings.Teleporter;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.actors.characters.npcs.Hostile;
 import com.engoneassessment.game.actors.characters.npcs.NonHostile;
@@ -25,6 +26,7 @@ public class RoomScreen implements Screen {
     private Room walls;
     public Stage stage;
     public Player auber;
+    private Teleporter teleporter;
     final int minX;
     final int minY;
     final int maxX;
@@ -60,8 +62,14 @@ public class RoomScreen implements Screen {
         //Creates the walls and floors of the rooms
         floor = new Room(new TextureRegion(new Texture("Rooms/General Square/Floor.png")));
         walls = new Room(new TextureRegion(new Texture("Rooms/General Square/Wall.png")));
+        teleporter = new Teleporter();
+
         stage.addActor(floor);
         stage.addActor(walls);
+        stage.addActor(teleporter);
+
+        teleporter.setScale(2f,2f);
+        teleporter.setPosition(500,100);
 
         //Creates the non hostiles in the rooms and gives them a random starting position
         for (int i = 1;i <= numNPCs; i ++){
@@ -95,6 +103,14 @@ public class RoomScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if(this == gameEntry.getCurrentRoomScreen()){
+            if(this.auber.getBounds().overlaps(teleporter.getBounds())){
+                gameEntry.hudStage.isTeleportEnabled(true);
+            }
+            else{
+                gameEntry.hudStage.isTeleportEnabled(false);
+            }
+        }
         //Checks for movement keys being held
         keysPressed();
         //Runs a function to spawn hostiles randomly in different rooms
