@@ -38,8 +38,14 @@ public class ClickableUIElement extends UIElement {
         this.addListener(clickableUIElementClickListener);
     }
 
-    public void setAvailability(boolean isEnabled){
+    public void isEnabled(boolean isEnabled){
         this.isEnabled = isEnabled;
+        if(isEnabled){
+            setButtonUIState(ButtonUIState.normal);
+        }
+        else {
+            setButtonUIState(ButtonUIState.notActivated);
+        }
     }
 
     //Switches the texture of the button to be highlighted or not highlighted
