@@ -272,8 +272,8 @@ public class RoomScreen implements Screen {
     public void passiveEffects(float delta){
         if (gameEntry.getOxygenScreen().isSabotaged()) {
             auber.setHealth(auber.getHealth()-delta*2);
+            gameEntry.hudStage.updateHealth();
         }
-
     }
 
     public void setSabotaged(boolean sabotaged) {
