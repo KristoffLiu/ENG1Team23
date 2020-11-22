@@ -32,7 +32,7 @@ public class RoomButton extends Button {
         this.roomName = roomName;
         isCurrentRoom = false;
         label = new Label(roomName, LabelStyles.usingImpactFontStyle(
-                true,0.3f,0.75f,0.75f,0.75f,1f)
+                true,0.3f,1f,0.3f,0f,1f)
                     );
         label.setVisible(false);
         labelNonUIAnimationHelper = new NonUIAnimationHelper(label);
