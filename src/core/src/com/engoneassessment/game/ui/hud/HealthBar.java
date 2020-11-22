@@ -58,11 +58,7 @@ public class HealthBar {
     }
 
     private void updateHpIndicatorText(String currentHPText){
-        hpIndicator = new Label(currentHPText + "/100",
-                LabelStyles.usingImpactFontStyle(
-                        true, 0.5f,
-                        1,1,1,1
-                ));
+        hpIndicator.setText(currentHPText + "/100");
     }
 
     public void updateHpBar(){

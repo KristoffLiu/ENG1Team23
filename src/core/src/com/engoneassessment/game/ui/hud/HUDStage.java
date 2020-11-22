@@ -412,4 +412,8 @@ public class HUDStage extends UIStage {
     public void isBeamEnabled(boolean bool){
         teleportButton.isEnabled(bool);
     }
+
+    public void updateHealth(){
+        healthBar.updateHpBar();
+    }
 }
