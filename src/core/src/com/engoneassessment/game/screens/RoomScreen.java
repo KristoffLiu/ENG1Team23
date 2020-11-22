@@ -28,6 +28,7 @@ public class RoomScreen implements Screen {
     private Teleporter teleporter;
     public Stage stage;
     public Player auber;
+    private Teleporter teleporter;
     final int minX;
     final int minY;
     final int maxX;
@@ -69,8 +70,14 @@ public class RoomScreen implements Screen {
         //Creates the walls and floors of the rooms
         floor = new Room(new TextureRegion(new Texture("Rooms/General Square/Floor.png")));
         walls = new Room(new TextureRegion(new Texture("Rooms/General Square/Wall.png")));
+        teleporter = new Teleporter();
+
         stage.addActor(floor);
         stage.addActor(walls);
+        stage.addActor(teleporter);
+
+        teleporter.setScale(2f,2f);
+        teleporter.setPosition(500,100);
 
         //Creates the teleporter
         teleporter = new Teleporter(new TextureRegion(new Texture("Systems/Teleporter.png")));
@@ -108,6 +115,14 @@ public class RoomScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if(this == gameEntry.getCurrentRoomScreen()){
+            if(this.auber.getBounds().overlaps(teleporter.getBounds())){
+                gameEntry.hudStage.isTeleportEnabled(true);
+            }
+            else{
+                gameEntry.hudStage.isTeleportEnabled(false);
+            }
+        }
         //Checks for movement keys being held
         movement();
         //Runs a function to spawn hostiles randomly in different rooms

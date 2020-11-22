@@ -5,19 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.characters.Player;
@@ -25,6 +18,7 @@ import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.ui.NonUIAnimationHelper;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
+import com.engoneassessment.game.ui.controls.ButtonClickListener;
 import com.engoneassessment.game.ui.controls.Image;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 import com.engoneassessment.game.ui.hud.minimap.MiniMap;
@@ -65,6 +59,16 @@ public class HUDStage extends UIStage {
 
         beamButton          = new BeamButton(this);
         teleportButton      = new TeleportButton(this);
+        teleportButton.setClickListener(new ButtonClickListener(){
+            /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
+             * button or touch. The touchUp event is always {@link Event#handle() handled}.
+             * @see ClickListener */
+            @Override
+            public void clicked (InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                openMiniMap();
+            }
+        });
         healthBar           = new HealthBar(auber);
         roomIndicator       = new RoomIndicator(this);
 
@@ -218,7 +222,7 @@ public class HUDStage extends UIStage {
         //MiniMap Teleporting Animation - Enlargement Step 1
         Interpolation firstInterpolation = Interpolation.pow3Out;
         float firstTarget_duration = 0.6f;
-        float firstTarget_scale = 1.9f;
+        float firstTarget_scale = 2.5f;
         float firstTarget_roomButtonWidth = minimap.getSelectedRoomImage().getWidth() * firstTarget_scale;
         float firstTarget_roomButtonHeight = minimap.getSelectedRoomImage().getHeight() * firstTarget_scale;
         float firstTarget_roomButtonX = minimap.getSelectedRoomImage().getRelativeX() * firstTarget_scale;
@@ -233,7 +237,7 @@ public class HUDStage extends UIStage {
 
         //MiniMap Teleporting Animation - Enlargement Step 2
         Interpolation secondInterpolation = Interpolation.pow3Out;
-        float secondTarget_duration = 0.8f;
+        float secondTarget_duration = 1.0f;
         float secondTarget_scale = 60f;
         float secondTarget_roomButtonWidth = minimap.getSelectedRoomImage().getWidth() * secondTarget_scale;
         float secondTarget_roomButtonHeight = minimap.getSelectedRoomImage().getHeight() * secondTarget_scale;
@@ -262,7 +266,7 @@ public class HUDStage extends UIStage {
 
                 AlphaAction fadeInAlphaAction = Actions.alpha(1.0f, 0.4f);
                 AlphaAction fadeOutAlphaAction = Actions.alpha(0f, 0.4f);
-                DelayAction fadeOutDelayAction = Actions.delay(0.8f,fadeOutAlphaAction);
+                DelayAction fadeOutDelayAction = Actions.delay(1.2f,fadeOutAlphaAction);
 
 
                 ParallelAction parallelAction = Actions.parallel(fadeOutDelayAction);
@@ -388,5 +392,13 @@ public class HUDStage extends UIStage {
 
     public MiniMap getMinimap() {
         return minimap;
+    }
+    public void isTeleportEnabled(boolean bool){
+        teleportButton.isEnabled(bool);
+        minimap.isTeleportEnabled(bool);
+    }
+
+    public void isBeamEnabled(boolean bool){
+        teleportButton.isEnabled(bool);
     }
 }

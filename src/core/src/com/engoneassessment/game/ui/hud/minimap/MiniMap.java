@@ -191,11 +191,9 @@ public class MiniMap extends UIGroup {
 
     public boolean isTeleportEnable() {
         return isTeleportEnable;
-    }
 
     public void setTeleportEnable(boolean teleportEnable) {
         isTeleportEnable = teleportEnable;
-    }
 
     public void OpenMap(float duration){
         isOpen = true;

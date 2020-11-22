@@ -1,5 +1,6 @@
 package com.engoneassessment.game.ui.controls;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -50,6 +51,17 @@ public class ClickableUIElementClickListener extends ClickListener {
         }
     }
 
+    /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
+     * button or touch. The touchUp event is always {@link Event#handle() handled}.
+     * @see InputEvent */
+    @Override
+    public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+        ClickableUIElement clickableUIElement = (ClickableUIElement) event.getListenerActor();
+        if(clickableUIElement.isEnabled){
+            super.touchUp(event,x,y,pointer,button);
+        }
+    }
+
     /** Called when a mouse button or a finger touch goes down on the actor. If true is returned, this listener will have
      * {@link Stage#addTouchFocus(EventListener, Actor, Actor, int, int) touch focus}, so it will receive all touchDragged and
      * touchUp events, even those not over this actor, until touchUp is received. Also when true is returned, the event is
@@ -57,12 +69,14 @@ public class ClickableUIElementClickListener extends ClickListener {
      * @see ClickListener */
     @Override
     public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-        isStillPressed = true;
         ClickableUIElement clickableUIElement = (ClickableUIElement) event.getListenerActor();
-        if (clickableUIElement.isEnabled) {
-            clickableUIElement.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
-        } else {
-            clickableUIElement.setButtonUIState(ClickableUIElement.ButtonUIState.notActivated);
+        if(clickableUIElement.isEnabled){
+            isStillPressed = true;
+            if (clickableUIElement.isEnabled) {
+                clickableUIElement.setButtonUIState(ClickableUIElement.ButtonUIState.pressed);
+            } else {
+                clickableUIElement.setButtonUIState(ClickableUIElement.ButtonUIState.notActivated);
+            }
         }
         return super.touchDown(event, x, y, pointer, button);
     }
