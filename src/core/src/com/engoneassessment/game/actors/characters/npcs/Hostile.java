@@ -36,6 +36,7 @@ public class Hostile extends NPC {
     public void useAbility(Player player, Random random){
         if(!abilityActivated) {
             if (ability.equals("Sprint")) {
+                System.out.println("Sprint");
                 setSpeed(3);
                 abilityActivated = true;
                 abilityTimer = 100;

@@ -309,7 +309,8 @@ public class GameEntry extends Game {
                     Hostile new_hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), brigScreen, abilities.random());
                     //Adds the hostile to the room and moves it to the location of a non hostile in the room
                     brigScreen.hostiles.add(new_hostile);
-                    new_hostile.setPosition(random.nextInt(brigScreen.getMaxX() - brigScreen.getMinX()) + brigScreen.getMinX(), random.nextInt(brigScreen.getMaxY() - brigScreen.getMinY()) + brigScreen.getMinY());
+                    //Random X, random Y above room
+                    new_hostile.setPosition(random.nextInt(brigScreen.getMaxX() - brigScreen.getMinX()) + brigScreen.getMinX(), random.nextInt(brigScreen.getMaxY() - brigScreen.getMinY()) + brigScreen.getMaxY() - brigScreen.getMinY());
                     brigScreen.stage.addActor(hostile);
 
                     caughtHostiles += 1;
