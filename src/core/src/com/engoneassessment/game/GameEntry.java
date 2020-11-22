@@ -322,6 +322,7 @@ public class GameEntry extends Game {
             }
         }
     }
+
     public Screen getCurrentScreen() {
         return currentScreen;
     }

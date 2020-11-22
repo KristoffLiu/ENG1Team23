@@ -24,7 +24,7 @@ public class BeamButton extends Button {
                         new Texture("UI/Icons/BeamHover.png")),
                 new TextureRegion(
                         new Texture("UI/Icons/BeamNotAble.png")));
-        setButtonUIState(ButtonUIState.notActivated);
+        setButtonUIState(ButtonUIState.normal);
         setClickListener(new ButtonClickListener(){
 
         });
