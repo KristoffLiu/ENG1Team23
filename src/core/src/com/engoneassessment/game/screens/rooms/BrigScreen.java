@@ -10,5 +10,6 @@ public class BrigScreen extends RoomScreen {
     public BrigScreen(GameEntry gameEntry, String name, int numNPCs) {
         super(gameEntry, name, numNPCs);
         setWallsTexture(new TextureRegion(new Texture("Rooms/General Square/Brig.png")));
+        setFloorTexture(new TextureRegion(new Texture("Rooms/General Square/BrigFloor.png")));
     }
 }
