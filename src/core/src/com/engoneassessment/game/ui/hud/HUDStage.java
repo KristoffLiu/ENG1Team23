@@ -58,17 +58,6 @@ public class HUDStage extends UIStage {
         this.player = player;
 
         beamButton          = new BeamButton(this);
-        beamButton.setClickListener(new ButtonClickListener(){
-            /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
-             * button or touch. The touchUp event is always {@link Event#handle() handled}.
-             * @see ClickListener */
-            @Override
-            public void clicked (InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                gameEntry.beamHostiles();
-            }
-        });
-
         teleportButton      = new TeleportButton(this);
         teleportButton.setClickListener(new ButtonClickListener(){
             /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
