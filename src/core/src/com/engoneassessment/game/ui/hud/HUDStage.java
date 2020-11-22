@@ -395,7 +395,7 @@ public class HUDStage extends UIStage {
     }
     public void isTeleportEnabled(boolean bool){
         teleportButton.isEnabled(bool);
-        minimap.isTeleportEnabled(bool);
+        minimap.setTeleportEnable(bool);
     }
 
     public void isBeamEnabled(boolean bool){
