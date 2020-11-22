@@ -15,7 +15,6 @@ import com.engoneassessment.game.ui.UIStage;
 import com.engoneassessment.game.ui.controls.Button;
 import com.engoneassessment.game.ui.controls.ClickableUIElement;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
-import com.engoneassessment.game.ui.startui.PlayButton;
 
 public class EndScreen implements Screen {
     private GameEntry gameEntry;

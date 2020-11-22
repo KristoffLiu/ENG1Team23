@@ -12,6 +12,7 @@ public class OxygenScreen extends RoomScreen {
 
     public OxygenScreen(GameEntry gameEntry, String name, int numNPCs) {
         super(gameEntry, name, numNPCs);
+        setWallsTexture(new TextureRegion(new Texture("Rooms/General Square/Oxygen.png")));
         oxygenSystem = new ShipSystem(new TextureRegion(new Texture("Systems/LifeSupport.png")));
         stage.addActor(oxygenSystem);
         oxygenSystem.setPosition(getWalls().getWidth()/2-oxygenSystem.getWidth()/2,getWalls().getHeight()-oxygenSystem.getHeight()*2);
