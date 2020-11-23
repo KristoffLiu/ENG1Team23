@@ -1,6 +1,5 @@
 package com.engoneassessment.game.ui.hud;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.ui.UIStage;

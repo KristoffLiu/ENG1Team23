@@ -1,6 +1,5 @@
 package com.engoneassessment.game.screens.start;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,9 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.ui.UIStage;
 import com.engoneassessment.game.ui.controls.ButtonClickListener;

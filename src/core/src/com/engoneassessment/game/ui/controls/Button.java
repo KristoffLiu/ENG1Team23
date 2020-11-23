@@ -1,12 +1,7 @@
 package com.engoneassessment.game.ui.controls;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
-import com.engoneassessment.game.ui.layouts.UIGroup;
 
 /**
  * A button class which extends from ClickableUIElement class

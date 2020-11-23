@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.ui.layouts.UIGroup;
 
 public class UIStage extends Stage implements IUIStage{

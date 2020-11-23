@@ -1,11 +1,7 @@
 package com.engoneassessment.game.ui.controls;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.engoneassessment.game.ui.UIElement;
-import com.engoneassessment.game.ui.UIStage;
 
 public class ClickableUIElement extends UIElement {
     TextureRegion normalTexture         ;

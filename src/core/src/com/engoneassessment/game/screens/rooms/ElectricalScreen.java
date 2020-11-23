@@ -6,7 +6,6 @@ import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.buildings.ShipSystem;
 import com.engoneassessment.game.screens.RoomScreen;
 
-
 public class ElectricalScreen extends RoomScreen {
     private ShipSystem electricalSystem;
     public ElectricalScreen(GameEntry gameEntry, String name, int numNPCs) {

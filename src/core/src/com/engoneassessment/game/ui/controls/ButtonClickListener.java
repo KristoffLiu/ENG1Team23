@@ -1,7 +1,6 @@
 package com.engoneassessment.game.ui.controls;
 
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class ButtonClickListener extends ClickableUIElementClickListener {
     /** Called any time the mouse cursor or a finger touch is moved over an actor. On the desktop, this event occurs even when no

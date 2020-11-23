@@ -2,10 +2,8 @@ package com.engoneassessment.game.ui.hud;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.engoneassessment.game.ui.UIStage;
 import com.engoneassessment.game.ui.controls.Button;
 import com.engoneassessment.game.ui.controls.ButtonClickListener;
-import com.engoneassessment.game.ui.layouts.UIGroup;
 
 public class MapButton extends Button {
 

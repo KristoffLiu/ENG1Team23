@@ -4,20 +4,14 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.screens.RoomScreen;
-import com.engoneassessment.game.screens.rooms.*;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
-import com.engoneassessment.game.ui.controls.Button;
 import com.engoneassessment.game.ui.controls.ClickableUIElement;
 import com.engoneassessment.game.ui.controls.Image;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
@@ -42,11 +36,7 @@ public class MiniMap extends UIGroup {
     RoomButton HangerRoomImage       ;
     RoomButton InfirmaryRoomImage    ;
     RoomButton OxygenRoomImage       ;
-    RoomButton QuartersRoomImage     ;
-    RoomButton WeaponsRoomImage      ;
     Color originalRoomColor     ;
-
-    Label CurrentRoomName;
 
     public MapButton mapButton;
 
@@ -59,12 +49,6 @@ public class MiniMap extends UIGroup {
     float closed_x;
     float closed_y;
     float closedScale;
-    float opened_x;
-    float opened_y;
-    float openedScale;
-
-
-
 
     public MiniMap(UIStage uiStage, GameEntry gameEntry){
         super(uiStage);
@@ -204,8 +188,6 @@ public class MiniMap extends UIGroup {
         float target_height = original_width * target_scale;
         float target_x = ((UIStage)getUIParent()).getWidth()/2 + target_width / 2;
         float target_y = ((UIStage)getUIParent()).getHeight()/2 + target_height / 2;
-
-
 
         Interpolation interpolation = Interpolation.pow3;
         ScaleToAction scaleToAction = Actions.scaleTo(

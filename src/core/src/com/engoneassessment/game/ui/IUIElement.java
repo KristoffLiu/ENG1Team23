@@ -1,7 +1,6 @@
 package com.engoneassessment.game.ui;
 
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.utils.Null;
 
 public interface IUIElement {

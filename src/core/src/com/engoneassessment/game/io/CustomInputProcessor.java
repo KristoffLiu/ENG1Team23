@@ -2,7 +2,6 @@ package com.engoneassessment.game.io;
 
 import com.badlogic.gdx.InputProcessor;
 
-
 public class CustomInputProcessor implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
