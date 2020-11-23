@@ -15,10 +15,8 @@ import com.engoneassessment.game.actors.characters.npcs.Hostile;
 import com.engoneassessment.game.screens.RoomScreen;
 import com.engoneassessment.game.screens.end.EndScreen;
 import com.engoneassessment.game.screens.rooms.*;
-import com.engoneassessment.game.screens.setting.SettingScreen;
 import com.engoneassessment.game.screens.start.StartScreen;
 import com.engoneassessment.game.ui.hud.HUDStage;
-import com.engoneassessment.game.ui.hud.minimap.RoomButton;
 
 import java.util.Random;
 
@@ -50,7 +48,6 @@ public class GameEntry extends Game {
     //Screens Objects
     private StartScreen startScreen;
     private EndScreen endScreen;
-    private SettingScreen settingScreen;
 
     //All the room screens
     private CargoScreen cargoScreen;
@@ -109,29 +106,29 @@ public class GameEntry extends Game {
         //Creates EndScreen
         endScreen = new EndScreen(this);
 
-        //Create Cargo Bay Screen
-        cargoScreen = new CargoScreen(this, "Cargo", 10);
+        //Create Cargo Bay Screen, gameEntry, screen name, number of NPCS
+        cargoScreen = new CargoScreen(this, "Cargo", 15);
 
-        //Create Command Screen
-        commandScreen = new CommandScreen(this, "Command", 10);
+        //Create Command Screen, gameEntry, screen name, number of NPCS
+        commandScreen = new CommandScreen(this, "Command", 15);
 
-        //Create Electrical Screen
-        electricalScreen = new ElectricalScreen(this, "Electrical", 10);
+        //Create Electrical Screen, gameEntry, screen name, number of NPCS
+        electricalScreen = new ElectricalScreen(this, "Electrical", 15);
 
-        //Create Engine Screen
-        engineScreen = new EngineScreen(this, "Engine", 10);
+        //Create Engine Screen, gameEntry, screen name, number of NPCS
+        engineScreen = new EngineScreen(this, "Engine", 15);
 
-        //Create Hanger Screen
-        hangerScreen = new HangerScreen(this, "Hanger", 10);
+        //Create Hanger Screen, gameEntry, screen name, number of NPCS
+        hangerScreen = new HangerScreen(this, "Hanger", 15);
 
-        //Create Infirmary Screen
+        //Create Infirmary Screen, gameEntry, screen name, number of NPCS
         infirmaryScreen = new InfirmaryScreen(this, "Infirmary", 0);
 
-        //Create Oxygen Screen
-        oxygenScreen = new OxygenScreen(this, "Oxygen", 10);
+        //Create Oxygen Screen, gameEntry, screen name, number of NPCS
+        oxygenScreen = new OxygenScreen(this, "Oxygen", 15);
 
 
-        //Create Brig Screen
+        //Create Brig Screen, gameEntry, screen name, number of NPCS
         brigScreen = new BrigScreen(this, "Brig", 0);
 
         //spawnable screens keeps track of the screens enemies can spawn on
@@ -310,7 +307,7 @@ public class GameEntry extends Game {
                     //Adds the hostile to the room and moves it to the location of a non hostile in the room
                     brigScreen.hostiles.add(new_hostile);
                     //Random X, random Y above room
-                    new_hostile.setPosition(random.nextInt(brigScreen.getMaxX() - brigScreen.getMinX()) + brigScreen.getMinX(), random.nextInt(brigScreen.getMaxY() - brigScreen.getMinY()) + brigScreen.getMaxY() - brigScreen.getMinY());
+                    new_hostile.setPosition(random.nextInt(brigScreen.getMaxX() - brigScreen.getMinX()) + brigScreen.getMinX(), random.nextInt(brigScreen.getMaxY() - brigScreen.getMinY()) + brigScreen.getMaxY()+(brigScreen.getMaxY() - brigScreen.getMinY()));
                     brigScreen.stage.addActor(hostile);
 
                     caughtHostiles += 1;

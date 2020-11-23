@@ -20,16 +20,15 @@ import com.engoneassessment.game.ui.controls.ButtonClickListener;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
 import com.engoneassessment.game.ui.startui.DemoButton;
 import com.engoneassessment.game.ui.startui.PlayButton;
+import com.engoneassessment.game.ui.startui.QuitButton;
 
 public class StartScreen implements Screen {
 
     private GameEntry gameEntry;
-    private Texture logoTexture;
     public UIStage uiStage;
-    private CustomActor customActor;
-    private TextField usernameTextField;
     private PlayButton playButton;
     private DemoButton demoButton;
+    private QuitButton quitButton;
 
     private Label labelGameTitle;
 
@@ -46,13 +45,13 @@ public class StartScreen implements Screen {
         uiStage = new UIStage(new StretchViewport(GameEntry.VIEW_WIDTH, GameEntry.VIEW_HEIGHT));
 
         labelGameTitle = new Label("Auber Game", LabelStyles.getGameTitleLabelStyle());
-        labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,600);
+        labelGameTitle.setPosition(uiStage.getWidth()/2-labelGameTitle.getWidth()/2,800);
 
         //Creates the play button and move it to the correct place
         playButton = new PlayButton(this.uiStage);
         playButton.setWidth(playButton.getWidth()/1.5f);
         playButton.setHeight(playButton.getHeight()/1.5f);
-        playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,300);
+        playButton.setPosition(uiStage.getWidth()/2-playButton.getWidth()/2,500);
 
         //Detects any inputs related to the play button
         playButton.setClickListener(new ButtonClickListener(){
@@ -72,7 +71,7 @@ public class StartScreen implements Screen {
         demoButton = new DemoButton(this.uiStage);
         demoButton.setWidth(demoButton.getWidth()/1.5f);
         demoButton.setHeight(demoButton.getHeight()/1.5f);
-        demoButton.setPosition(uiStage.getWidth()/2-demoButton.getWidth()/2,80);
+        demoButton.setPosition(uiStage.getWidth()/2-demoButton.getWidth()/2,280);
 
         //Detects any inputs related to the demo button
         demoButton.setClickListener(new ButtonClickListener(){
@@ -85,6 +84,25 @@ public class StartScreen implements Screen {
                 gameEntry.setScreen(gameEntry.getInfirmaryScreen());
                 gameEntry.setSpawnTime(System.currentTimeMillis());
                 gameEntry.setDemo(true);
+            }
+        });
+
+        //Creates the quit button and move it to the correct place
+        quitButton = new QuitButton(this.uiStage);
+        quitButton.setWidth(quitButton.getWidth()/1.5f);
+        quitButton.setHeight(quitButton.getHeight()/1.5f);
+        quitButton.setPosition(uiStage.getWidth()/2-quitButton.getWidth()/2,60);
+
+        //Detects any inputs related to the demo button
+        quitButton.setClickListener(new ButtonClickListener(){
+            /** Called when a mouse button or a finger touch goes up anywhere, but only if touchDown previously returned true for the mouse
+             * button or touch. The touchUp event is always {@link Event#handle() handled}.
+             * @see ButtonClickListener */
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                Gdx.app.exit();
+
             }
         });
 
