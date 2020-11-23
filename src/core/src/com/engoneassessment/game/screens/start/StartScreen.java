@@ -34,7 +34,7 @@ public class StartScreen implements Screen {
     private Label labelGameTitle;
 
     SpriteBatch backgroundBatch;
-    private TextureRegion[] walkFrames;
+    private TextureRegion[] backgroundFrames;
     private Animation walkAnimation;
     private TextureRegion currentFrame;
 
@@ -94,14 +94,14 @@ public class StartScreen implements Screen {
         int perCellWidth = hitbarTexture.getWidth() / background_frameCols;
         int perCellHeight = hitbarTexture.getHeight() / background_frameRows;
         TextureRegion[][] background_cellRegions = TextureRegion.split(hitbarTexture, perCellWidth, perCellHeight);
-        walkFrames = new TextureRegion[background_frameRows * background_frameCols];
+        backgroundFrames = new TextureRegion[background_frameRows * background_frameCols];
         int index = 0;
         for (int row = 0; row < background_frameRows; row++) {
             for (int col = 0; col < background_frameCols; col++) {
-                walkFrames[index++] = background_cellRegions[row][col];
+                backgroundFrames[index++] = background_cellRegions[row][col];
             }
         }
-        walkAnimation = new Animation(0.5F, walkFrames);
+        walkAnimation = new Animation(0.5F, backgroundFrames);
         walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
 
         uiStage.addActor(labelGameTitle);

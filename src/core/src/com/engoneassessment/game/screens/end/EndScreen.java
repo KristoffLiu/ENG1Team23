@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -23,6 +25,10 @@ public class EndScreen implements Screen {
     private Button menuButton;
     private Label labelResult;
 
+    SpriteBatch backgroundBatch;
+    private TextureRegion[] backgroundFrames;
+    private Animation walkAnimation;
+    private TextureRegion currentFrame;
 
     public EndScreen(final GameEntry gameEntry){
         this.gameEntry = gameEntry;
@@ -65,6 +71,23 @@ public class EndScreen implements Screen {
             }
         });
 
+
+        int background_frameCols = 2;
+        int background_frameRows = 2;
+        Texture hitbarTexture = new Texture(Gdx.files.internal("Background/space.png"));
+        int perCellWidth = hitbarTexture.getWidth() / background_frameCols;
+        int perCellHeight = hitbarTexture.getHeight() / background_frameRows;
+        TextureRegion[][] background_cellRegions = TextureRegion.split(hitbarTexture, perCellWidth, perCellHeight);
+        backgroundFrames = new TextureRegion[background_frameRows * background_frameCols];
+        int index = 0;
+        for (int row = 0; row < background_frameRows; row++) {
+            for (int col = 0; col < background_frameCols; col++) {
+                backgroundFrames[index++] = background_cellRegions[row][col];
+            }
+        }
+        walkAnimation = new Animation(0.5F, backgroundFrames);
+        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
         uiStage.addActor(labelResult);
         uiStage.addActor(menuButton);
 
@@ -76,6 +99,7 @@ public class EndScreen implements Screen {
      */
     @Override
     public void show() {
+        backgroundBatch = new SpriteBatch();
         Gdx.input.setInputProcessor(uiStage);
         if(gameEntry.isDemo()){
             gameEntry.create();
@@ -84,6 +108,8 @@ public class EndScreen implements Screen {
             gameEntry.setDemo(true);
         }
     }
+
+    float stateTime = 0f;
 
     /**
      * Called when the screen should render itself.
@@ -94,6 +120,13 @@ public class EndScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0.39f, 0.58f, 0.92f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        stateTime += Gdx.graphics.getDeltaTime();
+        currentFrame = (TextureRegion) walkAnimation.getKeyFrame(stateTime);
+        backgroundBatch.begin();
+        backgroundBatch.draw(currentFrame, 0, 0);
+        backgroundBatch.end();
+
         uiStage.act();
         uiStage.draw();
     }
