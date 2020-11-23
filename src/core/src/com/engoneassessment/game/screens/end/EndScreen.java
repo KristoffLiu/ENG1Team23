@@ -124,7 +124,7 @@ public class EndScreen implements Screen {
         stateTime += Gdx.graphics.getDeltaTime();
         currentFrame = (TextureRegion) walkAnimation.getKeyFrame(stateTime);
         backgroundBatch.begin();
-        backgroundBatch.draw(currentFrame, 0, 0);
+        backgroundBatch.draw(currentFrame, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         backgroundBatch.end();
 
         uiStage.act();
