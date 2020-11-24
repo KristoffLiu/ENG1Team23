@@ -1,12 +1,10 @@
 package com.engoneassessment.game;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -43,8 +41,6 @@ public class GameEntry extends Game {
     private Player auber;
     public HUDStage hudStage;
 
-    private InputListener inputHandler;
-
     //Screens Objects
     private StartScreen startScreen;
     private EndScreen endScreen;
@@ -62,8 +58,6 @@ public class GameEntry extends Game {
     private long spawnTime;
 
     public Stage stage;
-
-    private Label.LabelStyle style;
 
     private static Random random;
 
@@ -98,7 +92,7 @@ public class GameEntry extends Game {
 
         //Creates the initial auber
         auber = new Player(new TextureRegion(new Texture("Characters/auber/idle/idle.gif")), null);
-        hudStage = new HUDStage(new StretchViewport(this.VIEW_WIDTH, this.VIEW_HEIGHT), auber, this);
+        hudStage = new HUDStage(new StretchViewport(VIEW_WIDTH, VIEW_HEIGHT), auber, this);
 
         // Create StartScreen
         startScreen = new StartScreen(this);
@@ -147,12 +141,12 @@ public class GameEntry extends Game {
     @Override
     public void setScreen(Screen nextScreen) {
         if(getCurrentScreen() != nextScreen){
-            if(StartScreen.class.isInstance(getCurrentScreen())){
+            if(getCurrentScreen() instanceof StartScreen){
                 hudStage.updateRoomName((RoomScreen) nextScreen);
             }
             super.setScreen(nextScreen);
             setCurrentScreen(nextScreen);
-            if(RoomScreen.class.isInstance(nextScreen)){
+            if(nextScreen instanceof RoomScreen){
                 setCurrentRoomScreen((RoomScreen) nextScreen);
                 auber.setCurrentScreen((RoomScreen)nextScreen);
             }
@@ -226,10 +220,6 @@ public class GameEntry extends Game {
 
     public StartScreen getStartScreen() {
         return startScreen;
-    }
-
-    public InputListener getKeyboardInputHandler() {
-        return inputHandler;
     }
 
     public Player getAuber() {

@@ -9,8 +9,6 @@ import java.util.Random;
 
 public class Hostile extends NPC {
 
-    private boolean arrested = false; // hostile's initial status is not arrested
-
     public int NumOfDestroy = 0; // record the number of systems the hostile destroy
 
 
@@ -35,27 +33,29 @@ public class Hostile extends NPC {
 
     public void useAbility(Player player, Random random){
         if(!abilityActivated) {
-            if (ability.equals("Sprint")) {
-                System.out.println("Sprint");
-                setSpeed(3);
-                abilityActivated = true;
-                abilityTimer = 100;
-                abilityCooldown = 200;
-            }
-            else if (ability.equals("Invisibility")){
-                setVisible(false);
-                abilityTimer = 100;
-                abilityCooldown = 200;
-                abilityActivated = true;
-            }
-            else if (ability.equals("Teleport")){
-                if(checkIfPlayerInRange(player,100)){
-                    //Moves the hostile to a random point in the room
-                    setPosition(random.nextInt(getCurrentScreen().getMaxX()-getCurrentScreen().getMinX())+getCurrentScreen().getMinX(),random.nextInt(getCurrentScreen().getMaxY()-getCurrentScreen().getMinY())+getCurrentScreen().getMinY());
+            switch (ability) {
+                case "Sprint":
+                    System.out.println("Sprint");
+                    setSpeed(3);
+                    abilityActivated = true;
+                    abilityTimer = 100;
+                    abilityCooldown = 200;
+                    break;
+                case "Invisibility":
+                    setVisible(false);
                     abilityTimer = 100;
                     abilityCooldown = 200;
                     abilityActivated = true;
-                }
+                    break;
+                case "Teleport":
+                    if (checkIfPlayerInRange(player, 100)) {
+                        //Moves the hostile to a random point in the room
+                        setPosition(random.nextInt(getCurrentScreen().getMaxX() - getCurrentScreen().getMinX()) + getCurrentScreen().getMinX(), random.nextInt(getCurrentScreen().getMaxY() - getCurrentScreen().getMinY()) + getCurrentScreen().getMinY());
+                        abilityTimer = 100;
+                        abilityCooldown = 200;
+                        abilityActivated = true;
+                    }
+                    break;
             }
             
         }
@@ -73,21 +73,7 @@ public class Hostile extends NPC {
 
     private Boolean checkIfPlayerInRange(Player player,int range){
         //Works out the straight line distance between the player and hostile
-        if (Math.sqrt(Math.pow((player.getX()-getX()),2)+Math.pow((player.getY()-getY()),2)) < range){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
-    public void getCaught() {
-        arrested = true;
-    }
-
-
-    public int getNumOfDestroy() {
-        return NumOfDestroy;
+        return Math.sqrt(Math.pow((player.getX() - getX()), 2) + Math.pow((player.getY() - getY()), 2)) < range;
     }
 
     public int getAbilityCooldown() {
