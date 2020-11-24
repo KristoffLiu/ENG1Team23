@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.engoneassessment.game.GameEntry;
-import com.engoneassessment.game.actors.buildings.ShipSystem;
 import com.engoneassessment.game.actors.buildings.Teleporter;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.actors.characters.npcs.Hostile;
@@ -42,11 +41,11 @@ public class RoomScreen implements Screen {
 
     /**
      *
-     * @param gameEntry
-     * @param name
-     * @param numNPCs
+     * @param gameEntry the main gameEntry class that stores a lot of the information
+     * @param name The name of the room
+     * @param numNPCs The number of NPCs to spawn in the room
      */
-    public RoomScreen(GameEntry gameEntry,String name, int numNPCs){
+    public RoomScreen(GameEntry gameEntry, String name, int numNPCs){
         this.gameEntry = gameEntry;
         //Sets the boundaries of the room
         minX = 424;
@@ -107,8 +106,13 @@ public class RoomScreen implements Screen {
         Gdx.input.setInputProcessor(multiplexer);
     }
 
+    /**
+     *
+     * @param delta the time in seconds since the screen was last rendered
+     */
     @Override
     public void render(float delta) {
+        //Checks if the player is on top of the teleporter
         if(this == gameEntry.getCurrentRoomScreen()){
             if(this.auber.getBounds().overlaps(teleporter.getBounds())){
                 gameEntry.hudStage.isTeleportEnabled(true);
@@ -213,6 +217,7 @@ public class RoomScreen implements Screen {
     }
 
     public void sabotage(){
+        //If the time since the last sabotage is more than 15 seconds sabotages a system
         if(System.currentTimeMillis() - gameEntry.getSpawnTime() > 10000) {
             gameEntry.sabotage();
             gameEntry.setSpawnTime(System.currentTimeMillis());
@@ -261,14 +266,26 @@ public class RoomScreen implements Screen {
         return name;
     }
 
+    /**
+     *
+     * @param floor new floor texture
+     */
     public void  setFloorTexture(TextureRegion floor) {
         this.floor.setTextureRegion(floor);
     }
 
+    /**
+     *
+     * @param walls new wall texture
+     */
     public void setWallsTexture(TextureRegion walls) {
         this.walls.setTextureRegion(walls);
     }
 
+    /**
+     *
+     * @param delta time in seconds since last call
+     */
     public void passiveEffects(float delta){
         if (gameEntry.getOxygenScreen().isSabotaged()) {
             auber.setHealth(auber.getHealth()-delta*2);

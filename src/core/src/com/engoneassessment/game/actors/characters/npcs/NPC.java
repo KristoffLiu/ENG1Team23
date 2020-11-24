@@ -13,6 +13,13 @@ public class NPC extends Character {
     private float movement_y;
     private static Random random;
 
+    /**
+     *
+     * @param textureRegion texture of the NPC
+     * @param screen the screen the NPC is being created on
+     * @param runTexture the texture for running
+     * @param idleTexture the texture for idling
+     */
     public NPC(TextureRegion textureRegion, RoomScreen screen, Texture runTexture, Texture idleTexture) {
         super(textureRegion, screen, runTexture, idleTexture);
         //Used for generating random numbers
@@ -22,12 +29,17 @@ public class NPC extends Character {
 
     }
 
+    /**
+     *
+     * @param random random number generator
+     */
     public void changeDirectionRandom(Random random){
         movement_x -= ((float)random.nextInt(2)-1)*random.nextFloat();
         movement_y -= ((float)random.nextInt(2)-1)*random.nextFloat();
     }
 
     public void randomMove(){
+        //If the random number generator gets a float < 0.05 it changes the direction the NPC is moving in
         if(Math.random() < 0.05){
             this.changeDirectionRandom(random);
         }

@@ -9,8 +9,4 @@ public class NonHostile extends NPC {
         super(textureRegion, screen, new Texture("Characters/other/run/run.png"),
                 new Texture("Characters/other/idle/idle.png"));
     }
-
-    public void SelectRandomSystem(){
-
-    }
 }

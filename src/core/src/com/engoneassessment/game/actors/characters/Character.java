@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
@@ -22,10 +21,7 @@ public class Character extends CustomActor implements ICharacter {
         IDLE, Walking, Running, Teleporting
     }
 
-    Array<Texture> actionTextures;
-
     private float speed;
-    private String ability; // every hostile has a ability, abilities such as be invisible, speeding up...
 
     private Double health = 100.0;
     private String position; // variable type has to be changed to what we define later
@@ -51,9 +47,6 @@ public class Character extends CustomActor implements ICharacter {
         // Animation things
         runAnimation = this.makeAnimation(runTexture, 1f/12f, 56,90);
         idleAnimation = this.makeAnimation(idleTexture, 1f/12f, 56,90);
-    }
-
-    public void changeX(int change){
     }
 
     public Animation makeAnimation(Texture img, float frameDuration, int tileWidth, int tileHeight){
@@ -105,10 +98,6 @@ public class Character extends CustomActor implements ICharacter {
 
     }
 
-    public void MoveByAction() {
-        MoveByAction action = Actions.moveBy(100, 0, 2.0F);
-        this.addAction(action);
-    }
 
     public String getPos() {
         return position;

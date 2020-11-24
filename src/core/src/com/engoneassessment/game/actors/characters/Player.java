@@ -20,8 +20,8 @@ public class Player extends Character{
     public Player(TextureRegion region, RoomScreen screen) {
         super(region,screen, new Texture("Characters/Auber/run/run.png"),
                 new Texture("Characters/Auber/idle/idle.png"));
-        speed = 800;
-        autoSpeed = 8f;
+        speed = 600;
+        autoSpeed = 6f;
         NPCChosen = false;
         movingNextRoom = true;
         sabotageList = new Array<>();
@@ -31,12 +31,18 @@ public class Player extends Character{
         return speed;
     }
 
+    /**
+     * Used for the demo mode only
+     * @param random Random number generator
+     * @param gameEntry the main gameEntry class
+     */
     public void autoMove(Random random, GameEntry gameEntry){
         //Moves the player to the teleporter and teleports them to the next sabotaged room
         if (movingNextRoom && sabotageList.size > 0) {
             //The angle the player needs to move at to go straight to the Teleporter
             double movementAngle = Math.atan2(getY() - getCurrentScreen().getTeleporter().getY(), getX() - getCurrentScreen().getTeleporter().getX());
             moveBy(-(float) Math.cos(movementAngle) * autoSpeed, -(float) Math.sin(movementAngle) * autoSpeed);
+            //If the character is on a teleporter, teleport it to the next sabotaged room
             if(getBounds().overlaps(getCurrentScreen().getTeleporter().getBounds())){
                 getCurrentScreen().hudStage.teleport(sabotageList.get(0));
                 movingNextRoom = false;

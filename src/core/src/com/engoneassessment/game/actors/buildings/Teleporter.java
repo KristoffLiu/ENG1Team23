@@ -10,6 +10,11 @@ public class Teleporter extends Building {
         super(new TextureRegion(new Texture("Systems/Teleporter.png")));
     }
 
+    /**
+     * Checks if the player is on top of the teleporter
+     * @param auber player character
+     * @param hud hud overlay
+     */
     public void checkOverlap(Player auber, HUDStage hud){
         if(getBounds().overlaps(auber.getBounds())){
             hud.getMinimap().setTeleportEnable(true);
