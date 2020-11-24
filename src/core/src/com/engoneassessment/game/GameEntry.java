@@ -91,7 +91,7 @@ public class GameEntry extends Game {
         random = new Random();
 
         //Creates the initial auber
-        auber = new Player(new TextureRegion(new Texture("Characters/auber/idle/idle.gif")), null);
+        auber = new Player(new TextureRegion(new Texture("Characters/Auber/idle/idle.gif")), null);
         hudStage = new HUDStage(new StretchViewport(VIEW_WIDTH, VIEW_HEIGHT), auber, this);
 
         // Create StartScreen
@@ -259,7 +259,7 @@ public class GameEntry extends Game {
 
         if(numHostiles < 8) {
             //Creates a new hostile to spawn
-            Hostile hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), sabotagedRoom, abilities.random());
+            Hostile hostile = new Hostile(new TextureRegion(new Texture("Characters/Other/idle/idle.gif")), sabotagedRoom, abilities.random());
             //Adds the hostile to the room and moves it to the location of a non hostile in the room
             sabotagedRoom.hostiles.add(hostile);
             hostile.setPosition(sabotagedRoom.nonHostiles.get(sabotagedRoom.nonHostiles.size - 1).getX(), sabotagedRoom.nonHostiles.get(sabotagedRoom.nonHostiles.size - 1).getY());
@@ -293,7 +293,7 @@ public class GameEntry extends Game {
                     hostile.remove();
                     auber.getCurrentScreen().hostiles.removeValue(hostile,true);
                     //Creates a new hostile to spawn
-                    Hostile new_hostile = new Hostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")), brigScreen, abilities.random());
+                    Hostile new_hostile = new Hostile(new TextureRegion(new Texture("Characters/Other/idle/idle.gif")), brigScreen, abilities.random());
                     //Adds the hostile to the room and moves it to the location of a non hostile in the room
                     brigScreen.hostiles.add(new_hostile);
                     //Random X, random Y above room

@@ -6,7 +6,7 @@ import com.engoneassessment.game.screens.RoomScreen;
 
 public class NonHostile extends NPC {
     public NonHostile(TextureRegion textureRegion, RoomScreen screen) {
-        super(textureRegion, screen, new Texture("Characters/other/run/run.png"),
-                new Texture("Characters/other/idle/idle.png"));
+        super(textureRegion, screen, new Texture("Characters/Other/run/run.png"),
+                new Texture("Characters/Other/idle/idle.png"));
     }
 }

@@ -79,7 +79,7 @@ public class RoomScreen implements Screen {
 
         //Creates the non hostiles in the rooms and gives them a random starting position
         for (int i = 1;i <= numNPCs; i ++){
-            nonHostiles.add(new NonHostile(new TextureRegion(new Texture("Characters/other/idle/idle.gif")),this));
+            nonHostiles.add(new NonHostile(new TextureRegion(new Texture("Characters/Other/idle/idle.gif")),this));
             nonHostiles.get(nonHostiles.size-1).setPosition(GameEntry.getRandom().nextInt(this.getMaxX()-this.getMinX())+this.getMinX(), GameEntry.getRandom().nextInt(this.getMaxY()-this.getMinY())+this.getMinY());
             stage.addActor(nonHostiles.get(nonHostiles.size-1));
         }
