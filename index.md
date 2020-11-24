@@ -57,6 +57,3 @@ Scott Clark | Jamie Roberts | Maciej Kaszynski | Kristoff Liu | Oliver Xie | Tam
 ## 19th November
 - Documentation reviewed and finalised
 - WP_CS&GM Task 2 Complete (Allow sabotaging to effect the environment)
-### Mid Week Meeting
-- WP_CS&GM Task 3 (Allow sabotaged systems to be fixed)
-- WP_SVA Task 4 (Add basic sound effects)
