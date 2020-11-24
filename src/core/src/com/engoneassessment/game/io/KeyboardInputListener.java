@@ -2,7 +2,6 @@ package com.engoneassessment.game.io;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 

@@ -6,7 +6,6 @@ import com.engoneassessment.game.GameEntry;
 import com.engoneassessment.game.actors.buildings.ShipSystem;
 import com.engoneassessment.game.screens.RoomScreen;
 
-
 public class OxygenScreen extends RoomScreen {
     private ShipSystem oxygenSystem;
 

@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
-import java.awt.*;
-
 public class LabelStylesHelper {
 
     public static LabelStyle generateLabelStyle(String path,

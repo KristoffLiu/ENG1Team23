@@ -1,22 +1,18 @@
 package com.engoneassessment.game.ui.hud;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.engoneassessment.game.actors.characters.Player;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.controls.Image;
-import com.engoneassessment.game.ui.controls.NinePatchImage;
 import com.engoneassessment.game.ui.controls.labels.LabelStyles;
-
-import javax.print.DocFlavor;
 
 public class HealthBar {
     Player auber;
     Label PlayerName;
     Label hpIndicator;
-    //NinePatchImage hpBar;
     Image hpBar;
     TextureRegion[][] hpBar_cellRegions;
     int bar_frameRows = 10;
@@ -88,45 +84,11 @@ public class HealthBar {
             updateHpBarImage(7);
         }
         else if(currentHP >= 10){
-            updateHpBarImage(8);;
+            updateHpBarImage(8);
         }
         else{
             updateHpBarImage(9);
         }
         updateHpIndicatorText(String.valueOf(currentHP.intValue()));
     }
-
-//    private int getHealthLevel(){
-//        Double currentHP = auber.getHealth();
-//        if(currentHP == 100){
-//            return 10;
-//        }
-//        else if(currentHP >= 80){
-//            return 8;
-//        }
-//        else if(currentHP >= 70){
-//            return 7;
-//        }
-//        else if(currentHP >= 60){
-//            return 6;
-//        }
-//        else if(currentHP >= 50){
-//            return 5;
-//        }
-//        else if(currentHP >= 40){
-//            return 4;
-//        }
-//        else if(currentHP >= 30){
-//            return 3;
-//        }
-//        else if(currentHP >= 20){
-//            return 2;
-//        }
-//        else if(currentHP >= 10){
-//            return 1;
-//        }
-//        else{
-//            return 0;
-//        }
-//    }
 }

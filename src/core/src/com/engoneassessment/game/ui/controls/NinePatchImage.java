@@ -3,11 +3,10 @@ package com.engoneassessment.game.ui.controls;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.ui.UIElement;
 import com.engoneassessment.game.ui.UIStage;
 
-    public class NinePatchImage extends UIElement {
+public class NinePatchImage extends UIElement {
 
     NinePatch ninePatch         ;
     float ninePatch_X           ;

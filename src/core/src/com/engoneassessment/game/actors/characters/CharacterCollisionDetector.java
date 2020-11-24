@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.engoneassessment.game.actors.CustomActor;
 import com.engoneassessment.game.utils.CollisionDetector;
 
-
 public class CharacterCollisionDetector extends CollisionDetector {
     private final Rectangle CollisionDetectionBounds = new Rectangle();
     private Rectangle overlappedBounds = new Rectangle();

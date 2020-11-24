@@ -13,7 +13,7 @@ import com.engoneassessment.game.ui.UIStage;
 
 public class UIGroup extends Group implements IUIElement, IUIStage {
     Object uiParent = null;
-    Array<Actor> uiElements = new Array<Actor>();
+    Array<Actor> uiElements = new Array<>();
     UIElement.HorizontalAlignment horizontalAlignment = UIElement.HorizontalAlignment.leftAlignment;
     UIElement.VerticalAlignment verticalAlignment = UIElement.VerticalAlignment.bottomAlignment;
     float relativeX = 0;

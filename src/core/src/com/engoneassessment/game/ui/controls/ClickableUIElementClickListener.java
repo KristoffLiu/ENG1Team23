@@ -1,9 +1,7 @@
 package com.engoneassessment.game.ui.controls;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.TimeUtils;
 
 public class ClickableUIElementClickListener extends ClickListener {
 
